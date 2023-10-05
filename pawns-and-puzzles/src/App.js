@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import React, {Component} from 'react';
 import logo from './logo.svg';
 import './App.css';
@@ -36,24 +37,32 @@ class App extends Component {
     }
   }
 
+=======
+import './App.css';
+import Button from '@mui/material/Button';
+import Box from '@mui/material/Box';
+import SignIn from './Components/Sign in Page/SignIn'
+import Home from './Components/Home Page/Home.js'
+import {
+  Route,
+  NavLink,
+  HashRouter,
+  Routes
+} from "react-router-dom";
+>>>>>>> 6262e167d506dc8293f2fffebf9e2253d52b249e
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Box sx={{display:'block',bgcolor:'white', width:'100vw',height:'100vh', overflowX: 'hidden'}}>
+      <HashRouter>
+        <Routes>
+          <Route path='/' element={<SignIn></SignIn>} />
+          <Route path='/Home' element={<Home></Home>} />
+          <Route path='/Vendors' element={<div></div>} />
+          <Route path='/Games' element={<div></div>} />
+          <Route path='/Comments' element={<div></div>} />
+        </Routes>
+      </HashRouter>
+    </Box>
   );
 }
 
