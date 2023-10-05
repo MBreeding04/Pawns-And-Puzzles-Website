@@ -1,0 +1,20 @@
+.parallax {
+    /* The image used */
+    background-image: url('../../Assets/Paralax/blackAndWhite.jpg');
+
+    /* Set a specific height */
+    min-height: 700px;
+    aspect-ratio: auto;
+
+
+    /* Create the parallax scrolling effect */
+    background-attachment: fixed;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+
+    /*Allows display ot be center*/
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
