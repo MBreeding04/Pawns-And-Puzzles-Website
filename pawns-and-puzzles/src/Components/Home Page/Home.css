@@ -1,20 +1,26 @@
-.parallax {
-    /* The image used */
-    background-image: url('../../Assets/Paralax/blackAndWhite.jpg');
+@media screen and (max-width: 1920px) {
+    .chessPeices {
+        background-image: url('../../Assets/Paralax/chessPeices.png');
+    }
+}
 
-    /* Set a specific height */
-    min-height: 700px;
-    aspect-ratio: auto;
+@media screen and (max-width: 2560px) {
+    .chessPeices {
+        background-image: url('../../Assets/Paralax/chessPeices_2560x1440.png');
+    }
+}
 
+@media screen and (max-width: 3840px) {
+    .chessPeices {
+        background-image: url('../../Assets/Paralax/chessPeices_1_3840x2160.png');
+    }
+}
 
-    /* Create the parallax scrolling effect */
-    background-attachment: fixed;
-    background-position: center;
+.chessPeices {
+    background-size: cover;
+    background-position: center center;
     background-repeat: no-repeat;
     background-size: cover;
-
-    /*Allows display ot be center*/
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    width: 100vw;
+    height: 90vh;
 }
