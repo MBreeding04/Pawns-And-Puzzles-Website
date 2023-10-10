@@ -5,9 +5,10 @@ import {
 } from "react-router-dom";
 
 function SignIn() {
+
     return (
         <Box sx={{bgcolor:'yellow'}}>
-            <NavLink to='/Home'><Button>heelo</Button></NavLink>
+            <NavLink to='/Home'><Button>hello</Button></NavLink>
         </Box>
     );
 }
