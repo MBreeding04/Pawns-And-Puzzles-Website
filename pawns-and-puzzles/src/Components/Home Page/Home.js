@@ -1,5 +1,4 @@
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import Button from '@mui/material/Button';
 import Box from '@mui/material/Box';
 import './Home.css'
 import {
@@ -19,21 +18,17 @@ const SpecialEliteFont = createTheme({
         fontFamily: ['Special Elite', 'cursive'].join(",")
     },
 });
-var width = window.innerWidth
 function Home() {
     return (
-        <div>
-            <div className='parallax' style={{maxWidth:{width}}}>
-                <ThemeProvider theme={SpecialEliteFont}><Typography>Pawns and Puzzles</Typography></ThemeProvider>
+        <div style={{ display: 'flex', flexDirection: 'column' }}>
+            <div className='chessPeices'>
+                
             </div>
-            <Box sx={{bgcolor:'#0e1111', height:'500px'}}>
-
+            <Box sx={{ bgcolor: '#0f4a3b', width: '100%', height: '60vh' }}>
             </Box>
-            <Box sx={{bgcolor:'#F5F5F5', height:'500px'}}>
-
+            <Box sx={{ bgcolor: '#EEEEEB', width: '100%', height: '60vh' }}>
             </Box>
-            <Box sx={{bgcolor:'#0F4A3B', height:'500px'}}>
-
+            <Box sx={{ bgcolor: '#141414', width: '100%', height: '60vh' }}>
             </Box>
         </div>
     );
