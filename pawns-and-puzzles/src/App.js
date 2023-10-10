@@ -1,5 +1,5 @@
+
 import React, { Component } from 'react';
-import './App.css';
 import './App.css';
 import Box from '@mui/material/Box';
 import SignIn from './Components/Sign in Page/SignIn'
@@ -33,17 +33,19 @@ class App extends Component {
 
   render() {
     return (
-      <Box sx={{ display: 'block', bgcolor: 'white', width: '100vw', height: '100vh', overflowX: 'hidden' }}>
-        <HashRouter>
-          <Routes>
-            <Route path='/' element={<SignIn></SignIn>} />
-            <Route path='/Home' element={<Home></Home>} />
-            <Route path='/Vendors' element={<div></div>} />
-            <Route path='/Games' element={<div></div>} />
-            <Route path='/Comments' element={<div></div>} />
-          </Routes>
-        </HashRouter>
-      </Box>
+      <div className='body'>
+        <Box sx={{ display: 'block', bgcolor: 'white', width: '100vw', height: '100vh', overflowX: 'hidden' }}>
+          <HashRouter>
+            <Routes>
+              <Route path='/' element={<SignIn></SignIn>} />
+              <Route path='/Home' element={<Home></Home>} />
+              <Route path='/Vendors' element={<div></div>} />
+              <Route path='/Games' element={<div></div>} />
+              <Route path='/Comments' element={<div></div>} />
+            </Routes>
+          </HashRouter>
+        </Box>
+      </div>
     );
   }
 }

@@ -25,7 +25,7 @@ function Home() {
     return (
         <div style={{ display: 'flex', flexDirection: 'column' }}>
             <div className='chessPeices'>
-                <Fade ><ThemeProvider theme={MerriweatherFont}><Typography sx={{ fontSize: '6em', color: '#0f4a3b', fontWeight: 'bold', letterSpacing: '0.2em',textShadow:'2px 7px 5px rgba(0,0,0,0.3), 0px -4px 10px rgba(171,171,171,0.2);' }}>Pawns & Puzzles</Typography> </ThemeProvider>
+                <Fade ><ThemeProvider theme={MerriweatherFont}><Typography sx={{ fontSize: '6em', color: '#0f4a3b', fontWeight: 'bold', letterSpacing: '0.2em'}}>Pawns & Puzzles</Typography> </ThemeProvider>
                 <ThemeProvider theme={SpecialEliteFont}><Typography sx={{ fontSize: '2em', color: '#0f4a3b' }}>Welcome User</Typography> </ThemeProvider></Fade>
             </div>
             <Box sx={{ bgcolor: '#141414', width: '100%', height: '60vh', display: 'flex', flexDirection: 'row' }}>
@@ -72,9 +72,9 @@ function Home() {
                             </ThemeProvider>
                             <NavLink to={'/Vendors'} style={{ alignSelf: 'center' }}>
                                 <Button sx={{
-                                    my: '2em', width: '15em', backgroundColor: '#0f4a3b',
+                                    my: '2em', width: '15em', backgroundColor: '#8c8c8c',
                                     ':hover': {
-                                        bgcolor: '#09261f',
+                                        bgcolor: 'black',
                                         color: 'white'
                                     }
                                 }} variant='contained'>Become One!</Button>
