@@ -24,6 +24,7 @@ const SpecialEliteFont = createTheme({
 function Home() {
     return (
         <div style={{ display: 'flex', flexDirection: 'column' }}>
+            
             <div className='chessPeices'>
                 <Fade ><ThemeProvider theme={MerriweatherFont}><Typography sx={{ fontSize: '6em', color: '#0f4a3b', fontWeight: 'bold', letterSpacing: '0.2em'}}>Pawns & Puzzles</Typography> </ThemeProvider>
                 <ThemeProvider theme={SpecialEliteFont}><Typography sx={{ fontSize: '2em', color: '#0f4a3b' }}>Welcome User</Typography> </ThemeProvider></Fade>
