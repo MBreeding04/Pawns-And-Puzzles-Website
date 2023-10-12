@@ -5,10 +5,9 @@ import TextField from '@mui/material/TextField';
 import Paper from '@mui/material/Paper';
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
-
 import Typography from '@mui/material/Typography';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import checkerboard from "../../Assets/background/CheckerboardBackground.jpg"
+import checkerboard from "../../Assets/background/2.jpg"
 import '../Sign in Page/SignIn.css'
 
 
@@ -16,15 +15,15 @@ import '../Sign in Page/SignIn.css'
 const customTheme = createTheme({
 
     typography: {
-        fontFamily: 'Merriweather, serif', // Use Merriweather font for headings
+        fontFamily: 'Merriweather, serif', 
     },
     palette: {
         primary: {
-            main: '#0f4a3b', // Set the primary color to your desired color
+            main: '#0f4a3b', 
         },
         text: {
-            primary: '#000', // Black color for text
-            secondary: '#fff', // White color for secondary text
+            primary: '#000', 
+            secondary: '#fff', 
         },
     }
 });
@@ -63,9 +62,10 @@ export default function SignInSide() {
                     }}
                 ><img className='backdrop' src={checkerboard}></img></Grid>
                 <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
+                  
                     <Box
                         sx={{
-                            my: 8,
+                            my: 42,
                             mx: 4,
                             display: 'flex',
                             flexDirection: 'column',
@@ -73,7 +73,10 @@ export default function SignInSide() {
                         }}
                     >
                         <Typography component="h1" variant="h5">
-                            Sign in
+                        Welcome to Pawns and Puzzles
+                        </Typography>
+                        <Typography component="h1" variant="h5">
+                            Please Sign in
                         </Typography>
                         <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 1 }}>
                             <TextField
