@@ -12,12 +12,24 @@ import Grid from '@mui/material/Grid';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
+import checkerboard from "../../Assets/background/CheckerboardBackground.jpg"
 
 
 
-// TODO remove, this demo shouldn't need to reset the theme.
-
-const defaultTheme = createTheme();
+const customTheme = createTheme({
+  typography: {
+    fontFamily: 'Merriweather, serif', // Use Merriweather font for headings
+  },
+  palette: {
+    primary: {
+      main: '#0f4a3b', // Set the primary color to your desired color
+    },
+    text: {
+      primary: '#000', // Black color for text
+      secondary: '#fff', // White color for secondary text
+    },
+  },
+});
 
 export default function SignInSide() {
   const handleSubmit = (event) => {
@@ -30,7 +42,7 @@ export default function SignInSide() {
   };
 
   return (
-    <ThemeProvider theme={defaultTheme}>
+    <ThemeProvider theme={customTheme}>
       <Grid container component="main" sx={{ height: '100vh' }}>
         <CssBaseline />
         <Grid
@@ -39,7 +51,7 @@ export default function SignInSide() {
           sm={4}
           md={7}
           sx={{
-            backgroundImage: 'url(pawns-and-puzzles/src/assets/CheckerboardBackground.jpg)',
+            backgroundImage: {checkerboard},
             backgroundRepeat: 'no-repeat',
             backgroundColor: (t) =>
               t.palette.mode === 'light' ? t.palette.grey[50] : t.palette.grey[900],
@@ -57,9 +69,6 @@ export default function SignInSide() {
               alignItems: 'center',
             }}
           >
-            <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
-              <LockOutlinedIcon />
-            </Avatar>
             <Typography component="h1" variant="h5">
               Sign in
             </Typography>
@@ -84,10 +93,6 @@ export default function SignInSide() {
                 id="password"
                 autoComplete="current-password"
               />
-              <FormControlLabel
-                control={<Checkbox value="remember" color="primary" />}
-                label="Remember me"
-              />
               <Button
                 type="submit"
                 fullWidth
@@ -97,18 +102,9 @@ export default function SignInSide() {
                 Sign In
               </Button>
               <Grid container>
-                <Grid item xs>
-                  <Link href="#" variant="body2">
-                    Forgot password?
-                  </Link>
-                </Grid>
-                <Grid item>
-                  <Link href="#" variant="body2">
-                    {"Don't have an account? Sign Up"}
-                  </Link>
-                </Grid>
+                <Grid item xs></Grid>
+                <Grid item></Grid>
               </Grid>
-              
             </Box>
           </Box>
         </Grid>
