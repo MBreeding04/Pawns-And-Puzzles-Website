@@ -73,6 +73,9 @@ export default function SignInSide() {
                 name="email"
                 autoComplete="email"
                 autoFocus
+                onChange={(e) => {
+                  setEmail(e.target.value)
+                }}
               />
               <TextField
                 margin="normal"
@@ -83,12 +86,15 @@ export default function SignInSide() {
                 type="password"
                 id="password"
                 autoComplete="current-password"
+                onChange={(e) => {
+                  setPassword(e.target.value)
+                }}
               />
               <FormControlLabel
                 control={<Checkbox value="remember" color="primary" />}
                 label="Remember me"
               />
-              <Button
+              <Button onClick={login}
                 type="submit"
                 fullWidth
                 variant="contained"
