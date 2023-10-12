@@ -1,11 +1,19 @@
-const express = require('express'); 
+import express from "express"
+import mysql from "mysql"
 const app = express();
-const port = process.env.PORT || 5000; 
 
-// This displays message that the server running and listening to specified port
-app.listen(port, () => console.log(`Listening on port ${port}`)); 
 
-// create a GET route
-app.get('/express_backend', (req, res) => { 
-  res.send({ express: 'YOUR EXPRESS BACKEND IS CONNECTED TO REACT' });
-});
+const db = mysql.createConnection({
+    host: "localhost",
+    user: "root",
+    password: "2801",
+    database:"puzzle-pawns"
+  })
+  
+  app.get("/", (req, res)=>
+  res.json("This is the Puzzle and Pawn's backend connection"))
+  
+app.listen(5000, ()=> {
+console.log("Connected to server")
+}) 
+
