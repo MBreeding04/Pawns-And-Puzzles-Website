@@ -4,6 +4,7 @@ import './App.css';
 import Box from '@mui/material/Box';
 import SignIn from './Components/Sign in Page/SignIn'
 import Home from './Components/Home Page/Home.js'
+import Vendor from './Components/Vendor Page/Vendor'
 import {
   Route,
   HashRouter,
@@ -39,7 +40,7 @@ class App extends Component {
             <Routes>
               <Route path='/' element={<SignIn></SignIn>} />
               <Route path='/Home' element={<Home></Home>} />
-              <Route path='/Vendors' element={<div></div>} />
+              <Route path='/Vendors' element={<Vendor></Vendor>} />
               <Route path='/Games' element={<div></div>} />
               <Route path='/Comments' element={<div></div>} />
             </Routes>
