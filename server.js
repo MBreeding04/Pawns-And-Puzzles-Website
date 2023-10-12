@@ -9,11 +9,10 @@ const db = mysql.createConnection({
     password: "2801",
     database:"puzzle-pawns"
   })
-  
   app.get("/", (req, res)=>
   res.json("This is the Puzzle and Pawn's backend connection"))
   
 app.listen(5000, ()=> {
-console.log("Connected to server")
+console.log("Connected to server on port /5000")
 }) 
 
