@@ -1,13 +1,12 @@
-import React, {Component, useState} from 'react';
+import React, {Component} from 'react';
 import './App.css';
 import './App.css';
-import Button from '@mui/material/Button';
 import Box from '@mui/material/Box';
 import SignIn from './Components/Sign in Page/SignIn'
 import Home from './Components/Home Page/Home.js'
+import Vendor from './Components/Vendor Page/Vendor'
 import {
   Route,
-  NavLink,
   HashRouter,
   Routes
 } from "react-router-dom";
@@ -36,8 +35,7 @@ class App extends Component {
   state = {
       data: null
     };
-    
-    
+  
     componentDidMount() {
       this.callBackendAPI()
         .then(res => this.setState({ data: res.express }))
@@ -57,18 +55,19 @@ class App extends Component {
     render() {
       return (
         <Box sx={{ display: 'block', bgcolor: 'white', width: '100vw', height: '100vh', overflowX: 'hidden' }}>
-        <HashRouter>
-          <Routes>
-            <Route path='/' element={<SignIn></SignIn>} />
-            <Route path='/Home' element={<Home></Home>} />
-            <Route path='/Vendors' element={<div></div>} />
-            <Route path='/Games' element={<div></div>} />
-            <Route path='/Comments' element={<div></div>} />
-          </Routes>
-        </HashRouter>
-    </Box>
-      );
-    }
+          <HashRouter>
+            <Routes>
+              <Route path='/' element={<SignIn></SignIn>} />
+              <Route path='/Home' element={<Home></Home>} />
+              <Route path='/Vendors' element={<Vendor></Vendor>} />
+              <Route path='/Games' element={<div></div>} />
+              <Route path='/Comments' element={<div></div>} />
+            </Routes>
+          </HashRouter>
+        </Box>
+      </div>
+    );
   }
+}
 
 export default App;
