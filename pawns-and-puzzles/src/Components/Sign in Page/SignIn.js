@@ -28,31 +28,27 @@ const customTheme = createTheme({
         },
     }
 });
-
 const defaultTheme = createTheme();
 
 
 
 export default function SignInSide() {
-    const [Email, setEmail] = useState("");
-    const [Password, setPassword] = useState("");
-    const handleSubmit = (event) => {
-        event.preventDefault();
-        const data = new FormData(event.currentTarget);
+    const [EmailEntry, setEmail] = useState("");
+    const [PasswordEntry, setPassword] = useState("");
+
+    const handleSubmit = () => {
         console.log({
-            Email: data.get('Email'),
-            Password: data.get('Password'),
+            Email: EmailEntry,
+            Password: PasswordEntry
         });
     };
     const VerifyLogin = () => {
-        const login = () => {
-            Axios.post("http://localhost:5000/SignIn", {
-                Email: Email,
-                Password: Password,
-            }).then((response) => {
-                console.log(response.data)
-            });
-        };
+        Axios.post("http://localhost:5000/SignIn", {
+            Email: EmailEntry,
+            Password: PasswordEntry,
+        }).then((response) => {
+            console.log(response.data)
+        });
     }
     return (
         <ThemeProvider theme={customTheme}>
@@ -99,7 +95,7 @@ export default function SignInSide() {
                                 name="email"
                                 autoComplete="email"
                                 autoFocus
-                                onChange= {(e) => 
+                                onChange={(e) =>
                                     setEmail(e.target.value)}
                             />
                             <TextField
@@ -111,7 +107,7 @@ export default function SignInSide() {
                                 type="password"
                                 id="password"
                                 autoComplete="current-password"
-                                onChange= {(e) => 
+                                onChange={(e) =>
                                     setPassword(e.target.value)}
                             />
                             <Button
