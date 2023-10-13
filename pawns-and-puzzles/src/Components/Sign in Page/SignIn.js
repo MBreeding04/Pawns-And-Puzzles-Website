@@ -40,20 +40,17 @@ export default function SignInSide() {
         event.preventDefault();
         const data = new FormData(event.currentTarget);
         console.log({
-            email: data.get('email'),
-            password: data.get('password'),
+            Email: data.get('email'),
+            Password: data.get('password'),
         });
     };
     const VerifyLogin = () => {
-        const login = () => {
-            Axios.post("http://localhost:5000/SignIn", {
-                Email: Email,
-                Password: Password,
-            }).then((response) => {
-                console.log(response.data)
-            });
-
-        };
+        Axios.post("http://localhost:5000/SignIn", {
+            Email: Email,
+            Password: Password,
+        }).then((response) => {
+            console.log(response.data)
+        });
     }
     return (
         <ThemeProvider theme={customTheme}>
