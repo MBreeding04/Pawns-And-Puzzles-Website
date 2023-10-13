@@ -45,12 +45,14 @@ export default function SignInSide() {
         });
     };
     const VerifyLogin = () => {
-        Axios.post("http://localhost:5000/SignIn", {
-            Email: Email,
-            Password: Password,
-        }).then((response) => {
-            console.log(response.data)
-        });
+        const login = () => {
+            Axios.post("http://localhost:5000/SignIn", {
+                Email: Email,
+                Password: Password,
+            }).then((response) => {
+                console.log(response.data)
+            });
+        };
     }
     return (
         <ThemeProvider theme={customTheme}>

@@ -17,9 +17,10 @@ const SpecialEliteFont = createTheme({
 });
 export default function Browse() {
     return (
+        <Box sx={{display:'block', bgcolor:'#ebebeb',width:'100%', height:'100%'}}>
         <Box sx={{ display: 'flex', flexDirection: 'row', width: '100%', height: '100%' }}>
             <Box sx={{ display: 'flex', flexDirection: 'column' }}>
-                <img className='logo' src={logo} alt='Chess' />
+            <NavLink to={'/Home'} style={{ alignSelf: 'center' }}><img className='logo' src={logo} alt='Chess' /></NavLink>
                 <Box sx={{ display: 'flex', flexDirection: 'column', bgcolor: '#b8b8b8', height: '30%', width: '200px', m: '1em', borderRadius: 3, }}>
                 </Box>
             </Box>
@@ -27,7 +28,25 @@ export default function Browse() {
                 <Box sx={{ display: 'flex', flexDirection: 'row', justifyContent: 'end', alignItems: 'end' }}>
                     <NavLink to={'/Vendors'} style={{ alignSelf: 'center' }}>
                         <Button sx={{
-                            my: '2em', width: '15em', backgroundColor: '#0f4a3b',
+                            my: '2em', mx: '1em', width: '15em', backgroundColor: '#0f4a3b',
+                            ':hover': {
+                                bgcolor: '#09261f',
+                                color: 'white'
+                            }
+                        }} variant='contained'>Become a Vendor</Button>
+                    </NavLink>
+                    <NavLink to={'/Comments'} style={{ alignSelf: 'center' }}>
+                        <Button sx={{
+                            my: '2em', mx: '1em', width: '15em', backgroundColor: '#0f4a3b',
+                            ':hover': {
+                                bgcolor: '#09261f',
+                                color: 'white'
+                            }
+                        }} variant='contained'>Community</Button>
+                    </NavLink>
+                    <NavLink to={'/Home'} style={{ alignSelf: 'center' }}>
+                        <Button sx={{
+                            my: '2em', mx: '1em', width: '15em', backgroundColor: '#0f4a3b',
                             ':hover': {
                                 bgcolor: '#09261f',
                                 color: 'white'
@@ -36,7 +55,11 @@ export default function Browse() {
                     </NavLink>
                 </Box>
                 <Divider variant='middle' orientation='horizontal' sx={{ width: '100%', bgcolor: '#0f4a3b', borderBottomWidth: '0.15em', }}></Divider>
+                <Box sx={{bgcolor:'#3d3d3d', height:'300px', width:'300px', borderRadius: 2}}>
+
+                </Box>
             </Box>
+        </Box>
         </Box>
     )
 }
