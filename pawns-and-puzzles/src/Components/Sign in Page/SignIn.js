@@ -40,8 +40,8 @@ export default function SignInSide() {
         event.preventDefault();
         const data = new FormData(event.currentTarget);
         console.log({
-            Email: data.get('email'),
-            Password: data.get('password'),
+            Email: data.get('Email'),
+            Password: data.get('Password'),
         });
     };
     const VerifyLogin = () => {
@@ -99,6 +99,8 @@ export default function SignInSide() {
                                 name="email"
                                 autoComplete="email"
                                 autoFocus
+                                onChange= {(e) => 
+                                    setEmail(e.target.value)}
                             />
                             <TextField
                                 margin="normal"
@@ -109,6 +111,8 @@ export default function SignInSide() {
                                 type="password"
                                 id="password"
                                 autoComplete="current-password"
+                                onChange= {(e) => 
+                                    setPassword(e.target.value)}
                             />
                             <Button
                                 type="submit"
