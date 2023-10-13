@@ -3,23 +3,29 @@ import mysql from "mysql"
 import cors from "cors"
 const app = express();
 
-app.use(cors())
+const corsOption = {
+    origin: "http://localhost:3000"
+}
+app.use(cors(corsOption))
 
 app.use(express.json());
+
 const db = mysql.createConnection({
     host: "localhost",
     user: "root",
     password: "2801",
     database: "puzzle-pawns"
 })
-
-app.post("/SignIn", async (req, res) => {
+app.get("/", (_req, res) => {
+    res.json({message:"Connected"});
+});
+app.post("src/Components/Sign in Page/SignIn.js", async (req, res) => {
     const Email = req.body.Email;
     const Password = req.body.Password;
     console.log(`email being sent: ${req.body.Email}`)
     console.log(`password being sent: ${req.body.Password}`)
     db.query(
-        "SELECT * FROM WHERE Email = ? AND Password = ?"
+        "SELECT * FROM users WHERE Email = ? AND Password = ?"
         [Email, Password],
         (err, result) => {
             console.log(`result of query: ${result}`)
