@@ -1,8 +1,14 @@
 import express from "express"
 import mysql from "mysql"
+import cors from "cors"
+const express = require("express");
+const mysql = require("mysql");
+const cors = cors("cors");
 const app = express();
 
+app.use(cors())
 
+app.use(express.json());
 const db = mysql.createConnection({
     host: "localhost",
     user: "root",
@@ -10,9 +16,9 @@ const db = mysql.createConnection({
     database: "puzzle-pawns"
 })
 
-app.post("/src/Components/Sign in Page/SignIn.js", (req, res) => {
-    const Email = req.body.email;
-    const Password = req.body.password;
+app.post("/SignIn", async (req, res) => {
+    const Email = req.body.Email;
+    const Password = req.body.Password;
     db.query(
         "SELECT * FROM WHERE Email = ? AND Password = ?"
         [Email, Password],
