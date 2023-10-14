@@ -12,32 +12,36 @@ const db = mysql.createConnection({
     user: "sql9653263",
     password: "nsbriSDRqP", //make these enviormental variables so they are secret and cant be accessed
     database: "sql9653263",
-    port:'3306'
+    port: '3306'
 })
 app.get("/", (_req, res) => {
-    res.json({message:"Connected"});
+    res.json({ message: "Connected" });
 });
 app.post("/SignIn", async (req, res) => {
     const Email = req.body.Email;
     const Password = req.body.Password;
-    db.query(
-        "SELECT * FROM users WHERE Email = ? AND Password = ?;",
-        [Email, Password],
-        async (err, result) => {
-            console.log(`error message: ${err}`)
-            console.log(`result: ${result}`)
-            if (err) {
-                res.send({ message: "None" ,err: err })
+    try {
+        db.query(
+            "SELECT * FROM users WHERE Email = ? AND Password = ?;",
+            [Email, Password],
+            async (err, result) => {
+                console.log(`error message: ${err}`)
+                console.log(`result: ${result}`)
+                if (err) {
+                    res.send({ message: "None", err: err })
+                }
+                if (result.length > 0) {
+                    res.send(result)
+                }
+                else {
+                    res.send({ message: "None" })
+                }
             }
-            if (result.length > 0) {
-                res.send(result)
-            }
-            else {
-                res.send({ message: "None" })
-            }
-        }
-
-    );
+        );
+    }
+    catch {
+        res.send({ message: "None" })
+    }
 })
 
 app.listen('5000', () => {
