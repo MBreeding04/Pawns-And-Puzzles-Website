@@ -1,0 +1,24 @@
+{
+  "files": {
+    "main.css": "/Pawns-And-Puzzles-Website/static/css/main.72ca3630.css",
+    "main.js": "/Pawns-And-Puzzles-Website/static/js/main.c75e587d.js",
+    "static/js/787.ec8d4d30.chunk.js": "/Pawns-And-Puzzles-Website/static/js/787.ec8d4d30.chunk.js",
+    "static/media/TheGig.png": "/Pawns-And-Puzzles-Website/static/media/TheGig.19e079325bff9c66a3f6.png",
+    "static/media/ChessPeices2.png": "/Pawns-And-Puzzles-Website/static/media/ChessPeices2.4f1d0adcde1c57529bdf.png",
+    "static/media/2.jpg": "/Pawns-And-Puzzles-Website/static/media/2.5d941c467f0f70a0c9ca.jpg",
+    "static/media/Vinyl.png": "/Pawns-And-Puzzles-Website/static/media/Vinyl.a16da43aab5fa44d4cf8.png",
+    "static/media/Pawns&Puzzles.png": "/Pawns-And-Puzzles-Website/static/media/Pawns&Puzzles.d8743f96c22fffd969c5.png",
+    "static/media/LeftGirl.png": "/Pawns-And-Puzzles-Website/static/media/LeftGirl.24e22e547d238faa0b27.png",
+    "static/media/RightGirl.png": "/Pawns-And-Puzzles-Website/static/media/RightGirl.21c7fd15467fe92e8158.png",
+    "static/media/ChessPeices2_3840x2160.png": "/Pawns-And-Puzzles-Website/static/media/ChessPeices2_3840x2160.3a0dac109584479ef4b8.png",
+    "static/media/ChessPeices2_2560x1440.png": "/Pawns-And-Puzzles-Website/static/media/ChessPeices2_2560x1440.c0101e92b3557779b827.png",
+    "index.html": "/Pawns-And-Puzzles-Website/index.html",
+    "main.72ca3630.css.map": "/Pawns-And-Puzzles-Website/static/css/main.72ca3630.css.map",
+    "main.c75e587d.js.map": "/Pawns-And-Puzzles-Website/static/js/main.c75e587d.js.map",
+    "787.ec8d4d30.chunk.js.map": "/Pawns-And-Puzzles-Website/static/js/787.ec8d4d30.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.72ca3630.css",
+    "static/js/main.c75e587d.js"
+  ]
+}
