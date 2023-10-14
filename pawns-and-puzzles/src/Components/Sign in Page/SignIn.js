@@ -10,7 +10,9 @@ import checkerboard from "../../Assets/background/2.jpg"
 import '../Sign in Page/SignIn.css'
 import { useState } from 'react';
 import Axios from "axios";
-
+import Alert from '@mui/material/Alert';
+import Collapse from '@mui/material/Collapse';
+import { useNavigate } from "react-router-dom";
 
 
 const customTheme = createTheme({
@@ -35,19 +37,19 @@ const defaultTheme = createTheme();
 export default function SignInSide() {
     const [EmailEntry, setEmail] = useState("");
     const [PasswordEntry, setPassword] = useState("");
-
-    const handleSubmit = () => {
-        console.log({
-            Email: EmailEntry,
-            Password: PasswordEntry
-        });
-    };
-    const VerifyLogin = () => {
-        Axios.post("http://localhost:5000/SignIn", {
+    const [isError, setisError] = useState(false);
+    const Navigate = useNavigate();
+    const VerifyLogin = async () => {
+        await Axios.post("http://localhost:5000/SignIn", {
             Email: EmailEntry,
             Password: PasswordEntry,
-        }).then((response) => {
-            console.log(response.data)
+        }).then(async (response) => {
+            if(response.data.message === 'None'){
+                setisError(true)
+            }
+            else{
+                Navigate('/Home');
+            }
         });
     }
     return (
@@ -85,7 +87,7 @@ export default function SignInSide() {
                         <Typography component="h1" variant="h5">
                             Please Sign in
                         </Typography>
-                        <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 1 }}>
+                        <Box component="form" noValidate sx={{ mt: 1 }}>
                             <TextField
                                 margin="normal"
                                 required
@@ -111,7 +113,6 @@ export default function SignInSide() {
                                     setPassword(e.target.value)}
                             />
                             <Button
-                                type="submit"
                                 fullWidth
                                 variant="contained"
                                 sx={{ mt: 3, mb: 2 }}
@@ -119,6 +120,8 @@ export default function SignInSide() {
                             >
                                 Sign In
                             </Button>
+                            <Collapse in={isError}>
+                            <Alert severity="error">This email and/or password is not linked to an account!</Alert></Collapse>
                             <Grid container>
                                 <Grid item xs></Grid>
                                 <Grid item></Grid>

@@ -11,40 +11,37 @@ app.use(cors(corsOption))
 app.use(express.json());
 
 const db = mysql.createConnection({
-    host: "localhost",
-    user: "root",
-    password: "2801",
-    database: "puzzle-pawns"
+    host: "sql9.freemysqlhosting.net",
+    user: "sql9653263",
+    password: "nsbriSDRqP",
+    database: "sql9653263",
+    port:'3306'
 })
 app.get("/", (_req, res) => {
     res.json({message:"Connected"});
 });
-app.post("src/Components/Sign in Page/SignIn.js", async (req, res) => {
+app.post("/SignIn", async (req, res) => {
     const Email = req.body.Email;
     const Password = req.body.Password;
-    console.log(`email being sent: ${req.body.Email}`)
-    console.log(`password being sent: ${req.body.Password}`)
     db.query(
-        "SELECT * FROM users WHERE Email = ? AND Password = ?"
+        "SELECT * FROM users WHERE Email = ? AND Password = ?;",
         [Email, Password],
-        (err, result) => {
-            console.log(`result of query: ${result}`)
-            console.log(`error of query: ${err}`)
+        async (err, result) => {
             if (err) {
                 res.send({ err: err })
             }
-            /*/if (result.length > 0) {
+            if (result.length > 0) {
                 res.send(result)
-            }line of code causing the issue/*/
+            }
             else {
-                res.send({ message: "No email or password found" });
+                res.send({ message: "None" })
             }
         }
 
     );
 })
 
-app.listen(5000, () => {
+app.listen('5000', () => {
     console.log("Connected to server")
 })
 
