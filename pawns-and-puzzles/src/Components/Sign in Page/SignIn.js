@@ -12,6 +12,7 @@ import { useState } from 'react';
 import Axios from "axios";
 import Alert from '@mui/material/Alert';
 import Collapse from '@mui/material/Collapse';
+import LoadingButton from '@mui/lab/LoadingButton';
 import { useNavigate } from "react-router-dom";
 
 
@@ -38,14 +39,17 @@ export default function SignInSide() {
     const [EmailEntry, setEmail] = useState("");
     const [PasswordEntry, setPassword] = useState("");
     const [isError, setisError] = useState(false);
+    const [isLoading, setisLoading] = useState(false);
     const Navigate = useNavigate();
     const VerifyLogin = async () => {
+        setisLoading(true)
         await Axios.post("https://api-puzzles-pawns.onrender.com/SignIn", {
             Email: EmailEntry,
             Password: PasswordEntry,
         }).then(async (response) => {
             if(response.data.message === 'None'){
                 setisError(true)
+                setisLoading(false)
             }
             else{
                 Navigate('/Home');
@@ -112,14 +116,15 @@ export default function SignInSide() {
                                 onChange={(e) =>
                                     setPassword(e.target.value)}
                             />
-                            <Button
+                            <LoadingButton
+                            loading={isLoading}
                                 fullWidth
                                 variant="contained"
                                 sx={{ mt: 3, mb: 2 }}
                                 onClick={VerifyLogin}
                             >
                                 Sign In
-                            </Button>
+                            </LoadingButton>
                             <Collapse in={isError}>
                             <Alert severity="error">This email and/or password is not linked to an account!</Alert></Collapse>
                             <Grid container>
