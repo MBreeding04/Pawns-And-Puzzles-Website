@@ -6,6 +6,7 @@ import SignIn from './Components/Sign in Page/SignIn'
 import Home from './Components/Home Page/Home.js'
 import Vendor from './Components/Vendor Page/Vendor'
 import Browse from './Components/Browse Page/Browse'
+import Comments from './Components/Comments Page/Comments'
 import {
   Route,
   HashRouter,
@@ -45,7 +46,7 @@ class App extends Component {
               <Route path='/SignIn' element={<SignIn></SignIn>}/>
               <Route path='/Vendors' element={<Vendor></Vendor>} />
               <Route path='/Games' element={<Browse></Browse>} />
-              <Route path='/Comments' element={<div></div>} />
+              <Route path='/Comments' element={<Comments></Comments>} />
             </Routes>
           </HashRouter>
         </Box>

@@ -1,6 +1,7 @@
 {
   "name": "pawns-and-puzzles",
   "version": "0.1.0",
+  "homepage": "http://MBreeding04.github.io/Pawns-And-Puzzles-Website",
   "private": true,
   "dependencies": {
     "@emotion/react": "^11.11.1",
@@ -23,7 +24,10 @@
     "web-vitals": "^2.1.4"
   },
   "scripts": {
-    "start": "concurrently --kill-others \"react-scripts start\" \"node src/Server/index.js\"",
+    "start": "react-scripts start",
+    "start server": "node src/Server/index.js",
+    "predeploy":"npm run build",
+    "deploy":"gh-pages -d build",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
@@ -48,6 +52,7 @@
   },
   "proxy": "http://localhost:5000",
   "devDependencies": {
-    "concurrently": "^8.2.1"
+    "concurrently": "^8.2.1",
+    "gh-pages": "^6.0.0"
   }
 }

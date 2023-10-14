@@ -40,7 +40,7 @@ export default function SignInSide() {
     const [isError, setisError] = useState(false);
     const Navigate = useNavigate();
     const VerifyLogin = async () => {
-        await Axios.post("http://localhost:5000/SignIn", {
+        await Axios.post("https://api-puzzles-pawns.onrender.com/SignIn", {
             Email: EmailEntry,
             Password: PasswordEntry,
         }).then(async (response) => {

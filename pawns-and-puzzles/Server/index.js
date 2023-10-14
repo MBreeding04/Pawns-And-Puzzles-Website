@@ -13,7 +13,7 @@ app.use(express.json());
 const db = mysql.createConnection({
     host: "sql9.freemysqlhosting.net",
     user: "sql9653263",
-    password: "nsbriSDRqP",
+    password: "nsbriSDRqP", //make these enviormental variables so they are secret and cant be accessed
     database: "sql9653263",
     port:'3306'
 })
