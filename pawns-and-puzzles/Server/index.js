@@ -3,8 +3,6 @@ import mysql from "mysql"
 import cors from "cors"
 const app = express();
 
-app.use(cors(corsOption))
-
 app.use(express.json());
 
 const db = mysql.createConnection({
