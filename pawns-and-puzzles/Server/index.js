@@ -24,8 +24,10 @@ app.post("/SignIn", async (req, res) => {
         "SELECT * FROM users WHERE Email = ? AND Password = ?;",
         [Email, Password],
         async (err, result) => {
+            console.log(`error message: ${err}`)
+            console.log(`result: ${result}`)
             if (err) {
-                res.send({ err: err })
+                res.send({ message: "None" ,err: err })
             }
             if (result.length > 0) {
                 res.send(result)
