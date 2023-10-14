@@ -3,9 +3,6 @@ import mysql from "mysql"
 import cors from "cors"
 const app = express();
 
-const corsOption = {
-    origin: "http://localhost:3000"
-}
 app.use(cors(corsOption))
 
 app.use(express.json());
