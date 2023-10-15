@@ -26,7 +26,8 @@ app.post("/SignIn", async (req, res) => {
             [Email, Password],
             async (err, result) => {
                 console.log(`error message: ${err}`)
-                console.log(`result: ${result}`)
+                console.log(`result:`)
+                console.log(JSON.stringify(result))
                 if (err) {
                     res.send({ message: "None", err: err })
                 }
