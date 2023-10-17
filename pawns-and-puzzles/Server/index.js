@@ -53,8 +53,9 @@ app.post("/SignIn", async (req, res) => {
 })
 app.get("/Games", async (req, res) => {
     const Gname = req.body.Gname;
+    console.log(Gname)
     db.query(
-        "SELECT * FROM game WHERE Gname = ?;"
+        "SELECT * FROM game WHERE Gname = ?;",
         [Gname],
         async (err, result) => {
             if (err) {
