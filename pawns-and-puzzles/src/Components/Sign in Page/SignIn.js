@@ -40,6 +40,7 @@ export default function SignInSide() {
     const [PasswordEntry, setPassword] = useState("");
     const [isError, setisError] = useState(false);
     const [isLoading, setisLoading] = useState(false);
+    const [errMessage, seterrMessage] = useState("");
     const Navigate = useNavigate();
     const VerifyLogin = async () => {
         setisLoading(true)
@@ -47,14 +48,20 @@ export default function SignInSide() {
             Email: EmailEntry,
             Password: PasswordEntry,
         }).then(async (response) => {
-            if(response.data.message === 'None'){
+            if (response.data.message === 'None') {
                 setisError(true)
                 setisLoading(false)
+                seterrMessage("This email and/or password is not linked to an account!")
             }
-            else{
+            else {
                 Navigate('/Home');
             }
-        });
+        }).catch(() => {
+            setisError(true)
+            setisLoading(false)
+            seterrMessage('Api has failed, sorry for the inconvenience')
+        }
+        );
     }
     return (
         <ThemeProvider theme={customTheme}>
@@ -117,7 +124,7 @@ export default function SignInSide() {
                                     setPassword(e.target.value)}
                             />
                             <LoadingButton
-                            loading={isLoading}
+                                loading={isLoading}
                                 fullWidth
                                 variant="contained"
                                 sx={{ mt: 3, mb: 2 }}
@@ -126,7 +133,7 @@ export default function SignInSide() {
                                 Sign In
                             </LoadingButton>
                             <Collapse in={isError}>
-                            <Alert severity="error">This email and/or password is not linked to an account!</Alert></Collapse>
+                                <Alert severity="error">{errMessage}</Alert></Collapse>
                             <Grid container>
                                 <Grid item xs></Grid>
                                 <Grid item></Grid>

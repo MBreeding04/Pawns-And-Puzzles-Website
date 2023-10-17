@@ -24,7 +24,7 @@ app.post("/SignIn", async (req, res) => {
         db.query(
             "SELECT * FROM users WHERE Email = ? AND Password = ?;",
             [Email, Password],
-            async (err, result) => {
+            (err, result) => {
                 console.log(`error message: ${err}`)
                 console.log(`result:`)
                 console.log(JSON.stringify(result))
