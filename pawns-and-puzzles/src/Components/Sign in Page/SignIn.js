@@ -1,6 +1,7 @@
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
+import { useState } from 'react';
 import Paper from '@mui/material/Paper';
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
@@ -8,7 +9,6 @@ import Typography from '@mui/material/Typography';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import checkerboard from "../../Assets/background/2.jpg"
 import '../Sign in Page/SignIn.css'
-import { useState } from 'react';
 import Axios from "axios";
 import Alert from '@mui/material/Alert';
 import Collapse from '@mui/material/Collapse';
@@ -52,6 +52,11 @@ export default function SignInSide() {
                 setisError(true)
                 setisLoading(false)
                 seterrMessage("This email and/or password is not linked to an account!")
+            }
+            else if(response.data.message === 'API') {
+                setisError(true)
+                setisLoading(false)
+                seterrMessage("Api has failed, sorry for the inconvenience")
             }
             else {
                 Navigate('/Home');
@@ -99,7 +104,10 @@ export default function SignInSide() {
                             Please Sign in
                         </Typography>
                         <Box component="form" noValidate sx={{ mt: 1 }}>
-                            <TextField
+                            <TextField 
+                            InputLabelProps={{
+                                style: { color: '#0f4a3b' },
+                            }}
                                 margin="normal"
                                 required
                                 fullWidth
@@ -111,7 +119,10 @@ export default function SignInSide() {
                                 onChange={(e) =>
                                     setEmail(e.target.value)}
                             />
-                            <TextField
+                            <TextField 
+                                InputLabelProps={{
+                                    style: { color: '#0f4a3b' },
+                                }}
                                 margin="normal"
                                 required
                                 fullWidth

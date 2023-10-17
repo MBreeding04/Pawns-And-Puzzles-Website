@@ -40,15 +40,14 @@ app.post("/SignIn", async (req, res) => {
                     }
                 }
                 catch(error){
-                    res.send({ message: "None" })
+                    res.send({ message: "API" })
                     console.log(`Your error: ${error.message}`)
                 }
-
             }
         );
     }
     catch(error) {
-        res.send({ message: "None" })
+        res.send({ message: "API" })
         console.log(`Your error: ${error.message}`)
     }
 })
