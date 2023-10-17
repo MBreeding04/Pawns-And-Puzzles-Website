@@ -24,13 +24,46 @@ app.post("/SignIn", async (req, res) => {
         db.query(
             "SELECT * FROM users WHERE Email = ? AND Password = ?;",
             [Email, Password],
-            async (err, result) => {
+            (err, result) => {
                 console.log(`error message: ${err}`)
                 console.log(`result:`)
                 console.log(JSON.stringify(result))
                 if (err) {
                     res.send({ message: "None", err: err })
                 }
+                try {
+                    if (result.length > 0) {
+                        res.send(result)
+                    }
+                    else {
+                        res.send({ message: "None" })
+                    }
+                }
+                catch (error) {
+                    res.send({ message: "API" })
+                    console.log(`Your error: ${error.message}`)
+                }
+            }
+        );
+    }
+    catch (error) {
+        res.send({ message: "API" })
+        console.log(`Your error: ${error.message}`)
+    }
+})
+app.post("/Games", async (req, res) => {
+    var Gname = req.body.Gname;
+    console.log('Gname ',Gname);
+    Gname = '%'+Gname+'%'
+    console.log('Gname pt2 ',Gname)
+    db.query(
+        "SELECT * FROM game WHERE Gname LIKE ? ;",
+        [Gname],
+        async (err, result) => {
+            if (err) {
+                res.send({ err: err })
+            }
+            try {
                 if (result.length > 0) {
                     res.send(result)
                 }
@@ -38,11 +71,12 @@ app.post("/SignIn", async (req, res) => {
                     res.send({ message: "None" })
                 }
             }
-        );
-    }
-    catch {
-        res.send({ message: "None" })
-    }
+            catch (error) {
+                res.send({ message: "None" })
+                console.log(`Your error: ${error.message}`)
+            }
+        }
+    );
 })
 
 app.listen('5000', () => {
