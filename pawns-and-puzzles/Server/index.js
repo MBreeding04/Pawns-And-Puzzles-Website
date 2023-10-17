@@ -52,7 +52,7 @@ app.post("/SignIn", async (req, res) => {
     }
 })
 app.post("/Games", async (req, res) => {
-    const Gname = req.body.Gname;
+    var Gname = req.body.Gname;
     console.log('Gname ',Gname);
     Gname = '%'+Gname+'%'
     console.log('Gname pt2 ',Gname)
