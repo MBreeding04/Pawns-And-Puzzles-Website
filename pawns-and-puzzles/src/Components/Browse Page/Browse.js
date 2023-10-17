@@ -1,5 +1,8 @@
 import { Typography, Box, Divider, Button } from '@mui/material';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
+import FormGroup from '@mui/material/FormGroup';
+import FormControlLabel from '@mui/material/FormControlLabel';
+import Checkbox from '@mui/material/Checkbox';
 import Axios from "axios";
 import TextField from '@mui/material/TextField';
 import { useState } from 'react';
@@ -51,6 +54,10 @@ export default function Browse() {
                 <Box sx={{ display: 'flex', flexDirection: 'column' }}>
                     <NavLink to={'/Home'} style={{ alignSelf: 'center' }}><img className='logo' src={logo} alt='Chess' /></NavLink>
                     <Box sx={{ display: 'flex', flexDirection: 'column', bgcolor: '#b8b8b8', height: '30%', width: '200px', m: '1em', borderRadius: 3, }}>
+                        <FormGroup>
+                            <FormControlLabel control={<Checkbox defaultChecked />} label="" />
+                        </FormGroup>
+
                     </Box>
                 </Box>
                 <Box sx={{ display: 'flex', flexDirection: 'column', width: '100%' }}>
@@ -84,23 +91,33 @@ export default function Browse() {
                         </NavLink>
                     </Box>
                     <Divider variant='middle' orientation='horizontal' sx={{ width: '100%', bgcolor: '#0f4a3b', borderBottomWidth: '0.15em', }}></Divider>
-                    <ThemeProvider theme={customTheme}>
-                        <TextField sx={{ width: '30%', alignSelf: 'flex-end', my: '1em', mx: '2em' }}
-                            InputLabelProps={{
-                                style: { color: '#0f4a3b' },
-                            }}
-                            margin="normal"
-                            name="Search"
-                            label="Search"
-                            id="Search"
-                            autoComplete="current-password"
-                            onChange={(e) => {
-                                setSearchQuery(e.target.value)
-                                SearchDatabase()
+                    <Box sx={{display:'flex',flexDirection:'row',width:'100%', justifyContent:'end'}}>
+                        <ThemeProvider theme={customTheme}>
+                            <TextField sx={{ width: '30%', my: '1em', mx: '2em' }}
+                                InputLabelProps={{
+                                    style: { color: '#0f4a3b' },
+                                }}
+                                margin="normal"
+                                name="Search"
+                                label="Search"
+                                id="Search"
+                                autoComplete="current-password"
+                                onChange={(e) => {
+                                    setSearchQuery(e.target.value)
+                                }
+                                }
+                            />
+
+                        </ThemeProvider>
+                        <Button sx={{
+                            alignSelf: 'flex-end',
+                            my: '2em', width: '15em', backgroundColor: '#0f4a3b', mr:'2em',
+                            ':hover': {
+                                bgcolor: '#09261f',
+                                color: 'white'
                             }
-                        }
-                        />
-                    </ThemeProvider>
+                        }} onClick={SearchDatabase} variant='contained'>Search</Button>
+                    </Box>
                     <Box sx={{ bgcolor: '#3d3d3d', height: '300px', width: '300px', borderRadius: 2, display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
                         <img src='' alt='product'></img>
 
