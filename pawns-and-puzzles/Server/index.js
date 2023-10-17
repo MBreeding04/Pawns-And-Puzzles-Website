@@ -39,19 +39,19 @@ app.post("/SignIn", async (req, res) => {
                         res.send({ message: "None" })
                     }
                 }
-                catch(error){
+                catch (error) {
                     res.send({ message: "API" })
                     console.log(`Your error: ${error.message}`)
                 }
             }
         );
     }
-    catch(error) {
+    catch (error) {
         res.send({ message: "API" })
         console.log(`Your error: ${error.message}`)
     }
 })
-app.get("/Games", async (req,res) => {
+app.get("/Games", async (req, res) => {
     const Gname = req.body.Gname;
     db.query(
         "SELECT * FROM game WHERE Gname = ?;"
@@ -60,12 +60,18 @@ app.get("/Games", async (req,res) => {
             if (err) {
                 res.send({ err: err })
             }
-            if (result.length > 0) {
-                res.send(result)
+            try {
+                if (result.length > 0) {
+                    res.send(result)
+                }
+                else {
+                    res.send({ message: "None" })
+                }
             }
-            else {
+            catch (error) {
                 res.send({ message: "None" })
-            }  
+                console.log(`Your error: ${error.message}`)
+            }
         }
     );
 })

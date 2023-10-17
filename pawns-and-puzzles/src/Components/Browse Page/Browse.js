@@ -1,5 +1,6 @@
 import { Typography, Box, Divider, Button } from '@mui/material';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
+import Axios from "axios";
 import TextField from '@mui/material/TextField';
 import { useState } from 'react';
 import logo from '../../Assets/Logo/Pawns&Puzzles.png'
@@ -17,8 +18,33 @@ const SpecialEliteFont = createTheme({
         fontFamily: ['Special Elite', 'cursive'].join(",")
     },
 });
+const customTheme = createTheme({
+
+    typography: {
+        fontFamily: 'Merriweather, serif',
+    },
+    palette: {
+        primary: {
+            main: '#0f4a3b',
+        },
+        text: {
+            primary: '#000',
+            secondary: '#fff',
+        },
+    }
+});
 export default function Browse() {
     const [searchQuery, setSearchQuery] = useState('')
+    const SearchDatabase = async () => {
+        await Axios.post("https://api-puzzles-pawns.onrender.com/Games", {
+            Gname: searchQuery
+        }).then(async (response) => {
+            console.log(response)
+        }).catch(() => {
+
+        }
+        );
+    }
     return (
         <Box sx={{ display: 'block', bgcolor: '#ebebeb', width: '100%', height: '100%' }}>
             <Box sx={{ display: 'flex', flexDirection: 'row', width: '100%', height: '100%' }}>
@@ -58,22 +84,25 @@ export default function Browse() {
                         </NavLink>
                     </Box>
                     <Divider variant='middle' orientation='horizontal' sx={{ width: '100%', bgcolor: '#0f4a3b', borderBottomWidth: '0.15em', }}></Divider>
-                    <TextField
-                        InputLabelProps={{
-                            style: { color: '#0f4a3b' },
-                        }}
-                        margin="normal"
-                        required
-                        fullWidth
-                        name="password"
-                        label="Password"
-                        type="password"
-                        id="password"
-                        autoComplete="current-password"
-                        onChange={(e) =>
-                            setSearchQuery(e.target.value)}
-                    />
-                    <Box sx={{ bgcolor: '#3d3d3d', height: '300px', width: '300px', borderRadius: 2 }}>
+                    <ThemeProvider theme={customTheme}>
+                        <TextField sx={{ width: '30%', alignSelf: 'flex-end', my: '1em', mx: '2em' }}
+                            InputLabelProps={{
+                                style: { color: '#0f4a3b' },
+                            }}
+                            margin="normal"
+                            name="Search"
+                            label="Search"
+                            id="Search"
+                            autoComplete="current-password"
+                            onChange={(e) => {
+                                setSearchQuery(e.target.value)
+                                SearchDatabase()
+                            }
+                        }
+                        />
+                    </ThemeProvider>
+                    <Box sx={{ bgcolor: '#3d3d3d', height: '300px', width: '300px', borderRadius: 2, display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
+                        <img src='' alt='product'></img>
 
                     </Box>
                 </Box>
