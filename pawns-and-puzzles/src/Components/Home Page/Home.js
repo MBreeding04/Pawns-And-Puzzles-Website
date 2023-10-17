@@ -27,7 +27,7 @@ function Home() {
             
             <div className='chessPieces'>
                 <Fade ><ThemeProvider theme={MerriweatherFont}><Typography sx={{ fontSize: '6em', color: '#0f4a3b', fontWeight: 'bold', letterSpacing: '0.2em'}}>Pawns & Puzzles</Typography> </ThemeProvider>
-                <ThemeProvider theme={SpecialEliteFont}><Typography sx={{ fontSize: '2em', color: '#0f4a3b' }}>Welcome User</Typography> </ThemeProvider></Fade>
+                <ThemeProvider theme={SpecialEliteFont}><Typography sx={{ fontSize: '2em', color: '#0f4a3b' }}>Welcome!</Typography> </ThemeProvider></Fade>
             </div>
             <Box sx={{ bgcolor: '#141414', width: '100%', height: '60vh', display: 'flex', flexDirection: 'row' }}>
                 <Slide delay={200} direction='right'>

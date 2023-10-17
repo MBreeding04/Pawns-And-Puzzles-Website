@@ -12,30 +12,45 @@ const db = mysql.createConnection({
     user: "sql9653263",
     password: "nsbriSDRqP", //make these enviormental variables so they are secret and cant be accessed
     database: "sql9653263",
-    port:'3306'
+    port: '3306'
 })
 app.get("/", (_req, res) => {
-    res.json({message:"Connected"});
+    res.json({ message: "Connected" });
 });
 app.post("/SignIn", async (req, res) => {
     const Email = req.body.Email;
     const Password = req.body.Password;
-    db.query(
-        "SELECT * FROM users WHERE Email = ? AND Password = ?;",
-        [Email, Password],
-        async (err, result) => {
-            if (err) {
-                res.send({ err: err })
-            }
-            if (result.length > 0) {
-                res.send(result)
-            }
-            else {
-                res.send({ message: "None" })
-            }
-        }
+    try {
+        db.query(
+            "SELECT * FROM users WHERE Email = ? AND Password = ?;",
+            [Email, Password],
+            (err, result) => {
+                console.log(`error message: ${err}`)
+                console.log(`result:`)
+                console.log(JSON.stringify(result))
+                if (err) {
+                    res.send({ message: "None", err: err })
+                }
+                try {
+                    if (result.length > 0) {
+                        res.send(result)
+                    }
+                    else {
+                        res.send({ message: "None" })
+                    }
+                }
+                catch(error){
+                    res.send({ message: "None" })
+                    console.log(`Your error: ${error.message}`)
+                }
 
-    );
+            }
+        );
+    }
+    catch(error) {
+        res.send({ message: "None" })
+        console.log(`Your error: ${error.message}`)
+    }
 })
 app.get("/Games", async (req,res) => {
     const Gname = req.body.Gname;
