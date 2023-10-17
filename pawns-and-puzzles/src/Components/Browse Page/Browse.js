@@ -38,12 +38,13 @@ const customTheme = createTheme({
 });
 export default function Browse() {
     const [searchQuery, setSearchQuery] = useState('')
+    const [searchResult, setSearchResult] = useState()
     const SearchDatabase = async () => {
         console.log(searchQuery)
         await Axios.post("https://api-puzzles-pawns.onrender.com/Games", {
             Gname: searchQuery
         }).then(async (response) => {
-            console.log(response)
+            console.log(response.data)
         }).catch(() => {
         }
         );
