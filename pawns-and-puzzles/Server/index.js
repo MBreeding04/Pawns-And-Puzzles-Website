@@ -51,7 +51,7 @@ app.post("/SignIn", async (req, res) => {
         console.log(`Your error: ${error.message}`)
     }
 })
-app.get("/Games", async (req, res) => {
+app.post("/Games", async (req, res) => {
     const Gname = req.body.Gname;
     console.log('Gname ',Gname);
     db.query(
