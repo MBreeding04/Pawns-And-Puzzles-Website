@@ -55,7 +55,7 @@ app.post("/Games", async (req, res) => {
     const Gname = req.body.Gname;
     console.log('Gname ',Gname);
     db.query(
-        "SELECT * FROM game WHERE Gname LIKE % ? % ;",
+        "SELECT * FROM game WHERE Gname LIKE % ?  ;",
         [Gname],
         async (err, result) => {
             if (err) {
