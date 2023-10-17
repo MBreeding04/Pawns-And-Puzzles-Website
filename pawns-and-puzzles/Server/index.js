@@ -31,17 +31,25 @@ app.post("/SignIn", async (req, res) => {
                 if (err) {
                     res.send({ message: "None", err: err })
                 }
-                if (result.length > 0) {
-                    res.send(result)
+                try {
+                    if (result.length > 0) {
+                        res.send(result)
+                    }
+                    else {
+                        res.send({ message: "None" })
+                    }
                 }
-                else {
+                catch(error){
                     res.send({ message: "None" })
+                    console.log(`Your error: ${error.message}`)
                 }
+
             }
         );
     }
-    catch {
+    catch(error) {
         res.send({ message: "None" })
+        console.log(`Your error: ${error.message}`)
     }
 })
 
