@@ -40,12 +40,11 @@ export default function Browse() {
     const [searchQuery, setSearchQuery] = useState('')
     const SearchDatabase = async () => {
         console.log(searchQuery)
-        await Axios.post("https://api-puzzles-pawns.onrender.com/Games", {
+        await Axios.get("https://api-puzzles-pawns.onrender.com/Games", {
             Gname: searchQuery
         }).then(async (response) => {
             console.log(response)
         }).catch(() => {
-
         }
         );
     }
