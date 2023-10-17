@@ -51,6 +51,24 @@ app.post("/SignIn", async (req, res) => {
         console.log(`Your error: ${error.message}`)
     }
 })
+app.get("/Games", async (req,res) => {
+    const Gname = req.body.Gname;
+    db.query(
+        "SELECT * FROM game WHERE Gname = ?;"
+        [Gname],
+        async (err, result) => {
+            if (err) {
+                res.send({ err: err })
+            }
+            if (result.length > 0) {
+                res.send(result)
+            }
+            else {
+                res.send({ message: "None" })
+            }  
+        }
+    );
+})
 
 app.listen('5000', () => {
     console.log("Connected to server")
