@@ -105,19 +105,11 @@ export default function Browse() {
                                 autoComplete="current-password"
                                 onChange={(e) => {
                                     setSearchQuery(e.target.value)
+                                    SearchDatabase()
                                 }
                                 }
                             />
-
                         </ThemeProvider>
-                        <Button sx={{
-                            alignSelf: 'flex-end',
-                            my: '2em', width: '15em', backgroundColor: '#0f4a3b', mr:'2em',
-                            ':hover': {
-                                bgcolor: '#09261f',
-                                color: 'white'
-                            }
-                        }} onClick={SearchDatabase} variant='contained'>Search</Button>
                     </Box>
                     <Box sx={{ bgcolor: '#3d3d3d', height: '300px', width: '300px', borderRadius: 2, display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
                         <img src='' alt='product'></img>
