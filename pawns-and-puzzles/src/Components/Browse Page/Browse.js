@@ -45,7 +45,6 @@ export default function Browse() {
         }).then(async (response) => {
             console.log(response)
         }).catch(() => {
-
         }
         );
     }
