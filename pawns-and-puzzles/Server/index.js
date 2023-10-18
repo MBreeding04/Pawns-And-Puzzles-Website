@@ -68,7 +68,7 @@ app.post("/Games", async (req, res) => {
                     res.send(result)
                 }
                 else {
-                    res.send({ message: "None" })
+                    res.send({ message: "None", error: 'No result matches your query' })
                 }
             }
             catch (error) {
