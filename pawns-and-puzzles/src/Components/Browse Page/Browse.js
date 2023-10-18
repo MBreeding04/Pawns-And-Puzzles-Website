@@ -5,8 +5,11 @@ import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
 import Axios from "axios";
 import TextField from '@mui/material/TextField';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import logo from '../../Assets/Logo/Pawns&Puzzles.png'
+import Collapse from '@mui/material/Collapse';
+import Alert from '@mui/material/Alert';
+import React, { Component } from 'react';
 import '../Browse Page/Browse.css'
 import {
     NavLink,
@@ -38,17 +41,40 @@ const customTheme = createTheme({
 });
 export default function Browse() {
     const [searchQuery, setSearchQuery] = useState('')
-    const [searchResult, setSearchResult] = useState()
+    const [searchResult, setSearchResult] = useState([])
+    const [isAlert, setIsAlert] = useState(false)
+    const [alertMessage, setalertMessage] = useState('')
     const SearchDatabase = async () => {
         console.log(searchQuery)
         await Axios.post("https://api-puzzles-pawns.onrender.com/Games", {
             Gname: searchQuery
         }).then(async (response) => {
-            console.log(response.data)
+            if (response.data.message === 'None') {
+                setIsAlert(true)
+                setalertMessage(response.data.error)
+            }
+            else {
+                setIsAlert(false)
+                let temp = []
+                for (let i = 0; i < (response.data.length); i++) {
+                    let tempName = (response.data[i].Gname);
+                    let tempDesc = (response.data[i].descp);
+                    let tempType = (response.data[i].Type);
+                    console.log('data', response.data[i]);
+                    temp.push({ name: tempName, desc: tempDesc, type: tempType });
+                    console.log(temp);
+                }
+                setSearchResult(temp)
+                searchResult.map.size = searchResult.length
+                console.log('result in state: ', searchResult);
+            }
         }).catch(() => {
         }
         );
     }
+    useEffect(() => {
+        SearchDatabase()
+    })
     return (
         <Box sx={{ display: 'block', bgcolor: '#ebebeb', width: '100%', height: '100%' }}>
             <Box sx={{ display: 'flex', flexDirection: 'row', width: '100%', height: '100%' }}>
@@ -58,7 +84,6 @@ export default function Browse() {
                         <FormGroup>
                             <FormControlLabel control={<Checkbox defaultChecked />} label="" />
                         </FormGroup>
-
                     </Box>
                 </Box>
                 <Box sx={{ display: 'flex', flexDirection: 'column', width: '100%' }}>
@@ -92,7 +117,7 @@ export default function Browse() {
                         </NavLink>
                     </Box>
                     <Divider variant='middle' orientation='horizontal' sx={{ width: '100%', bgcolor: '#0f4a3b', borderBottomWidth: '0.15em', }}></Divider>
-                    <Box sx={{display:'flex',flexDirection:'row',width:'100%', justifyContent:'end'}}>
+                    <Box sx={{ display: 'flex', flexDirection: 'row', width: '100%', justifyContent: 'end' }}>
                         <ThemeProvider theme={customTheme}>
                             <TextField sx={{ width: '30%', my: '1em', mx: '2em' }}
                                 InputLabelProps={{
@@ -102,7 +127,7 @@ export default function Browse() {
                                 name="Search"
                                 label="Search"
                                 id="Search"
-                                autoComplete="current-password"
+                                value={searchQuery}
                                 onChange={(e) => {
                                     setSearchQuery(e.target.value)
                                     SearchDatabase()
@@ -111,9 +136,20 @@ export default function Browse() {
                             />
                         </ThemeProvider>
                     </Box>
-                    <Box sx={{ bgcolor: '#3d3d3d', height: '300px', width: '300px', borderRadius: 2, display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
-                        <img src='' alt='product'></img>
-
+                    <Collapse in={isAlert}>
+                        <Alert severity="error">{alertMessage}</Alert>
+                    </Collapse>
+                    <Box sx={{ display: 'flex', flexDirection: 'row', }}>
+                        {searchResult.map((result) => (
+                            <Box sx={{
+                                bgcolor: '#3d3d3d', minHeight: '300px', minWidth: '300px',
+                                borderRadius: 2, display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', mx: '1em', flexWrap: 'wrap'
+                            }}>
+                                <img src='' alt='product'></img><ThemeProvider theme={MerriweatherFont}><Typography sx={{ fontSize: '2em' }}>{result.name}</Typography>
+                                    <Typography align='center' sx={{ fontSize: '1em' }}>{result.desc}</Typography>
+                                </ThemeProvider>
+                            </Box>
+                        ))}
                     </Box>
                 </Box>
             </Box>

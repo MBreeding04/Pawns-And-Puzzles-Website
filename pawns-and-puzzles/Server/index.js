@@ -72,7 +72,7 @@ app.post("/Games", async (req, res) => {
                 }
             }
             catch (error) {
-                res.send({ message: "None" })
+                res.send({ message: "None", error: error.message })
                 console.log(`Your error: ${error.message}`)
             }
         }
