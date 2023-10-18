@@ -147,7 +147,7 @@ export default function Browse() {
                                 bgcolor: '#3d3d3d', maxHeight: '400px', maxWidth: '400px',
                                 borderRadius: 2, display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', mx: '1em',my:'1em'
                             }}>
-                                <img src = {require(`${result.picture}`)} alt='product'></img><ThemeProvider theme={MerriweatherFont}><Typography sx={{ fontSize: '2em' }}>{result.name}</Typography>
+                                <img src = {`https://raw.githubusercontent.com/MBreeding04/Pawns-And-Puzzles-Website/main/pawns-and-puzzles/src/Assets/products/CandylandPic.webp`} alt='product'></img><ThemeProvider theme={MerriweatherFont}><Typography sx={{ fontSize: '2em' }}>{result.name}</Typography>
                                     <Typography align='center' sx={{ fontSize: '1em' }}>{result.desc}</Typography>
                                 </ThemeProvider>
                             </Box>
