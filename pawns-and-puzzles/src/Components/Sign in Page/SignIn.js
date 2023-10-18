@@ -119,10 +119,6 @@ export default function SignInSide() {
                                 autoFocus
                                 onChange={(e) =>
                                     setEmail(e.target.value)}
-                                InputLabelProps={{
-                                      shrink: true, 
-                                  }}
-                                  className="custom-textfield"
                             />
                             <TextField 
                                 InputLabelProps={{
@@ -138,11 +134,6 @@ export default function SignInSide() {
                                 autoComplete="current-password"
                                 onChange={(e) =>
                                     setPassword(e.target.value)}
-                                InputLabelProps={{
-                                      shrink: true, 
-                                  }}
-                                  className="custom-textfield"
-                                  
                             />
                             <LoadingButton
                                 loading={isLoading}
