@@ -61,7 +61,7 @@ app.post("/Games", async (req, res) => {
         [Gname],
         async (err, result) => {
             if (err) {
-                res.send({ err: err })
+                res.send({ err: err.message })
             }
             try {
                 if (result.length > 0) {

@@ -11,6 +11,7 @@ import Collapse from '@mui/material/Collapse';
 import Alert from '@mui/material/Alert';
 import React, { Component } from 'react';
 import '../Browse Page/Browse.css'
+import check from '../../Assets/products/CheckersPic.png'
 import {
     NavLink,
 } from "react-router-dom";
@@ -60,8 +61,10 @@ export default function Browse() {
                     let tempName = (response.data[i].Gname);
                     let tempDesc = (response.data[i].descp);
                     let tempType = (response.data[i].Type);
+                    let tempPrice = (response.data[i].Price);
+                    let tempPic = (response.data[i].picture);
                     console.log('data', response.data[i]);
-                    temp.push({ name: tempName, desc: tempDesc, type: tempType });
+                    temp.push({ name: tempName, desc: tempDesc, type: tempType, price: tempPrice, picture: tempPic});
                     console.log(temp);
                 }
                 setSearchResult(temp)
@@ -130,7 +133,6 @@ export default function Browse() {
                                 value={searchQuery}
                                 onChange={(e) => {
                                     setSearchQuery(e.target.value)
-                                    SearchDatabase()
                                 }
                                 }
                             />
@@ -139,13 +141,13 @@ export default function Browse() {
                     <Collapse in={isAlert}>
                         <Alert severity="error">{alertMessage}</Alert>
                     </Collapse>
-                    <Box sx={{ display: 'flex', flexDirection: 'row', }}>
+                    <Box sx={{ display: 'flex', flexDirection: 'row', flexWrap: 'wrap' }}>
                         {searchResult.map((result) => (
                             <Box sx={{
-                                bgcolor: '#3d3d3d', minHeight: '300px', minWidth: '300px',
-                                borderRadius: 2, display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', mx: '1em', flexWrap: 'wrap'
+                                bgcolor: '#3d3d3d', maxHeight: '400px', maxWidth: '400px',
+                                borderRadius: 2, display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', mx: '1em',my:'1em'
                             }}>
-                                <img src='' alt='product'></img><ThemeProvider theme={MerriweatherFont}><Typography sx={{ fontSize: '2em' }}>{result.name}</Typography>
+                                <img src = {require(`${result.picture}`)} alt='product'></img><ThemeProvider theme={MerriweatherFont}><Typography sx={{ fontSize: '2em' }}>{result.name}</Typography>
                                     <Typography align='center' sx={{ fontSize: '1em' }}>{result.desc}</Typography>
                                 </ThemeProvider>
                             </Box>
