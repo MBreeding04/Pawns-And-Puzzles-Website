@@ -78,7 +78,40 @@ app.post("/Games", async (req, res) => {
         }
     );
 })
-
+app.post("/Register", async (req, res) => {
+    const EmailReg = req.body.EmailReg;
+    const PasswordReg = req.body.PasswordReg;
+    try {
+        db.query(
+            "INSERT INTO users (Email, Password) VALUES (?,?);",
+            [EmailReg, PasswordReg],
+            (err, result) => {
+                console.log(`error message: ${err}`)
+                console.log(`result:`)
+                console.log(JSON.stringify(result))
+                if (err) {
+                    res.send({ message: "None", err: err })
+                }
+                try {
+                    if (result.length > 0) {
+                        res.send(result)
+                    }
+                    else {
+                        res.send({ message: "None" })
+                    }
+                }
+                catch (error) {
+                    res.send({ message: "None" })
+                    console.log(`Your error: ${error.message}`)
+                }
+            }
+        );
+    }
+    catch (error) {
+        res.send({ message: "None" })
+        console.log(`Your error: ${error.message}`)
+    }
+})
 app.listen('5000', () => {
     console.log("Connected to server")
 })
