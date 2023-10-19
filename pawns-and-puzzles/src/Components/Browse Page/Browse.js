@@ -63,9 +63,7 @@ export default function Browse() {
                     let tempType = (response.data[i].Type);
                     let tempPrice = (response.data[i].Price);
                     let tempPic = (response.data[i].picture);
-                    console.log('data', response.data[i]);
                     temp.push({ name: tempName, desc: tempDesc, type: tempType, price: tempPrice, picture: tempPic});
-                    console.log(temp);
                 }
                 setSearchResult(temp)
                 searchResult.map.size = searchResult.length
@@ -79,13 +77,13 @@ export default function Browse() {
         SearchDatabase()
     })
     return (
-        <Box sx={{ display: 'block', bgcolor: '#ebebeb', width: '100%', height: '100%' }}>
+        <Box sx={{ display: 'flex', bgcolor: '#fefff5', minHeight:'100%' }}>
             <Box sx={{ display: 'flex', flexDirection: 'row', width: '100%', height: '100%' }}>
                 <Box sx={{ display: 'flex', flexDirection: 'column' }}>
                     <NavLink to={'/Home'} style={{ alignSelf: 'center' }}><img className='logo' src={logo} alt='Chess' /></NavLink>
-                    <Box sx={{ display: 'flex', flexDirection: 'column', bgcolor: '#b8b8b8', height: '30%', width: '200px', m: '1em', borderRadius: 3, }}>
+                    <Box sx={{ display: 'flex', flexDirection: 'column', bgcolor: '#b8b8b8', height: '30vh', width: '200px', m: '1em', borderRadius: 3,boxShadow:'0px 3px 3px -2px rgba(0,0,0,0.2), 0px 3px 4px 0px rgba(0,0,0,0.14), 0px 1px 8px 0px rgba(0,0,0,0.12);' }}>
                         <FormGroup>
-                            <FormControlLabel control={<Checkbox defaultChecked />} label="" />
+                            <FormControlLabel sx={{justifyContent:'center',alignItems:'center'}}control={<Checkbox defaultChecked />} label="Board Game" />
                         </FormGroup>
                     </Box>
                 </Box>
@@ -144,11 +142,19 @@ export default function Browse() {
                     <Box sx={{ display: 'flex', flexDirection: 'row', flexWrap: 'wrap' }}>
                         {searchResult.map((result) => (
                             <Box sx={{
-                                bgcolor: '#3d3d3d', maxHeight: '400px', maxWidth: '400px',
-                                borderRadius: 2, display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', mx: '1em',my:'1em'
+                                bgcolor: '#dddedc',
+                                borderRadius: 2, display: 'flex', flexDirection: 'column', alignItems: 'center', mx: '1em',my:'1em', boxShadow:'0px 3px 3px -2px rgba(0,0,0,0.2), 0px 3px 4px 0px rgba(0,0,0,0.14), 0px 1px 8px 0px rgba(0,0,0,0.12);'
                             }}>
-                                <img src = {`https://raw.githubusercontent.com/MBreeding04/Pawns-And-Puzzles-Website/main/pawns-and-puzzles/src/Assets/products/CandylandPic.webp`} alt='product'></img><ThemeProvider theme={MerriweatherFont}><Typography sx={{ fontSize: '2em' }}>{result.name}</Typography>
-                                    <Typography align='center' sx={{ fontSize: '1em' }}>{result.desc}</Typography>
+                                <img className='products' src = {`${result.picture}`} alt='product'></img><ThemeProvider theme={MerriweatherFont}><Typography sx={{ fontSize: '2em' }}>{result.name}</Typography>
+                                    <Typography align='left' color={'#595959'} sx={{ fontSize: '1em',mt:'1em', maxWidth:'30em',mx:'1em' }}>{result.desc}</Typography>
+                                    <Typography align='left' color={'#0f4a3b'} sx={{ fontSize: '1.5em',mt:'0.5em',fontWeight:'bold'}}>{result.price}</Typography>
+                                    <Button sx={{
+                                my: '2em', mx: '1em', width: '15em', backgroundColor: '#0f4a3b',
+                                ':hover': {
+                                    bgcolor: '#09261f',
+                                    color: 'white'
+                                }
+                            }} variant='contained'>Add to Cart</Button>
                                 </ThemeProvider>
                             </Box>
                         ))}
