@@ -93,18 +93,10 @@ export default function SignInSide() {
                 EmailReg: RegisterEmailEntry,
                 PasswordReg: RegisterPasswordEntry,
             }).then(async (response) => {
-                console.log(response.data.message)
-                try{
-                    console.log(response.data.err.code)
-                }
-                catch{
-
-                }
-                if (response.data.message === "duplicate entry") {
-
+                if (response.data.message == "duplicate entry") {
+                    setisRegisterError(true)
                     setseverity('error')
                     setRegistererrMessage('This email is already in use!')
-                    setisRegisterError(true)
                 }
                 else {
                     setseverity('success')
@@ -121,7 +113,6 @@ export default function SignInSide() {
             setisRegisterError(true)
         }
         setisRegisterLoading(false)
-        setisRegisterError(false)
     }
     return (
         <ThemeProvider theme={customTheme}>

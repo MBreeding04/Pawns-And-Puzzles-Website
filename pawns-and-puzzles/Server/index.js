@@ -93,7 +93,7 @@ app.post("/Register", async (req, res) => {
                     try{
                         console.log('error code:',err.code)
                         console.log('error code:',JSON.stringify(err.code))
-                        if (err.code === "ER_DUP_ENTRY") {
+                        if (JSON.stringify(err.code) == "ER_DUP_ENTRY") {
                             res.send({ message: "duplicate entry", err: err })
                         }
                         else{
