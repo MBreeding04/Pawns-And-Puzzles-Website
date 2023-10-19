@@ -77,8 +77,12 @@ export default function SignInSide() {
         }
         );
     }
-    const VerifyRegister = () =>{
+    const VerifyRegister = async () =>{
         setisRegisterLoading(true)
+        await Axios.post("https://api-puzzles-pawns.onrender.com/Register" , {
+          EmailReg: RegisterEmailEntry,
+          PasswordReg: RegisterPasswordEntry,  
+        })
         if(passwordScore >= 2){
             console.log('your score is acceptab;le')
         }
