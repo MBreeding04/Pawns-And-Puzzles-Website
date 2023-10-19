@@ -46,11 +46,19 @@ export default function SignInSide() {
     const [passwordScore, setPasswordScore] = useState(0);
     const [RegisterPasswordEntry, setRegisterPassword] = useState("");
     const [isError, setisError] = useState(false);
+    const [isRegisterError, setisRegisterError] = useState(false);
     const [isOpen, setisOpen] = useState(false);
     const [isLoading, setisLoading] = useState(false);
     const [isRegisterLoading, setisRegisterLoading] = useState(false);
     const [errMessage, seterrMessage] = useState("");
+    const [RegistererrMessage, setRegistererrMessage] = useState("your password is too short!");
+    const [severity, setseverity] = useState('error');
     const Navigate = useNavigate();
+
+    const delay = (delayInms) => {
+        return new Promise(resolve => setTimeout(resolve, delayInms));
+    }
+
     const VerifyLogin = async () => {
         setisLoading(true)
         await Axios.post("https://api-puzzles-pawns.onrender.com/SignIn", {
@@ -77,17 +85,25 @@ export default function SignInSide() {
         }
         );
     }
-    const VerifyRegister = async () =>{
+    const VerifyRegister = async () => {
+
         setisRegisterLoading(true)
-        await Axios.post("https://api-puzzles-pawns.onrender.com/Register" , {
-          EmailReg: RegisterEmailEntry,
-          PasswordReg: RegisterPasswordEntry,  
-        })
-        if(passwordScore >= 2){
-            console.log('your score is acceptab;le')
+        setisRegisterError(false)
+        if (passwordScore >= 2) {
+            await Axios.post("https://api-puzzles-pawns.onrender.com/Register", {
+                EmailReg: RegisterEmailEntry,
+                PasswordReg: RegisterPasswordEntry,
+            })
+            setseverity('success')
+            setRegistererrMessage('Please log into your new account after window closes!')
+            setisRegisterError(true)
+            await delay(3000)
+            setisOpen(false)
         }
-        else{
-            console.log('your score is NOT acceptab;le')
+        else {
+            setseverity('error')
+            setRegistererrMessage('Your password is too short!')
+            setisRegisterError(true)
         }
         setisRegisterLoading(false)
     }
@@ -181,6 +197,9 @@ export default function SignInSide() {
                                         </Box>
                                         <Divider></Divider>
                                     </Box>
+                                    <Collapse in={isRegisterError}>
+                                        <Alert severity={severity}>{RegistererrMessage}</Alert>
+                                    </Collapse>
                                     <TextField
                                         InputLabelProps={{
                                             style: { color: '#0f4a3b' },
@@ -193,7 +212,7 @@ export default function SignInSide() {
                                         name="email2"
                                         autoComplete="email2"
                                         autoFocus
-                                        onChange={(e)=>setRegisterEmail(e.target.value)}
+                                        onChange={(e) => setRegisterEmail(e.target.value)}
                                     />
                                     <TextField
                                         InputLabelProps={{
@@ -209,11 +228,12 @@ export default function SignInSide() {
                                         autoComplete="current-password"
                                         onChange={(e) => setRegisterPassword(e.target.value)}
                                     />
-                                    <PasswordStrengthBar onChangeScore={(score, feedback) => { setPasswordScore(score) }} password={RegisterPasswordEntry} style={{ marginRight: '1em', marginLeft: '1em' }}></PasswordStrengthBar>
+                                    <PasswordStrengthBar onChangeScore={(score, feedback) => { setPasswordScore(score) }}
+                                        password={RegisterPasswordEntry} style={{ marginRight: '1em', marginLeft: '1em' }}></PasswordStrengthBar>
                                     <LoadingButton
                                         loading={isRegisterLoading}
                                         variant="contained"
-                                        sx={{ mt: 3, mb: 2, mx:'1em' }}
+                                        sx={{ mt: 3, mb: 2, mx: '1em' }}
                                         onClick={VerifyRegister}
                                     >
                                         Register
