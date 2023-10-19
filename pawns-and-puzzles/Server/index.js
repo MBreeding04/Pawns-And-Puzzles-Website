@@ -31,17 +31,13 @@ app.post("/SignIn", async (req, res) => {
                 if (err) {
                     res.send({ message: "None", err: err })
                 }
-                try {
+                else{
                     if (result.length > 0) {
                         res.send(result)
                     }
                     else {
                         res.send({ message: "None" })
                     }
-                }
-                catch (error) {
-                    res.send({ message: "API" })
-                    console.log(`Your error: ${error.message}`)
                 }
             }
         );
@@ -63,17 +59,13 @@ app.post("/Games", async (req, res) => {
             if (err) {
                 res.send({ err: err.message })
             }
-            try {
+            else{
                 if (result.length > 0) {
                     res.send(result)
                 }
                 else {
                     res.send({ message: "None", error: 'No result matches your query' })
                 }
-            }
-            catch (error) {
-                res.send({ message: "None", error: error.message })
-                console.log(`Your error: ${error.message}`)
             }
         }
     );
