@@ -86,19 +86,31 @@ export default function SignInSide() {
         );
     }
     const VerifyRegister = async () => {
-
         setisRegisterLoading(true)
         setisRegisterError(false)
         if (passwordScore >= 2) {
             await Axios.post("https://api-puzzles-pawns.onrender.com/Register", {
                 EmailReg: RegisterEmailEntry,
                 PasswordReg: RegisterPasswordEntry,
+            }).then(async (response) => {
+                console.log(response.data.err.code)
+                if (response.data.err.code === "ER_DUP_ENTRY") {
+                    console.log('duplicate entry')
+                    setseverity('error')
+                    setRegistererrMessage('This email is already in use!')
+                    setisRegisterError(true)
+                }
+                else {
+                    setseverity('success')
+                    setRegistererrMessage('Please log into your new account after window closes!')
+                    setisRegisterError(true)
+                    await delay(3000)
+                    setisOpen(false)
+                }
+            }).catch(() => {
+
             })
-            setseverity('success')
-            setRegistererrMessage('Please log into your new account after window closes!')
-            setisRegisterError(true)
-            await delay(3000)
-            setisOpen(false)
+
         }
         else {
             setseverity('error')
