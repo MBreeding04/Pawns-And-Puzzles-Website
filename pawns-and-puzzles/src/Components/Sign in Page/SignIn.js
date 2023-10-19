@@ -94,7 +94,7 @@ export default function SignInSide() {
                 PasswordReg: RegisterPasswordEntry,
             }).then(async (response) => {
                 console.log(response.data.err.code)
-                if (response.data.err.code === "ER_DUP_ENTRY") {
+                if (response.data.message === "duplicate entry") {
                     console.log('duplicate entry')
                     setseverity('error')
                     setRegistererrMessage('This email is already in use!')
@@ -107,10 +107,7 @@ export default function SignInSide() {
                     await delay(3000)
                     setisOpen(false)
                 }
-            }).catch(() => {
-
             })
-
         }
         else {
             setseverity('error')

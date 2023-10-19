@@ -53,9 +53,9 @@ app.post("/SignIn", async (req, res) => {
 })
 app.post("/Games", async (req, res) => {
     var Gname = req.body.Gname;
-    console.log('Gname ',Gname);
-    Gname = '%'+Gname+'%'
-    console.log('Gname pt2 ',Gname)
+    console.log('Gname ', Gname);
+    Gname = '%' + Gname + '%'
+    console.log('Gname pt2 ', Gname)
     db.query(
         "SELECT * FROM game WHERE Gname LIKE ? ;",
         [Gname],
@@ -90,7 +90,17 @@ app.post("/Register", async (req, res) => {
                 console.log(`result:`)
                 console.log(JSON.stringify(result))
                 if (err) {
-                    res.send({ message: "None", err: err })
+                    try{
+                        if (err.code === "ER_DUP_ENTRY") {
+                            res.send({ message: "duplicate entry", err: err })
+                        }
+                        else{
+                            res.send({ message: "None", err: err })
+                        }
+                    }
+                    catch{
+                        res.send({ message: "None", err: err })
+                    }   
                 }
                 try {
                     if (result.length > 0) {
