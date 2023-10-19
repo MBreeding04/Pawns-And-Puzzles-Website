@@ -13,7 +13,11 @@ import Axios from "axios";
 import Collapse from '@mui/material/Collapse';
 import Alert from '@mui/material/Alert';
 import LoadingButton from '@mui/lab/LoadingButton';
+import { Divider, Icon, Modal } from '@mui/material';
 import { useNavigate } from "react-router-dom";
+import CloseIcon from '@mui/icons-material/Close';
+import IconButton from '@mui/material/IconButton';
+import PasswordStrengthBar from 'react-password-strength-bar';
 
 
 const customTheme = createTheme({
@@ -38,8 +42,13 @@ const defaultTheme = createTheme();
 export default function SignInSide() {
     const [EmailEntry, setEmail] = useState("");
     const [PasswordEntry, setPassword] = useState("");
+    const [RegisterEmailEntry, setRegisterEmail] = useState("");
+    const [passwordScore, setPasswordScore] = useState(0);
+    const [RegisterPasswordEntry, setRegisterPassword] = useState("");
     const [isError, setisError] = useState(false);
+    const [isOpen, setisOpen] = useState(false);
     const [isLoading, setisLoading] = useState(false);
+    const [isRegisterLoading, setisRegisterLoading] = useState(false);
     const [errMessage, seterrMessage] = useState("");
     const Navigate = useNavigate();
     const VerifyLogin = async () => {
@@ -53,7 +62,7 @@ export default function SignInSide() {
                 setisLoading(false)
                 seterrMessage("This email and/or password is not linked to an account!")
             }
-            else if(response.data.message === 'API') {
+            else if (response.data.message === 'API') {
                 setisError(true)
                 setisLoading(false)
                 seterrMessage("Api has failed, sorry for the inconvenience")
@@ -67,6 +76,16 @@ export default function SignInSide() {
             seterrMessage('Api has failed, sorry for the inconvenience')
         }
         );
+    }
+    const VerifyRegister = () =>{
+        setisRegisterLoading(true)
+        if(passwordScore >= 2){
+            console.log('your score is acceptab;le')
+        }
+        else{
+            console.log('your score is NOT acceptab;le')
+        }
+        setisRegisterLoading(false)
     }
     return (
         <ThemeProvider theme={customTheme}>
@@ -103,11 +122,11 @@ export default function SignInSide() {
                         <Typography component="h1" variant="h5">
                             Please Sign in
                         </Typography>
-                        <Box component="form" noValidate sx={{ mt: 1 }}>
-                            <TextField 
-                            InputLabelProps={{
-                                style: { color: '#0f4a3b' },
-                            }}
+                        <Box component="form" noValidate sx={{ mt: 1, justifyContent: 'center', alignItems: 'center', display: 'flex', flexDirection: 'column', minWidth: '500px' }}>
+                            <TextField
+                                InputLabelProps={{
+                                    style: { color: '#0f4a3b' },
+                                }}
                                 margin="normal"
                                 required
                                 fullWidth
@@ -119,7 +138,7 @@ export default function SignInSide() {
                                 onChange={(e) =>
                                     setEmail(e.target.value)}
                             />
-                            <TextField 
+                            <TextField
                                 InputLabelProps={{
                                     style: { color: '#0f4a3b' },
                                 }}
@@ -144,7 +163,59 @@ export default function SignInSide() {
                                 Sign In
                             </LoadingButton>
                             <Collapse in={isError}>
-                                <Alert severity="error">{errMessage}</Alert></Collapse>
+                                <Alert severity="error">{errMessage}</Alert>
+                            </Collapse>
+                            <Button variant='text' onClick={() => setisOpen(true)} sx={{ alignSelf: 'center' }}>
+                                Register
+                            </Button>
+                            <Modal sx={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }} open={isOpen} onClose={() => setisOpen(false)}>
+                                <Box sx={{ display: 'flex', flexDirection: 'column', bgcolor: 'white', minWidth: '30%', minHeight: '30%', borderRadius: 4 }}>
+                                    <Box sx={{ display: 'flex', flexDirection: 'column' }}>
+                                        <Box sx={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between' }}>
+                                            <ThemeProvider theme={customTheme}><Typography sx={{ m: '0.5em' }} fontWeight={'bold'}>Register</Typography></ThemeProvider>
+                                            <IconButton onClick={() => setisOpen(false)}><CloseIcon></CloseIcon></IconButton>
+                                        </Box>
+                                        <Divider></Divider>
+                                    </Box>
+                                    <TextField
+                                        InputLabelProps={{
+                                            style: { color: '#0f4a3b' },
+                                        }}
+                                        sx={{ mx: '1em' }}
+                                        margin="normal"
+                                        required
+                                        id="email2"
+                                        label="Email Address"
+                                        name="email2"
+                                        autoComplete="email2"
+                                        autoFocus
+                                        onChange={(e)=>setRegisterEmail(e.target.value)}
+                                    />
+                                    <TextField
+                                        InputLabelProps={{
+                                            style: { color: '#0f4a3b' },
+                                        }}
+                                        sx={{ mx: '1em' }}
+                                        margin="normal"
+                                        required
+                                        name="password2"
+                                        label="Password"
+                                        type="password2"
+                                        id="password2"
+                                        autoComplete="current-password"
+                                        onChange={(e) => setRegisterPassword(e.target.value)}
+                                    />
+                                    <PasswordStrengthBar onChangeScore={(score, feedback) => { setPasswordScore(score) }} password={RegisterPasswordEntry} style={{ marginRight: '1em', marginLeft: '1em' }}></PasswordStrengthBar>
+                                    <LoadingButton
+                                        loading={isRegisterLoading}
+                                        variant="contained"
+                                        sx={{ mt: 3, mb: 2, mx:'1em' }}
+                                        onClick={VerifyRegister}
+                                    >
+                                        Register
+                                    </LoadingButton>
+                                </Box>
+                            </Modal>
                             <Grid container>
                                 <Grid item xs></Grid>
                                 <Grid item></Grid>
