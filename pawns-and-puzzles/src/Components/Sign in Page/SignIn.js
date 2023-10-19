@@ -93,7 +93,12 @@ export default function SignInSide() {
                 EmailReg: RegisterEmailEntry,
                 PasswordReg: RegisterPasswordEntry,
             }).then(async (response) => {
-                console.log(response.data.err.code)
+                try{
+                    console.log(response.data.err.code)
+                }
+                catch{
+
+                }
                 if (response.data.message === "duplicate entry") {
                     console.log('duplicate entry')
                     setseverity('error')

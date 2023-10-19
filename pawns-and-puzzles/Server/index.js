@@ -102,17 +102,13 @@ app.post("/Register", async (req, res) => {
                         res.send({ message: "None", err: err })
                     }   
                 }
-                try {
+                else{
                     if (result.length > 0) {
                         res.send(result)
                     }
                     else {
                         res.send({ message: "None" })
                     }
-                }
-                catch (error) {
-                    res.send({ message: "None" })
-                    console.log(`Your error: ${error.message}`)
                 }
             }
         );
