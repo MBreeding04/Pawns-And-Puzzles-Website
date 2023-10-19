@@ -12,6 +12,7 @@ import {
   Divider
 } from '@mui/material';
 import { createTheme as createMuiTheme } from '@mui/material/styles';
+import checkerboard from '../../Assets/background/CheckerboardBackground.jpg'
 import logo from '../../Assets/Logo/Pawns&Puzzles.png'
 const MerriweatherFont = createTheme({
     typography: {
@@ -38,10 +39,6 @@ const customTheme = createTheme({
     },
   },
 });
-
-
-const checkerboard = '../../Assets/Logocheckerboard/BGwithlogo.jpg'; 
-
 function App() {
   const [reviews, setReviews] = useState([]);
   const [name, setName] = useState('');
@@ -88,7 +85,6 @@ function App() {
                 <Divider variant='middle' orientation='horizontal' sx={{ width: '95%', bgcolor:'#0f4a3b', borderBottomWidth:'0.15em',  }}></Divider>
             </Box>
         </Box>
-      <img className='backdrop' src={checkerboard}></img>
         <Container maxWidth="md">
           <Grid container spacing={2}>
             <Grid item xs={12}>

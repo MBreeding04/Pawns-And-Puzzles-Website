@@ -104,6 +104,7 @@ export default function SignInSide() {
                     setisRegisterError(true)
                     await delay(3000)
                     setisOpen(false)
+                    setisRegisterError(false)
                 }
             })
         }
