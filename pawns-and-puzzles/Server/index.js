@@ -5,6 +5,7 @@ const app = express();
 
 app.use(cors())
 
+
 app.use(express.json());
 
 const db = mysql.createConnection({
@@ -23,6 +24,65 @@ app.post("/SignIn", async (req, res) => {
     try {
         db.query(
             "SELECT * FROM users WHERE Email = ? AND Password = ?;",
+            [Email, Password],
+            (err, result) => {
+                console.log(`error message: ${err}`)
+                console.log(`result:`)
+                console.log(JSON.stringify(result))
+                if (err) {
+                    res.send({ message: "None", err: err })
+                }
+                else{
+                    if (result.length > 0) {
+                        res.send(result)
+                    }
+                    else {
+                        res.send({ message: "None" })
+                    }
+                }
+            }
+        );
+    }
+    catch (error) {
+        res.send({ message: "API" })
+        console.log(`Your error: ${error.message}`)
+    }
+})
+app.post("/ForgotPassword", async (req, res) => {
+    const Email = req.body.Email;
+    try {
+        db.query(
+            "SELECT * FROM users WHERE Email = ?;",
+            [Email],
+            (err, result) => {
+                console.log(`error message: ${err}`)
+                console.log(`result:`)
+                console.log(JSON.stringify(result))
+                if (err) {
+                    res.send({ message: "None", err: err })
+                }
+                else{
+                    if (result.length > 0) {
+                        res.send(result)
+                    }
+                    else {
+                        res.send({ message: "None" })
+                    }
+                }
+            }
+        );
+    }
+    catch (error) {
+        res.send({ message: "API" })
+        console.log(`Your error: ${error.message}`)
+    }
+})
+app.post("/ResetPassword", async (req, res) => {
+    const Email = req.body.Email;
+    const Password = req.body.Password
+    try {
+        db.query(
+            "UPDATE users SET Password = ? WHERE Email = ?;",
             [Email, Password],
             (err, result) => {
                 console.log(`error message: ${err}`)

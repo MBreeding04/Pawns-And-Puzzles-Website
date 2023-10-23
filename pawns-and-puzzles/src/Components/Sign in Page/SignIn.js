@@ -42,17 +42,22 @@ const defaultTheme = createTheme();
 export default function SignInSide() {
     const [EmailEntry, setEmail] = useState("");
     const [PasswordEntry, setPassword] = useState("");
-    const [RegisterEmailEntry, setRegisterEmail] = useState("");
     const [passwordScore, setPasswordScore] = useState(0);
+    const [RegisterEmailEntry, setRegisterEmail] = useState("");
     const [RegisterPasswordEntry, setRegisterPassword] = useState("");
+    const [ResetPasswordEmail, setResetPasswordEmail] = useState("");
+    const [ResetPasswordPassword, setResetPasswordPassword] = useState("");
     const [isError, setisError] = useState(false);
     const [isRegisterError, setisRegisterError] = useState(false);
     const [isOpen, setisOpen] = useState(false);
+    const [passwordIsOpen, setpasswordIsOpen] = useState(false);
     const [isLoading, setisLoading] = useState(false);
     const [isRegisterLoading, setisRegisterLoading] = useState(false);
     const [errMessage, seterrMessage] = useState("");
     const [RegistererrMessage, setRegistererrMessage] = useState("your password is too short!");
     const [severity, setseverity] = useState('error');
+    const [PasswordMessage, setPasswordMessage] = useState("this Email has not been registered!");
+    const [severity2, setseverity2] = useState('error');
     const Navigate = useNavigate();
 
     const delay = (delayInms) => {
@@ -85,6 +90,13 @@ export default function SignInSide() {
         }
         );
     }
+    const ForgotPassword = async () => {
+        await Axios.post("https://api-puzzles-pawns.onrender.com/ForgotPassword", {
+            Email: ResetPasswordEmail,
+    }).then(async (response) =>{
+        console.log(response)
+    })
+    }
     const VerifyRegister = async () => {
         setisRegisterLoading(true)
         setisRegisterError(false)
@@ -93,7 +105,7 @@ export default function SignInSide() {
                 EmailReg: RegisterEmailEntry,
                 PasswordReg: RegisterPasswordEntry,
             }).then(async (response) => {
-                if (response.data.message == "duplicate entry") {
+                if (response.data.message === "duplicate entry") {
                     setisRegisterError(true)
                     setseverity('error')
                     setRegistererrMessage('This email is already in use!')
@@ -193,9 +205,15 @@ export default function SignInSide() {
                             <Collapse in={isError}>
                                 <Alert severity="error">{errMessage}</Alert>
                             </Collapse>
-                            <Button variant='text' onClick={() => setisOpen(true)} sx={{ alignSelf: 'center' }}>
-                                Register
-                            </Button>
+                            <Box sx={{display:'flex',flexDirection:'row', justifyContent:'space-between', width:'90%'}}>
+                                <Button variant='text' onClick={() => setisOpen(true)} sx={{ alignSelf: 'center' }}>
+                                    Register
+                                </Button>
+                                <Button variant='text' onClick={() => setpasswordIsOpen(true)} sx={{ alignSelf: 'center' }}>
+                                    forgot password
+                                </Button>
+                            </Box>
+                            {/*pop up for sign in */}
                             <Modal sx={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }} open={isOpen} onClose={() => setisOpen(false)}>
                                 <Box sx={{ display: 'flex', flexDirection: 'column', bgcolor: 'white', minWidth: '30%', minHeight: '30%', borderRadius: 4 }}>
                                     <Box sx={{ display: 'flex', flexDirection: 'column' }}>
@@ -245,6 +263,57 @@ export default function SignInSide() {
                                         onClick={VerifyRegister}
                                     >
                                         Register
+                                    </LoadingButton>
+                                </Box>
+                            </Modal>
+                            {/*pop up for forgot password */}
+                            <Modal sx={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }} open={passwordIsOpen} onClose={() => setpasswordIsOpen(false)}>
+                                <Box sx={{ display: 'flex', flexDirection: 'column', bgcolor: 'white', minWidth: '30%', minHeight: '30%', borderRadius: 4 }}>
+                                    <Box sx={{ display: 'flex', flexDirection: 'column' }}>
+                                        <Box sx={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between' }}>
+                                            <ThemeProvider theme={customTheme}><Typography sx={{ m: '0.5em' }} fontWeight={'bold'}>Forgot Password</Typography></ThemeProvider>
+                                            <IconButton onClick={() => setpasswordIsOpen(false)}><CloseIcon></CloseIcon></IconButton>
+                                        </Box>
+                                        <Divider></Divider>
+                                    </Box>
+                                    <Collapse in={isRegisterError}>
+                                        <Alert severity={severity2}>{PasswordMessage}</Alert>
+                                    </Collapse>
+                                    <TextField
+                                        InputLabelProps={{
+                                            style: { color: '#0f4a3b' },
+                                        }}
+                                        sx={{ mx: '1em' }}
+                                        margin="normal"
+                                        required
+                                        id="email2"
+                                        label="Email Address"
+                                        name="email2"
+                                        autoComplete="email2"
+                                        autoFocus
+                                        onChange={(e) => setResetPasswordEmail(e.target.value)}
+                                    />
+                                    <TextField
+                                        InputLabelProps={{
+                                            style: { color: '#0f4a3b' },
+                                        }}
+                                        sx={{ mx: '1em' }}
+                                        margin="normal"
+                                        required
+                                        name="password2"
+                                        label="New password"
+                                        type="password2"
+                                        id="password2"
+                                        autoComplete="current-password"
+                                        onChange={(e) => setResetPasswordPassword(e.target.value)}
+                                    />
+                                    <LoadingButton
+                                        loading={isRegisterLoading}
+                                        variant="contained"
+                                        sx={{ mt: 3, mb: 2, mx: '1em' }}
+                                        onClick={()=>{ForgotPassword()}}
+                                    >
+                                        reset password
                                     </LoadingButton>
                                 </Box>
                             </Modal>
