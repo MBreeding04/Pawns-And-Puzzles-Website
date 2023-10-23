@@ -83,7 +83,7 @@ app.post("/ResetPassword", async (req, res) => {
     try {
         db.query(
             "UPDATE users SET Password = ? WHERE Email = ?;",
-            [Email, Password],
+            [Password, Email],
             (err, result) => {
                 console.log(`error message: ${err}`)
                 console.log(`result:`)
