@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/Pawns-And-Puzzles-Website/static/css/main.1c764c41.css",
-    "main.js": "/Pawns-And-Puzzles-Website/static/js/main.3b9c6dce.js",
+    "main.js": "/Pawns-And-Puzzles-Website/static/js/main.b02959cc.js",
     "static/js/787.ec8d4d30.chunk.js": "/Pawns-And-Puzzles-Website/static/js/787.ec8d4d30.chunk.js",
     "static/media/CheckersPic.png": "/Pawns-And-Puzzles-Website/static/media/CheckersPic.265ffa07adbd66d20e92.png",
     "static/media/CheckerboardBackground.jpg": "/Pawns-And-Puzzles-Website/static/media/CheckerboardBackground.5acba52f0c169835c944.jpg",
@@ -16,11 +16,11 @@
     "static/media/ChessPeices2_2560x1440.png": "/Pawns-And-Puzzles-Website/static/media/ChessPeices2_2560x1440.c0101e92b3557779b827.png",
     "index.html": "/Pawns-And-Puzzles-Website/index.html",
     "main.1c764c41.css.map": "/Pawns-And-Puzzles-Website/static/css/main.1c764c41.css.map",
-    "main.3b9c6dce.js.map": "/Pawns-And-Puzzles-Website/static/js/main.3b9c6dce.js.map",
+    "main.b02959cc.js.map": "/Pawns-And-Puzzles-Website/static/js/main.b02959cc.js.map",
     "787.ec8d4d30.chunk.js.map": "/Pawns-And-Puzzles-Website/static/js/787.ec8d4d30.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.1c764c41.css",
-    "static/js/main.3b9c6dce.js"
+    "static/js/main.b02959cc.js"
   ]
 }
