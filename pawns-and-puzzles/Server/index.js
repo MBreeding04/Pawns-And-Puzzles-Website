@@ -92,12 +92,7 @@ app.post("/ResetPassword", async (req, res) => {
                     res.send({ message: "None", err: err })
                 }
                 else{
-                    if (result.length > 0) {
-                        res.send(result)
-                    }
-                    else {
-                        res.send({ message: "None" })
-                    }
+                    res.send(result)
                 }
             }
         );

@@ -14,7 +14,7 @@ import Collapse from '@mui/material/Collapse';
 import Alert from '@mui/material/Alert';
 import LoadingButton from '@mui/lab/LoadingButton';
 import { Divider, Icon, Modal } from '@mui/material';
-import { useNavigate } from "react-router-dom";
+import { resolvePath, useNavigate } from "react-router-dom";
 import CloseIcon from '@mui/icons-material/Close';
 import IconButton from '@mui/material/IconButton';
 import PasswordStrengthBar from 'react-password-strength-bar';
@@ -93,9 +93,18 @@ export default function SignInSide() {
     const ForgotPassword = async () => {
         await Axios.post("https://api-puzzles-pawns.onrender.com/ForgotPassword", {
             Email: ResetPasswordEmail,
-    }).then(async (response) =>{
-        console.log(response)
-    })
+        }).then(async (response) => {
+            if (response.data.length >= 1) {
+                await Axios.post("https://api-puzzles-pawns.onrender.com/ResetPassword", {
+                    Email: ResetPasswordEmail,
+                    Password: ResetPasswordPassword,
+                }).then(async (response) => {
+                    console.log(ResetPasswordEmail)
+                    console.log(ResetPasswordPassword)
+                    console.log(response)
+                })
+            }
+        })
     }
     const VerifyRegister = async () => {
         setisRegisterLoading(true)
@@ -205,7 +214,7 @@ export default function SignInSide() {
                             <Collapse in={isError}>
                                 <Alert severity="error">{errMessage}</Alert>
                             </Collapse>
-                            <Box sx={{display:'flex',flexDirection:'row', justifyContent:'space-between', width:'90%'}}>
+                            <Box sx={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between', width: '90%' }}>
                                 <Button variant='text' onClick={() => setisOpen(true)} sx={{ alignSelf: 'center' }}>
                                     Register
                                 </Button>
@@ -311,7 +320,7 @@ export default function SignInSide() {
                                         loading={isRegisterLoading}
                                         variant="contained"
                                         sx={{ mt: 3, mb: 2, mx: '1em' }}
-                                        onClick={()=>{ForgotPassword()}}
+                                        onClick={() => { ForgotPassword() }}
                                     >
                                         reset password
                                     </LoadingButton>
