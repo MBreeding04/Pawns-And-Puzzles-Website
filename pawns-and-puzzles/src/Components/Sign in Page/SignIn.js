@@ -49,6 +49,7 @@ export default function SignInSide() {
     const [ResetPasswordPassword, setResetPasswordPassword] = useState("");
     const [isError, setisError] = useState(false);
     const [isRegisterError, setisRegisterError] = useState(false);
+    const [isRegisterError2, setisRegisterError2] = useState(false);
     const [isOpen, setisOpen] = useState(false);
     const [passwordIsOpen, setpasswordIsOpen] = useState(false);
     const [isLoading, setisLoading] = useState(false);
@@ -99,10 +100,14 @@ export default function SignInSide() {
                     Email: ResetPasswordEmail,
                     Password: ResetPasswordPassword,
                 }).then(async (response) => {
-                    console.log(ResetPasswordEmail)
-                    console.log(ResetPasswordPassword)
+                    setisRegisterError2(false)
                     console.log(response)
                 })
+            }
+            else{
+                setseverity2('error')
+                setPasswordMessage('this email is not associated with an account!')
+                setisRegisterError2(true)
             }
         })
     }
@@ -285,7 +290,7 @@ export default function SignInSide() {
                                         </Box>
                                         <Divider></Divider>
                                     </Box>
-                                    <Collapse in={isRegisterError}>
+                                    <Collapse in={isRegisterError2}>
                                         <Alert severity={severity2}>{PasswordMessage}</Alert>
                                     </Collapse>
                                     <TextField
