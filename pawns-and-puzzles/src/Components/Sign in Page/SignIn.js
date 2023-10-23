@@ -100,11 +100,13 @@ export default function SignInSide() {
                     Email: ResetPasswordEmail,
                     Password: ResetPasswordPassword,
                 }).then(async (response) => {
-                    setisRegisterError2(false)
                     console.log(response)
+                    setseverity2('success')
+                    setPasswordMessage('You have changed your password!')
+                    setisRegisterError2(true)
                 })
             }
-            else{
+            else {
                 setseverity2('error')
                 setPasswordMessage('this email is not associated with an account!')
                 setisRegisterError2(true)
@@ -206,6 +208,9 @@ export default function SignInSide() {
                                 autoComplete="current-password"
                                 onChange={(e) =>
                                     setPassword(e.target.value)}
+                                onKeyDown={(e)=>{if(e.key === "Enter"){
+                                    VerifyLogin()
+                                }}}
                             />
                             <LoadingButton
                                 loading={isLoading}
@@ -281,12 +286,18 @@ export default function SignInSide() {
                                 </Box>
                             </Modal>
                             {/*pop up for forgot password */}
-                            <Modal sx={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }} open={passwordIsOpen} onClose={() => setpasswordIsOpen(false)}>
+                            <Modal sx={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }} open={passwordIsOpen} onClose={() => {
+                                setpasswordIsOpen(false)
+                                setisRegisterError2(false)
+                            }}>
                                 <Box sx={{ display: 'flex', flexDirection: 'column', bgcolor: 'white', minWidth: '30%', minHeight: '30%', borderRadius: 4 }}>
                                     <Box sx={{ display: 'flex', flexDirection: 'column' }}>
                                         <Box sx={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between' }}>
                                             <ThemeProvider theme={customTheme}><Typography sx={{ m: '0.5em' }} fontWeight={'bold'}>Forgot Password</Typography></ThemeProvider>
-                                            <IconButton onClick={() => setpasswordIsOpen(false)}><CloseIcon></CloseIcon></IconButton>
+                                            <IconButton onClick={() => {
+                                                setpasswordIsOpen(false)
+                                                setisRegisterError2(false)
+                                            }}><CloseIcon></CloseIcon></IconButton>
                                         </Box>
                                         <Divider></Divider>
                                     </Box>
