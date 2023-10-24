@@ -221,7 +221,7 @@ app.post("/Comment", async (req, res) => {
     comment = req.body.comment;
     console.log('reviews ',reviews);
     db.query(
-        "UPDATE reviews WHERE Email = ?",
+        "UPDATE reviews SET Comment = ? WHERE Email = ?;",
         [comment],
         async (err, result) => {
             if (err) {
