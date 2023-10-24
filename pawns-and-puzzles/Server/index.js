@@ -167,6 +167,81 @@ app.post("/Register", async (req, res) => {
         console.log(`Your error: ${error.message}`)
     }
 })
+app.post("/Comment", async (req, res) => {      
+    reviews = req.body.reviews;
+    console.log('reviews ',reviews);
+    db.query(
+        "SELECT * FROM reviews;",
+        [reviews],
+        async (err, result) => {
+            if (err) {
+                res.send({ err: err.message })
+            }
+            try {
+                if (result.length > 0) {
+                    res.send(result)
+                }
+                else {
+                    res.send({ message: "None", error: 'No result matches your query' })
+                }
+            }
+            catch (error) {
+                res.send({ message: "None", error: error.message })
+                console.log(`Your error: ${error.message}`)
+            }
+        }
+    );
+})
+app.post("/Comment", async (req, res) => {      
+    comment = req.body.comment;
+    console.log('reviews ',reviews);
+    db.query(
+        "INSERT INTO reviews (Comment) VALUES(?)",
+        [comment],
+        async (err, result) => {
+            if (err) {
+                res.send({ err: err.message })
+            }
+            try {
+                if (result.length > 0) {
+                    res.send(result)
+                }
+                else {
+                    res.send({ message: "None", error: 'No comment' })
+                }
+            }
+            catch (error) {
+                res.send({ message: "None", error: error.message })
+                console.log(`Your error: ${error.message}`)
+            }
+        }
+    );
+})
+app.post("/Comment", async (req, res) => {      
+    comment = req.body.comment;
+    console.log('reviews ',reviews);
+    db.query(
+        "UPDATE reviews WHERE Email = ?",
+        [comment],
+        async (err, result) => {
+            if (err) {
+                res.send({ err: err.message })
+            }
+            try {
+                if (result.length > 0) {
+                    res.send(result)
+                }
+                else {
+                    res.send({ message: "None", error: 'No comment' })
+                }
+            }
+            catch (error) {
+                res.send({ message: "None", error: error.message })
+                console.log(`Your error: ${error.message}`)
+            }
+        }
+    );
+})
 app.listen('5000', () => {
     console.log("Connected to server")
 })
