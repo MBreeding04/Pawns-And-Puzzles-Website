@@ -57,6 +57,7 @@ function App() {
     if (finalUserId == 1) {
       return (<Box><Button
         variant="outlined"
+        sx={{mr:4}}
         color="error"
         onClick={() => handleDelete(ChatRef)}
       >
@@ -118,6 +119,7 @@ function App() {
     }).then(async (response) => {
       console.log(response)
     })
+    RenderComments()
   }
   useEffect(() => {
     RenderComments()
@@ -140,11 +142,35 @@ function App() {
             </Box>
           </Box>
           <Box sx={{ display: 'flex', flexDirection: 'column', width: '100%' }}>
-            <Box sx={{ display: 'flex', flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
-              <Box sx={{ display: 'flex', flexDirection: 'row', justifyContent: 'center', alignItems: 'center', m: '1em', borderRadius: 4, width: '20%', border: '3px solid #0f4a3b', mr: '150px' }}>
-                <ThemeProvider theme={MerriweatherFont}><Typography sx={{ m: '1em', fontWeight: 'bold', color: 'black' }}>Reviews</Typography></ThemeProvider>
-              </Box>
-            </Box>
+          <Box sx={{ display: 'flex', flexDirection: 'row', justifyContent: 'end', alignItems: 'end' }}>
+                    <NavLink to={'/Home'} style={{ alignSelf: 'center' }}>
+                            <Button sx={{
+                                my: '2em', mx: '1em', width: '15em', backgroundColor: '#0f4a3b',
+                                ':hover': {
+                                    bgcolor: '#09261f',
+                                    color: 'white'
+                                }
+                            }} variant='contained'>Home</Button>
+                        </NavLink>
+                        <NavLink to={'/Vendors'} style={{ alignSelf: 'center' }}>
+                            <Button sx={{
+                                my: '2em', mx: '1em', width: '15em', backgroundColor: '#0f4a3b',
+                                ':hover': {
+                                    bgcolor: '#09261f',
+                                    color: 'white'
+                                }
+                            }} variant='contained'>Become a Vendor</Button>
+                        </NavLink>
+                        <NavLink to={'/Games'} style={{ alignSelf: 'center' }}>
+                            <Button sx={{
+                                my: '2em', mx: '1em', width: '15em', backgroundColor: '#0f4a3b',
+                                ':hover': {
+                                    bgcolor: '#09261f',
+                                    color: 'white'
+                                }
+                            }} variant='contained'>Browse Games</Button>
+                        </NavLink>
+                    </Box>
             <Divider variant='middle' orientation='horizontal' sx={{ width: '95%', bgcolor: '#0f4a3b', borderBottomWidth: '0.15em', }}></Divider>
           </Box>
         </Box>
@@ -160,8 +186,8 @@ function App() {
             {reviews.map((review) => (
               <Grid item xs={12} key={review.ReviewId}>
                 <Paper elevation={3} sx={{ p: 2 }}>
-                  <Typography variant="h6">{review.Commenter}</Typography>
-                  <Typography>{review.CommentBody}</Typography>
+                  <Typography fontWeight={'bold'}>{review.CommentBody}</Typography>
+                  <Typography color={'grey'} variant="h6">- {review.Commenter}</Typography>
                   {renderDelete(review.UserId, review.ReviewId)}
                 </Paper>
               </Grid>
@@ -170,21 +196,8 @@ function App() {
           <Grid container spacing={2}>
             <Grid item xs={12}>
               <Paper elevation={3} sx={{ p: 2, mt: 2 }}>
-                <Typography variant="h6">Leave Your Review</Typography>
+                <Typography sx={{mb:2}} variant="h6">Leave Your Review</Typography>
                 <form onSubmit={handleSubmit}>
-                  <Box sx={{ mb: 2 }}> {/* Add margin-bottom */}
-                    <TextField
-                      required
-                      fullWidth
-                      label="Your Name"
-                      value={name}
-                      onChange={(e) => setName(e.target.value)}
-                      InputLabelProps={{
-                        shrink: true,
-                      }}
-                      className="custom-textfield"
-                    />
-                  </Box>
                   <Box sx={{ mb: 2 }}> {/* Add margin-bottom */}
                     <TextField
                       required
@@ -198,9 +211,6 @@ function App() {
                         shrink: true,
                       }}
                       className="custom-textfield"
-                      onKeyDown={(e) => {
-                        handleSubmit()
-                      }}
                     />
                   </Box>
                   <Button

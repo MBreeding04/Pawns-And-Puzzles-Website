@@ -32,7 +32,7 @@ app.post("/SignIn", async (req, res) => {
                 if (err) {
                     res.send({ message: "None", err: err })
                 }
-                else{
+                else {
                     if (result.length > 0) {
                         res.send(result)
                     }
@@ -61,7 +61,7 @@ app.post("/ForgotPassword", async (req, res) => {
                 if (err) {
                     res.send({ message: "None", err: err })
                 }
-                else{
+                else {
                     if (result.length > 0) {
                         res.send(result)
                     }
@@ -91,7 +91,7 @@ app.post("/ResetPassword", async (req, res) => {
                 if (err) {
                     res.send({ message: "None", err: err })
                 }
-                else{
+                else {
                     res.send(result)
                 }
             }
@@ -114,7 +114,7 @@ app.post("/Games", async (req, res) => {
             if (err) {
                 res.send({ err: err.message })
             }
-            else{
+            else {
                 if (result.length > 0) {
                     res.send(result)
                 }
@@ -137,21 +137,21 @@ app.post("/Register", async (req, res) => {
                 console.log(`result:`)
                 console.log(JSON.stringify(result))
                 if (err) {
-                    try{
-                        console.log('error code:',err.code)
-                        console.log('error code:',JSON.stringify(err.code))
+                    try {
+                        console.log('error code:', err.code)
+                        console.log('error code:', JSON.stringify(err.code))
                         if (JSON.stringify(err.code) == "ER_DUP_ENTRY") {
                             res.send({ message: "duplicate entry", err: err })
                         }
-                        else{
+                        else {
                             res.send({ message: "None", err: err })
                         }
                     }
-                    catch{
+                    catch {
                         res.send({ message: "None", err: err })
-                    }   
+                    }
                 }
-                else{
+                else {
                     if (result.length > 0) {
                         res.send(result)
                     }
@@ -167,29 +167,24 @@ app.post("/Register", async (req, res) => {
         console.log(`Your error: ${error.message}`)
     }
 })
-app.post("/Comment", async (req, res) => {      
+app.post("/Comment", async (req, res) => {
     db.query(
         "SELECT X.ChatID, X.Comment, X.userID, Y.Email FROM reviews X INNER JOIN users Y ON X.userId = Y.userId",
         async (err, result) => {
             if (err) {
                 res.send({ err: err.message })
             }
-            try {
-                if (result.length > 0) {
-                    res.send(result)
-                }
-                else {
-                    res.send({ message: "None", error: 'No result matches your query' })
-                }
+
+            if (result.length > 0) {
+                res.send(result)
             }
-            catch (error) {
-                res.send({ message: "None", error: error.message })
-                console.log(`Your error: ${error.message}`)
+            else {
+                res.send({ message: "None", error: 'No result matches your query' })
             }
         }
     );
 })
-app.post("/AddComment", async (req, res) => {      
+app.post("/AddComment", async (req, res) => {
     const comment = req.body.commentEntry;
     const userId = req.body.userId;
     db.query(
@@ -199,17 +194,11 @@ app.post("/AddComment", async (req, res) => {
             if (err) {
                 res.send({ err: err.message })
             }
-            try {
-                if (result.length > 0) {
-                    res.send(result)
-                }
-                else {
-                    res.send({ message: "None", error: 'No comment' })
-                }
+            if (result.length > 0) {
+                res.send(result)
             }
-            catch (error) {
-                res.send({ message: "None", error: error.message })
-                console.log(`Your error: ${error.message}`)
+            else {
+                res.send({ message: "None", error: 'No comment' })
             }
         }
     );
@@ -223,43 +212,31 @@ app.post("/DeleteComment", async (req, res) => {
             if (err) {
                 res.send({ err: err.message })
             }
-            try {
-                if (result.length > 0) {
-                    res.send(result)
-                }
-                else {
-                    res.send({ message: "None", error: 'No comment' })
-                }
+            if (result.length > 0) {
+                res.send(result)
             }
-            catch (error) {
-                res.send({ message: "None", error: error.message })
-                console.log(`Your error: ${error.message}`)
+            else {
+                res.send({ message: "None", error: 'No comment' })
             }
         }
     );
 })
-app.post("/UpdateComment", async (req, res) => {      
+app.post("/UpdateComment", async (req, res) => {
     comment = req.body.comment;
     email = req.body.comment
-    console.log('reviews ',reviews);
+    console.log('reviews ', reviews);
     db.query(
         "UPDATE reviews SET (Comment) = ? WHERE (Email) = ?;",
-        [comment,email],
+        [comment, email],
         async (err, result) => {
             if (err) {
                 res.send({ err: err.message })
             }
-            try {
-                if (result.length > 0) {
-                    res.send(result)
-                }
-                else {
-                    res.send({ message: "None", error: 'No comment' })
-                }
+            if (result.length > 0) {
+                res.send(result)
             }
-            catch (error) {
-                res.send({ message: "None", error: error.message })
-                console.log(`Your error: ${error.message}`)
+            else {
+                res.send({ message: "None", error: 'No comment' })
             }
         }
     );
