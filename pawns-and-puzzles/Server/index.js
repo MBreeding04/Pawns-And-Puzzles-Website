@@ -214,8 +214,9 @@ app.post("/AddComment", async (req, res) => {
         }
     );
 })
-app.post("/DeleteComment", async (req, res) => {      
-    ChatID = req.body.reviewID;
+app.post("/DeleteComment", async (req, res) => {
+    console.log(req.body)      
+    ChatID = req.body.reviewID
     console.log(ChatID)
     db.query(
         "DELETE FROM `reviews` WHERE ChatID = ?",
