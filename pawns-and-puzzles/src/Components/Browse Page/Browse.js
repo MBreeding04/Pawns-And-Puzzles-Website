@@ -11,7 +11,6 @@ import Collapse from '@mui/material/Collapse';
 import Alert from '@mui/material/Alert';
 import React, { Component } from 'react';
 import '../Browse Page/Browse.css'
-import check from '../../Assets/products/CheckersPic.png'
 import {
     NavLink,
 } from "react-router-dom";
@@ -46,7 +45,6 @@ export default function Browse() {
     const [isAlert, setIsAlert] = useState(false)
     const [alertMessage, setalertMessage] = useState('')
     const SearchDatabase = async () => {
-        console.log(searchQuery)
         await Axios.post("https://api-puzzles-pawns.onrender.com/Games", {
             Gname: searchQuery
         }).then(async (response) => {
@@ -81,14 +79,25 @@ export default function Browse() {
             <Box sx={{ display: 'flex', flexDirection: 'row', width: '100%', height: '100%' }}>
                 <Box sx={{ display: 'flex', flexDirection: 'column' }}>
                     <NavLink to={'/Home'} style={{ alignSelf: 'center' }}><img className='logo' src={logo} alt='Chess' /></NavLink>
-                    <Box sx={{ display: 'flex', flexDirection: 'column', bgcolor: '#b8b8b8', height: '30vh', width: '200px', m: '1em', borderRadius: 3,boxShadow:'0px 3px 3px -2px rgba(0,0,0,0.2), 0px 3px 4px 0px rgba(0,0,0,0.14), 0px 1px 8px 0px rgba(0,0,0,0.12);' }}>
+                    <Box sx={{ display: 'flex', flexDirection: 'column', bgcolor: '#b8b8b8', width: '200px', m: '1em', borderRadius: 3,boxShadow:'0px 3px 3px -2px rgba(0,0,0,0.2), 0px 3px 4px 0px rgba(0,0,0,0.14), 0px 1px 8px 0px rgba(0,0,0,0.12);' }}>
                         <FormGroup>
-                            <FormControlLabel sx={{justifyContent:'center',alignItems:'center'}}control={<Checkbox defaultChecked />} label="Board Game" />
+                            <FormControlLabel sx={{alignItems:'center',mx:'0.5em'}}control={<Checkbox defaultChecked />} label="Board Game" />
+                            <FormControlLabel sx={{alignItems:'center',mx:'0.5em'}}control={<Checkbox defaultChecked />} label="Lowest to Highest" />
+                            <FormControlLabel sx={{alignItems:'center',mx:'0.5em'}}control={<Checkbox defaultChecked />} label="Highest to Lowest" />
                         </FormGroup>
                     </Box>
                 </Box>
                 <Box sx={{ display: 'flex', flexDirection: 'column', width: '100%' }}>
                     <Box sx={{ display: 'flex', flexDirection: 'row', justifyContent: 'end', alignItems: 'end' }}>
+                    <NavLink to={'/Home'} style={{ alignSelf: 'center' }}>
+                            <Button sx={{
+                                my: '2em', mx: '1em', width: '15em', backgroundColor: '#0f4a3b',
+                                ':hover': {
+                                    bgcolor: '#09261f',
+                                    color: 'white'
+                                }
+                            }} variant='contained'>Home</Button>
+                        </NavLink>
                         <NavLink to={'/Vendors'} style={{ alignSelf: 'center' }}>
                             <Button sx={{
                                 my: '2em', mx: '1em', width: '15em', backgroundColor: '#0f4a3b',
@@ -106,15 +115,6 @@ export default function Browse() {
                                     color: 'white'
                                 }
                             }} variant='contained'>Community</Button>
-                        </NavLink>
-                        <NavLink to={'/Home'} style={{ alignSelf: 'center' }}>
-                            <Button sx={{
-                                my: '2em', mx: '1em', width: '15em', backgroundColor: '#0f4a3b',
-                                ':hover': {
-                                    bgcolor: '#09261f',
-                                    color: 'white'
-                                }
-                            }} variant='contained'>Home</Button>
                         </NavLink>
                     </Box>
                     <Divider variant='middle' orientation='horizontal' sx={{ width: '100%', bgcolor: '#0f4a3b', borderBottomWidth: '0.15em', }}></Divider>
@@ -143,7 +143,7 @@ export default function Browse() {
                         {searchResult.map((result) => (
                             <Box sx={{
                                 bgcolor: '#dddedc',
-                                borderRadius: 2, display: 'flex', flexDirection: 'column', alignItems: 'center', mx: '1em',my:'1em', boxShadow:'0px 3px 3px -2px rgba(0,0,0,0.2), 0px 3px 4px 0px rgba(0,0,0,0.14), 0px 1px 8px 0px rgba(0,0,0,0.12);'
+                                borderRadius: 2, Width:'400px', display: 'flex', flexDirection: 'column', alignItems: 'center', mx: '1em',my:'1em', boxShadow:'0px 3px 3px -2px rgba(0,0,0,0.2), 0px 3px 4px 0px rgba(0,0,0,0.14), 0px 1px 8px 0px rgba(0,0,0,0.12);'
                             }}>
                                 <img className='products' src = {`${result.picture}`} alt='product'></img><ThemeProvider theme={MerriweatherFont}><Typography sx={{ fontSize: '2em' }}>{result.name}</Typography>
                                     <Typography align='left' color={'#595959'} sx={{ fontSize: '1em',mt:'1em', maxWidth:'30em',mx:'1em' }}>{result.desc}</Typography>

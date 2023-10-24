@@ -168,11 +168,8 @@ app.post("/Register", async (req, res) => {
     }
 })
 app.post("/Comment", async (req, res) => {      
-    reviews = req.body.reviews;
-    console.log('reviews ',reviews);
     db.query(
         "SELECT * FROM reviews;",
-        [reviews],
         async (err, result) => {
             if (err) {
                 res.send({ err: err.message })

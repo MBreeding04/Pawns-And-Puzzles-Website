@@ -1,7 +1,10 @@
-import { Typography, Box, Divider } from '@mui/material';
+import { Typography, Box, Divider, Button } from '@mui/material';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import logo from '../../Assets/Logo/Pawns&Puzzles.png'
-import '../Browse Page/Browse.css'
+import '../Vendor Page/Vendor.css'
+import {
+    NavLink,
+} from "react-router-dom";
 const MerriweatherFont = createTheme({
     typography: {
         fontFamily: ['Merriweather', 'serif'].join(",")
@@ -14,20 +17,48 @@ const SpecialEliteFont = createTheme({
 });
 export default function Browse() {
     return (
-        <Box sx={{ display: 'flex', flexDirection: 'row', width:'100%', height:'100%'}}>
-            <Box sx={{ display: 'flex', flexDirection: 'column' }}>
-                <img className='logo' src={logo} alt='Chess' />
-                <Box sx={{display:'flex', flexDirection:'column', bgcolor:'grey'}}>
-
-                </Box>
-            </Box>
-            <Box sx={{ display: 'flex', flexDirection: 'column', width:'100%' }}>   
-                <Box sx={{ display: 'flex', flexDirection: 'row', justifyContent: 'end', alignItems: 'end'}}>
-                    <Box sx={{display:'flex',flexDirection:'row', justifyContent:'center',alignItems:'center',bgcolor:'#0f4a3b', m:'1em', borderRadius:4, width:'40%'}}>
-                        <ThemeProvider theme={MerriweatherFont}><Typography sx={{m:'1em', fontWeight: 'bold', color:'#F5F5F5'}}>Games</Typography></ThemeProvider>
+        <Box sx={{ display: 'flex', bgcolor: '#fefff5', minHeight: '100%' }}>
+            <Box sx={{ display: 'flex', flexDirection: 'row', width: '100%', height: '100%' }}>
+                <Box sx={{ display: 'flex', flexDirection: 'column' }}>
+                    <NavLink to={'/Home'} style={{ alignSelf: 'center' }}><img className='logo' src={logo} alt='Chess' /></NavLink>
+                    <Box sx={{ display: 'flex', flexDirection: 'column', bgcolor: 'grey', width: '200px' }}>
                     </Box>
                 </Box>
-                <Divider variant='middle' orientation='horizontal' sx={{ width: '95%', bgcolor:'#0f4a3b', borderBottomWidth:'0.15em',  }}></Divider>
+                <Box sx={{ display: 'flex', flexDirection: 'column', width: '100%' }}>
+                    <Box sx={{ display: 'flex', flexDirection: 'row', justifyContent: 'end', alignItems: 'end' }}>
+                        <NavLink to={'/Home'} style={{ alignSelf: 'center' }}>
+                            <Button sx={{
+                                my: '2em', mx: '1em', width: '15em', backgroundColor: '#0f4a3b',
+                                ':hover': {
+                                    bgcolor: '#09261f',
+                                    color: 'white'
+                                }
+                            }} variant='contained'>Home</Button>
+                        </NavLink>
+                        <NavLink to={'/Games'} style={{ alignSelf: 'center' }}>
+                            <Button sx={{
+                                my: '2em', mx: '1em', width: '15em', backgroundColor: '#0f4a3b',
+                                ':hover': {
+                                    bgcolor: '#09261f',
+                                    color: 'white'
+                                }
+                            }} variant='contained'>Browse Games</Button>
+                        </NavLink>
+                        <NavLink to={'/Comments'} style={{ alignSelf: 'center' }}>
+                            <Button sx={{
+                                my: '2em', mx: '1em', width: '15em', backgroundColor: '#0f4a3b',
+                                ':hover': {
+                                    bgcolor: '#09261f',
+                                    color: 'white'
+                                }
+                            }} variant='contained'>Community</Button>
+                        </NavLink>
+                    </Box>
+                    <Divider variant='middle' orientation='horizontal' sx={{ width: '100%', bgcolor: '#0f4a3b', borderBottomWidth: '0.15em', }}></Divider>
+                    <Box sx={{display:'flex',flexDirection:'row', justifyContent:'center',alignItems:'center', m:'1em', borderRadius:4, width:'20%', border:'3px solid #0f4a3b', mr:'150px'}}>
+                        <ThemeProvider theme={MerriweatherFont}><Typography sx={{m:'1em', fontWeight: 'bold', color:'black'}}>Vendor Name</Typography></ThemeProvider>
+                    </Box>
+                </Box>
             </Box>
         </Box>
     )

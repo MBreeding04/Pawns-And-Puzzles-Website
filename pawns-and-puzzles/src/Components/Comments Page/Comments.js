@@ -14,6 +14,10 @@ import {
 import { createTheme as createMuiTheme } from '@mui/material/styles';
 import checkerboard from '../../Assets/background/CheckerboardBackground.jpg'
 import logo from '../../Assets/Logo/Pawns&Puzzles.png'
+import {
+  NavLink,
+} from "react-router-dom";
+import Axios from "axios";
 const MerriweatherFont = createTheme({
     typography: {
         fontFamily: ['Merriweather', 'serif'].join(",")
@@ -39,6 +43,7 @@ const customTheme = createTheme({
     },
   },
 });
+
 function App() {
   const [reviews, setReviews] = useState([]);
   const [name, setName] = useState('');
@@ -50,15 +55,12 @@ function App() {
     setReviews(updatedReviews);
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    const newReview = { id: nextReviewId, name, comment };
-    setReviews([...reviews, newReview]);
-    setName('');
-    setComment('');
-    setNextReviewId(nextReviewId + 1); // Increment the ID counter
+  const handleSubmit = async () => {
+      await Axios.post("https://api-puzzles-pawns.onrender.com/Comment", {
+      }).then(async (response) => {
+        console.log(response)
+      })
   };
-
   return (
     <ThemeProvider theme={customTheme}>
       <div
@@ -71,15 +73,15 @@ function App() {
       >
         <Box sx={{ display: 'flex', flexDirection: 'row', width:'100%', height:'100%'}}>
             <Box sx={{ display: 'flex', flexDirection: 'column' }}>
-                <img className='logo' src={logo} alt='Chess' />
-                <Box sx={{display:'flex', flexDirection:'column', bgcolor:'grey'}}>
+            <NavLink to={'/Home'} style={{ alignSelf: 'center' }}><img className='logo' src={logo} alt='Chess' /></NavLink>
+                <Box sx={{display:'flex', flexDirection:'column', bgcolor:'white'}}>
 
                 </Box>
             </Box>
             <Box sx={{ display: 'flex', flexDirection: 'column', width:'100%' }}>   
-                <Box sx={{ display: 'flex', flexDirection: 'row', justifyContent: 'end', alignItems: 'end'}}>
-                    <Box sx={{display:'flex',flexDirection:'row', justifyContent:'center',alignItems:'center',bgcolor:'#0f4a3b', m:'1em', borderRadius:4, width:'40%'}}>
-                        <ThemeProvider theme={MerriweatherFont}><Typography sx={{m:'1em', fontWeight: 'bold', color:'#F5F5F5'}}>Games</Typography></ThemeProvider>
+                <Box sx={{ display: 'flex', flexDirection: 'row', justifyContent: 'center', alignItems: 'center'}}>
+                    <Box sx={{display:'flex',flexDirection:'row', justifyContent:'center',alignItems:'center', m:'1em', borderRadius:4, width:'20%', border:'3px solid #0f4a3b', mr:'150px'}}>
+                        <ThemeProvider theme={MerriweatherFont}><Typography sx={{m:'1em', fontWeight: 'bold', color:'black'}}>Reviews</Typography></ThemeProvider>
                     </Box>
                 </Box>
                 <Divider variant='middle' orientation='horizontal' sx={{ width: '95%', bgcolor:'#0f4a3b', borderBottomWidth:'0.15em',  }}></Divider>
@@ -141,6 +143,11 @@ function App() {
                         shrink: true,
                       }}
                       className="custom-textfield"
+                      onKeyDown={(e)=>{
+                        if(e.key === "Enter"){
+                          handleSubmit()
+                        }
+                          }}
                     />
                   </Box>
                   <Button
