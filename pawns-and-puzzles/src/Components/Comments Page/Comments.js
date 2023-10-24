@@ -48,7 +48,6 @@ function App() {
   const [reviews, setReviews] = useState([]);
   const [name, setName] = useState('');
   const [comment, setComment] = useState('');
-  const [nextReviewId, setNextReviewId] = useState(1); // Counter for assigning unique review IDs
 
   const renderDelete = (commentRef, ChatRef) => {
     let userId = document.cookie
@@ -86,7 +85,7 @@ function App() {
   }
   const handleDelete = async (ChatID) => {
     await Axios.post("https://api-puzzles-pawns.onrender.com/DeleteComment", {
-      ChatID: ChatID
+      reviewID: ChatID
   }).then(async (response) => {
     console.log(response)
   })
