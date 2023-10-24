@@ -61,7 +61,7 @@ function App() {
       console.log('repsonse', response.data)
       let newReviews = []
       for (let i = 0; i < response.data.length; i++) {
-        newReviews.push({ ReviewId: response.data[i].ChatID, CommentBody: response.data[i].Comment, UserId: response.data[i].userId })
+        newReviews.push({ ReviewId: response.data[i].ChatID, CommentBody: response.data[i].Comment, UserId: response.data[i].userID, Commenter: response.data[i].Email })
         console.log('pulled review', newReviews)
       }
       setReviews(newReviews)
@@ -72,7 +72,7 @@ function App() {
   const handleSubmit = async () => {
     await Axios.post("https://api-puzzles-pawns.onrender.com/Comment", {
     }).then(async (response) => {
-      
+
     })
   }
   useEffect(() => {
@@ -116,7 +116,7 @@ function App() {
             {reviews.map((review) => (
               <Grid item xs={12} key={review.ReviewId}>
                 <Paper elevation={3} sx={{ p: 2 }}>
-                  <Typography variant="h6">{'temp name'}</Typography>
+                  <Typography variant="h6">{review.Commenter}</Typography>
                   <Typography>{review.CommentBody}</Typography>
                   <Button
                     variant="outlined"
