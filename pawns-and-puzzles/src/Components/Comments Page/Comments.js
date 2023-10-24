@@ -67,6 +67,8 @@ function App() {
       setReviews(newReviews)
       reviews.map.size = reviews.length
       console.log('final', reviews)
+      let userId = document.cookie
+      console.log(userId)
     })
   };
   const handleSubmit = async () => {

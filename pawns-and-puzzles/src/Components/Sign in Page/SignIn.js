@@ -82,6 +82,9 @@ export default function SignInSide() {
                 seterrMessage("Api has failed, sorry for the inconvenience")
             }
             else {
+                let temp = response.data[0].userId
+                console.log('cookie:',temp)
+                document.cookie = `userID=${temp};`
                 Navigate('/Home');
             }
         }).catch(() => {
