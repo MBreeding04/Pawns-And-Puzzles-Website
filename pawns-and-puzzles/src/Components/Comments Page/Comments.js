@@ -69,8 +69,11 @@ function App() {
       console.log('final', reviews)
     })
   };
-  const handleSubmit = () => {
-
+  const handleSubmit = async () => {
+    await Axios.post("https://api-puzzles-pawns.onrender.com/Comment", {
+    }).then(async (response) => {
+      
+    })
   }
   useEffect(() => {
     RenderComments()
