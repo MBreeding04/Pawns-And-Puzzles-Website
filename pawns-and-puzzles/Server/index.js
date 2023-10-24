@@ -169,7 +169,7 @@ app.post("/Register", async (req, res) => {
 })
 app.post("/Comment", async (req, res) => {      
     db.query(
-        "SELECT X.Comment, X.userID, Y.Email FROM reviews X INNER JOIN users Y ON X.userId = Y.userId",
+        "SELECT X.ChatID, X.Comment, X.userID, Y.Email FROM reviews X INNER JOIN users Y ON X.userId = Y.userId",
         async (err, result) => {
             if (err) {
                 res.send({ err: err.message })
