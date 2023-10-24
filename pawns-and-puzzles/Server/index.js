@@ -192,7 +192,6 @@ app.post("/Comment", async (req, res) => {
 app.post("/AddComment", async (req, res) => {      
     const comment = req.body.commentEntry;
     const userId = req.body.userId;
-    console.log('reviews ',reviews);
     db.query(
         "INSERT INTO reviews ( Comment, userId) VALUES(?,?)",
         [comment, userId],
