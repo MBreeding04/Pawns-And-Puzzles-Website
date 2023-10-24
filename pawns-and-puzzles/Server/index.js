@@ -189,7 +189,7 @@ app.post("/Comment", async (req, res) => {
         }
     );
 })
-app.post("/Comment", async (req, res) => {      
+app.post("/InsertComment", async (req, res) => {      
     comment = req.body.comment;
     console.log('reviews ',reviews);
     db.query(
@@ -214,7 +214,7 @@ app.post("/Comment", async (req, res) => {
         }
     );
 })
-app.post("/Comment", async (req, res) => {      
+app.post("/UpDateComment", async (req, res) => {      
     comment = req.body.comment;
     email = req.body.comment
     console.log('reviews ',reviews);
