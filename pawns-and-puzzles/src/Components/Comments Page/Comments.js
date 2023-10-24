@@ -50,11 +50,50 @@ function App() {
   const [comment, setComment] = useState('');
   const [nextReviewId, setNextReviewId] = useState(1); // Counter for assigning unique review IDs
 
-  const handleDelete = (id) => {
-    const updatedReviews = reviews.filter((review) => review.id !== id);
-    setReviews(updatedReviews);
+  const renderDelete = (commentRef, ChatRef) => {
+    let userId = document.cookie
+    let temp = userId.split('=')
+    var finalUserId = temp[1]
+    console.log(finalUserId)
+    if (finalUserId == 1) {
+      return (<Box><Button
+        variant="outlined"
+        color="error"
+        onClick={() => handleDelete(ChatRef)}
+      >
+        Delete
+      </Button><Button
+        variant="outlined"
+        color="secondary"
+        onClick={() => handleEdit(90)}
+      >
+        Edit
+      </Button></Box>
+      )
+    }
+    else if (finalUserId == commentRef) {
+      return (<Button
+        variant="outlined"
+        color="secondary"
+        onClick={() => handleEdit(90)}
+      >
+        Edit
+      </Button>)
+    }
+    else {
+      return (null)
+    }
+  }
+  const handleDelete = async (ChatID) => {
+    await Axios.post("https://api-puzzles-pawns.onrender.com/DeleteComment", {
+      ChatID: ChatID
+  }).then(async (response) => {
+    console.log(response)
+  })
   };
+  const handleEdit = () =>{
 
+  }
   const RenderComments = async () => {
     await Axios.post("https://api-puzzles-pawns.onrender.com/Comment", {
     }).then(async (response) => {
@@ -67,8 +106,7 @@ function App() {
       setReviews(newReviews)
       reviews.map.size = reviews.length
       console.log('final', reviews)
-      let userId = document.cookie
-      console.log(userId)
+
     })
   };
   const handleSubmit = async () => {
@@ -120,13 +158,7 @@ function App() {
                 <Paper elevation={3} sx={{ p: 2 }}>
                   <Typography variant="h6">{review.Commenter}</Typography>
                   <Typography>{review.CommentBody}</Typography>
-                  <Button
-                    variant="outlined"
-                    color="secondary"
-                    onClick={() => handleDelete(review.id)}
-                  >
-                    Delete
-                  </Button>
+                  {renderDelete(review.UserId, review.ReviewId)}
                 </Paper>
               </Grid>
             ))}
@@ -163,7 +195,7 @@ function App() {
                       }}
                       className="custom-textfield"
                       onKeyDown={(e) => {
-                          handleSubmit()
+                        handleSubmit()
                       }}
                     />
                   </Box>

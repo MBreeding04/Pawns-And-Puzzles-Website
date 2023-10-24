@@ -214,6 +214,31 @@ app.post("/AddComment", async (req, res) => {
         }
     );
 })
+app.post("/DeleteComment", async (req, res) => {      
+    ChatID = req.body.ChatID;
+    console.log('reviews ',reviews);
+    db.query(
+        "DELETE FROM `reviews` WHERE ChatID = ?",
+        [ChatID],
+        async (err, result) => {
+            if (err) {
+                res.send({ err: err.message })
+            }
+            try {
+                if (result.length > 0) {
+                    res.send(result)
+                }
+                else {
+                    res.send({ message: "None", error: 'No comment' })
+                }
+            }
+            catch (error) {
+                res.send({ message: "None", error: error.message })
+                console.log(`Your error: ${error.message}`)
+            }
+        }
+    );
+})
 app.post("/UpdateComment", async (req, res) => {      
     comment = req.body.comment;
     email = req.body.comment
