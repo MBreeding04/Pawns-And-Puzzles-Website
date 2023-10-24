@@ -219,10 +219,11 @@ app.post("/Comment", async (req, res) => {
 })
 app.post("/Comment", async (req, res) => {      
     comment = req.body.comment;
+    email = req.body.comment
     console.log('reviews ',reviews);
     db.query(
-        "UPDATE reviews SET Comment = ? WHERE Email = ?;",
-        [comment],
+        "UPDATE reviews SET (Comment) = ? WHERE (Email) = ?;",
+        [comment,email],
         async (err, result) => {
             if (err) {
                 res.send({ err: err.message })
