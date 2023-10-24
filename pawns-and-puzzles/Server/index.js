@@ -190,11 +190,12 @@ app.post("/Comment", async (req, res) => {
     );
 })
 app.post("/AddComment", async (req, res) => {      
-    comment = req.body.comment;
+    const comment = req.body.commentEntry;
+    const userId = req.body.userId;
     console.log('reviews ',reviews);
     db.query(
-        "INSERT INTO reviews (Comment) VALUES(?)",
-        [comment],
+        "INSERT INTO reviews ( Comment, userId) VALUES(?,?)",
+        [comment, userId],
         async (err, result) => {
             if (err) {
                 res.send({ err: err.message })

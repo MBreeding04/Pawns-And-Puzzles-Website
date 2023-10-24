@@ -87,7 +87,7 @@ function App() {
     await Axios.post("https://api-puzzles-pawns.onrender.com/DeleteComment", {
       reviewID: ChatID
   }).then(async (response) => {
-    console.log(response)
+    RenderComments()
   })
   };
   const handleEdit = () =>{
@@ -109,9 +109,14 @@ function App() {
     })
   };
   const handleSubmit = async () => {
-    await Axios.post("https://api-puzzles-pawns.onrender.com/Comment", {
+    let userId = document.cookie
+    let temp = userId.split('=')
+    var finalUserId = temp[1]
+    await Axios.post("https://api-puzzles-pawns.onrender.com/AddComment", {
+      commentEntry: comment,
+      userId: finalUserId
     }).then(async (response) => {
-
+      console.log(response)
     })
   }
   useEffect(() => {
