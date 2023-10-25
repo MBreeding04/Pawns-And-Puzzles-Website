@@ -73,7 +73,7 @@ export default function Browse() {
     }
     useEffect(() => {
         SearchDatabase()
-    })
+    },)
     return (
         <Box sx={{ display: 'flex', bgcolor: '#fefff5', minHeight:'100%' }}>
             <Box sx={{ display: 'flex', flexDirection: 'row', width: '100%', height: '100%' }}>

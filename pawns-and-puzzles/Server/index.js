@@ -222,8 +222,8 @@ app.post("/DeleteComment", async (req, res) => {
     );
 })
 app.post("/UpdateComment", async (req, res) => {
-    comment = req.body.comment;
-    email = req.body.comment
+    const comment = req.body.comment;
+    const email = req.body.email
     console.log('reviews ', reviews);
     db.query(
         "UPDATE reviews SET (Comment) = ? WHERE (Email) = ?;",
@@ -232,7 +232,7 @@ app.post("/UpdateComment", async (req, res) => {
             if (err) {
                 res.send({ err: err.message })
             }
-            if (result.length > 0) {
+            else if (result.length > 0) {
                 res.send(result)
             }
             else {

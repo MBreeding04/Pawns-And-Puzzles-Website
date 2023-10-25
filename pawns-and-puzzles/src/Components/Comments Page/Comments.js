@@ -18,6 +18,9 @@ import {
   NavLink,
 } from "react-router-dom";
 import Axios from "axios";
+import { Modal } from '@mui/material';
+import CloseIcon from '@mui/icons-material/Close';
+import IconButton from '@mui/material/IconButton';
 const MerriweatherFont = createTheme({
   typography: {
     fontFamily: ['Merriweather', 'serif'].join(",")
@@ -46,54 +49,9 @@ const customTheme = createTheme({
 
 function App() {
   const [reviews, setReviews] = useState([]);
-  const [name, setName] = useState('');
   const [comment, setComment] = useState('');
-
-  const renderDelete = (commentRef, ChatRef) => {
-    let userId = document.cookie
-    let temp = userId.split('=')
-    var finalUserId = temp[1]
-    console.log(finalUserId)
-    if (finalUserId == 1) {
-      return (<Box><Button
-        variant="outlined"
-        sx={{mr:4}}
-        color="error"
-        onClick={() => handleDelete(ChatRef)}
-      >
-        Delete
-      </Button><Button
-        variant="outlined"
-        color="secondary"
-        onClick={() => handleEdit(90)}
-      >
-        Edit
-      </Button></Box>
-      )
-    }
-    else if (finalUserId == commentRef) {
-      return (<Button
-        variant="outlined"
-        color="secondary"
-        onClick={() => handleEdit(90)}
-      >
-        Edit
-      </Button>)
-    }
-    else {
-      return (null)
-    }
-  }
-  const handleDelete = async (ChatID) => {
-    await Axios.post("https://api-puzzles-pawns.onrender.com/DeleteComment", {
-      reviewID: ChatID
-  }).then(async (response) => {
-    RenderComments()
-  })
-  };
-  const handleEdit = () =>{
-
-  }
+  const [editComment, seteditComment] = useState('');
+  const [isOpen, setisOpen] = useState(false);
   const RenderComments = async () => {
     await Axios.post("https://api-puzzles-pawns.onrender.com/Comment", {
     }).then(async (response) => {
@@ -106,9 +64,60 @@ function App() {
       setReviews(newReviews)
       reviews.map.size = reviews.length
       console.log('final', reviews)
-
     })
   };
+
+  const renderDelete = (commentRef, ChatRef, Comment) => {
+    let userId = document.cookie
+    let temp = userId.split('=')
+    var finalUserId = temp[1]
+    console.log(finalUserId)
+    if (finalUserId == 1) {
+      return (<Box><Button
+        variant="outlined"
+        sx={{ mr: 4 }}
+        color="error"
+        onClick={() => handleDelete(ChatRef)}
+      >
+        Delete
+      </Button><Button
+        variant="outlined"
+        color="secondary"
+        onClick={() => {
+          setisOpen(true)
+          seteditComment(Comment)
+        }}
+      >
+          Edit
+        </Button></Box>
+      )
+    }
+    else if (finalUserId == commentRef) {
+      return (<Button
+        variant="outlined"
+        color="secondary"
+        onClick={() => {
+          setisOpen(true)
+          seteditComment(Comment)
+        }}
+      >
+        Edit
+      </Button>)
+    }
+    else {
+      return (null)
+    }
+  }
+  const handleDelete = async (ChatID) => {
+    await Axios.post("https://api-puzzles-pawns.onrender.com/DeleteComment", {
+      reviewID: ChatID
+    }).then(async (response) => {
+      RenderComments()
+    })
+  };
+  const handleEdit = () => {
+
+  }
   const handleSubmit = async () => {
     let userId = document.cookie
     let temp = userId.split('=')
@@ -142,35 +151,35 @@ function App() {
             </Box>
           </Box>
           <Box sx={{ display: 'flex', flexDirection: 'column', width: '100%' }}>
-          <Box sx={{ display: 'flex', flexDirection: 'row', justifyContent: 'end', alignItems: 'end' }}>
-                    <NavLink to={'/Home'} style={{ alignSelf: 'center' }}>
-                            <Button sx={{
-                                my: '2em', mx: '1em', width: '15em', backgroundColor: '#0f4a3b',
-                                ':hover': {
-                                    bgcolor: '#09261f',
-                                    color: 'white'
-                                }
-                            }} variant='contained'>Home</Button>
-                        </NavLink>
-                        <NavLink to={'/Vendors'} style={{ alignSelf: 'center' }}>
-                            <Button sx={{
-                                my: '2em', mx: '1em', width: '15em', backgroundColor: '#0f4a3b',
-                                ':hover': {
-                                    bgcolor: '#09261f',
-                                    color: 'white'
-                                }
-                            }} variant='contained'>Become a Vendor</Button>
-                        </NavLink>
-                        <NavLink to={'/Games'} style={{ alignSelf: 'center' }}>
-                            <Button sx={{
-                                my: '2em', mx: '1em', width: '15em', backgroundColor: '#0f4a3b',
-                                ':hover': {
-                                    bgcolor: '#09261f',
-                                    color: 'white'
-                                }
-                            }} variant='contained'>Browse Games</Button>
-                        </NavLink>
-                    </Box>
+            <Box sx={{ display: 'flex', flexDirection: 'row', justifyContent: 'end', alignItems: 'end' }}>
+              <NavLink to={'/Home'} style={{ alignSelf: 'center' }}>
+                <Button sx={{
+                  my: '2em', mx: '1em', width: '15em', backgroundColor: '#0f4a3b',
+                  ':hover': {
+                    bgcolor: '#09261f',
+                    color: 'white'
+                  }
+                }} variant='contained'>Home</Button>
+              </NavLink>
+              <NavLink to={'/Vendors'} style={{ alignSelf: 'center' }}>
+                <Button sx={{
+                  my: '2em', mx: '1em', width: '15em', backgroundColor: '#0f4a3b',
+                  ':hover': {
+                    bgcolor: '#09261f',
+                    color: 'white'
+                  }
+                }} variant='contained'>Become a Vendor</Button>
+              </NavLink>
+              <NavLink to={'/Games'} style={{ alignSelf: 'center' }}>
+                <Button sx={{
+                  my: '2em', mx: '1em', width: '15em', backgroundColor: '#0f4a3b',
+                  ':hover': {
+                    bgcolor: '#09261f',
+                    color: 'white'
+                  }
+                }} variant='contained'>Browse Games</Button>
+              </NavLink>
+            </Box>
             <Divider variant='middle' orientation='horizontal' sx={{ width: '95%', bgcolor: '#0f4a3b', borderBottomWidth: '0.15em', }}></Divider>
           </Box>
         </Box>
@@ -188,7 +197,7 @@ function App() {
                 <Paper elevation={3} sx={{ p: 2 }}>
                   <Typography fontWeight={'bold'}>{review.CommentBody}</Typography>
                   <Typography color={'grey'} variant="h6">- {review.Commenter}</Typography>
-                  {renderDelete(review.UserId, review.ReviewId)}
+                  {renderDelete(review.UserId, review.ReviewId, review.CommentBody)}
                 </Paper>
               </Grid>
             ))}
@@ -196,37 +205,69 @@ function App() {
           <Grid container spacing={2}>
             <Grid item xs={12}>
               <Paper elevation={3} sx={{ p: 2, mt: 2 }}>
-                <Typography sx={{mb:2}} variant="h6">Leave Your Review</Typography>
-                <form onSubmit={handleSubmit}>
-                  <Box sx={{ mb: 2 }}> {/* Add margin-bottom */}
-                    <TextField
-                      required
-                      fullWidth
-                      label="Your Review"
-                      multiline
-                      rows={4}
-                      value={comment}
-                      onChange={(e) => setComment(e.target.value)}
-                      InputLabelProps={{
-                        shrink: true,
-                      }}
-                      className="custom-textfield"
-                    />
-                  </Box>
-                  <Button
-                    type="submit"
-                    variant="contained"
-                    color="primary"
+                <Typography sx={{ mb: 2 }} variant="h6">Leave Your Review</Typography>
+                <Box sx={{ mb: 2 }}> {/* Add margin-bottom */}
+                  <TextField
+                    required
                     fullWidth
-                    sx={{ mt: 2 }}
-                  >
-                    Submit Review
-                  </Button>
-                </form>
+                    label="Your Review"
+                    multiline
+                    rows={4}
+                    value={comment}
+                    onChange={(e) => setComment(e.target.value)}
+                    InputLabelProps={{
+                      shrink: true,
+                    }}
+                    className="custom-textfield"
+                  />
+                </Box>
+                <Button
+                  type="submit"
+                  variant="contained"
+                  color="primary"
+                  fullWidth
+                  sx={{ mt: 2 }}
+                  onClick={handleSubmit}
+                >
+                  Submit Review
+                </Button>
               </Paper>
             </Grid>
           </Grid>
         </Container>
+        <Modal sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }} open={isOpen} onClose={() => setisOpen(false)}>
+          <Box sx={{ display: 'flex', bgcolor: 'white', flexDirection: 'column', width: '50%' }}>
+            <Box sx={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between' }}>
+              <ThemeProvider theme={customTheme}><Typography sx={{ m: '0.5em' }} fontWeight={'bold'}>Edit your review</Typography></ThemeProvider>
+              <IconButton onClick={() => setisOpen(false)}><CloseIcon></CloseIcon></IconButton>
+            </Box>
+            <Divider></Divider>
+            <Box sx={{ m: 2 }}> {/* Add margin-bottom */}
+              <TextField
+                required
+                fullWidth
+                label="Your Review"
+                multiline
+                rows={4}
+                value={editComment}
+                onChange={(e) => seteditComment(e.target.value)}
+                InputLabelProps={{
+                  shrink: true,
+                }}
+                className="custom-textfield"
+              />
+            </Box>
+            <Button
+              type="submit"
+              variant="contained"
+              color="primary"
+              sx={{ m: 2 }}
+              onClick={handleEdit}
+            >
+              Submit Review
+            </Button>
+          </Box>
+        </Modal>
       </div>
     </ThemeProvider>
   );
