@@ -21,6 +21,8 @@ import Axios from "axios";
 import { Modal } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
 import IconButton from '@mui/material/IconButton';
+import Collapse from '@mui/material/Collapse';
+import Alert from '@mui/material/Alert';
 const MerriweatherFont = createTheme({
   typography: {
     fontFamily: ['Merriweather', 'serif'].join(",")
@@ -52,6 +54,7 @@ function App() {
   const [comment, setComment] = useState('');
   const [editComment, seteditComment] = useState('');
   const [isOpen, setisOpen] = useState(false);
+  const [isAlert, setisAlert] = useState(false);
   const [currentUserId, setcurrentUserId] = useState(0)
   const RenderComments = async () => {
     await Axios.post("https://api-puzzles-pawns.onrender.com/Comment", {
@@ -88,7 +91,7 @@ function App() {
           onClick={() => {
             setisOpen(true)
             seteditComment(Comment)
-            setcurrentUserId(commentRef)
+            setcurrentUserId(ChatRef)
           }}
         >
           Edit
@@ -102,7 +105,7 @@ function App() {
         onClick={() => {
           setisOpen(true)
           seteditComment(Comment)
-          setcurrentUserId(commentRef)
+          setcurrentUserId(ChatRef)
         }}
       >
         Edit
@@ -120,25 +123,33 @@ function App() {
     })
   };
   const handleEdit = async () => {
-      await Axios.post("https://api-puzzles-pawns.onrender.com/UpdateComment", {
-        comment: editComment,
-        userId: currentUserId
-      }).then(async (response) => {
-        setisOpen(false)
-        RenderComments()
-      })
+    await Axios.post("https://api-puzzles-pawns.onrender.com/UpdateComment", {
+      comment: editComment,
+      userId: currentUserId
+    }).then(async (response) => {
+      setisOpen(false)
+      RenderComments()
+    })
   };
   const handleSubmit = async () => {
-    let userId = document.cookie
-    let temp = userId.split('=')
-    var finalUserId = temp[1]
-    await Axios.post("https://api-puzzles-pawns.onrender.com/AddComment", {
-      commentEntry: comment,
-      userId: finalUserId
-    }).then(async (response) => {
-      console.log(response)
-    })
-    RenderComments()
+    if (comment === '') {
+      setisAlert(true)
+    }
+    else {
+      setComment('')
+      setisAlert(false)
+      let userId = document.cookie
+      let temp = userId.split('=')
+      var finalUserId = temp[1]
+      await Axios.post("https://api-puzzles-pawns.onrender.com/AddComment", {
+        commentEntry: comment,
+        userId: finalUserId
+      }).then(async (response) => {
+        console.log(response)
+      })
+      RenderComments()
+    }
+
   }
   useEffect(() => {
     RenderComments()
@@ -217,6 +228,9 @@ function App() {
               <Paper elevation={3} sx={{ p: 2, mt: 2 }}>
                 <Typography sx={{ mb: 2 }} variant="h6">Leave Your Review</Typography>
                 <Box sx={{ mb: 2 }}> {/* Add margin-bottom */}
+                  <Collapse in={isAlert}>
+                    <Alert severity='error'>Please input text in the body paragraph</Alert>
+                  </Collapse>
                   <TextField
                     required
                     fullWidth
