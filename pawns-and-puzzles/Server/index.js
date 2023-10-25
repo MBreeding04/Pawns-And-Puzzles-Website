@@ -240,7 +240,7 @@ app.post("/UpdateComment", async (req, res) => {
     const comment = req.body.comment;
     const email = req.body.email
     db.query(
-        "UPDATE reviews SET (Comment) = ? WHERE (Email) = ?;",
+        "UPDATE reviews SET Comment = ? WHERE Email = ?;",
         [comment, email],
         async (err, result) => {
             if (err) {
