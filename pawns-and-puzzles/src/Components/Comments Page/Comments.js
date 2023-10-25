@@ -120,17 +120,13 @@ function App() {
     })
   };
   const handleEdit = async () => {
-
-    await Axios.post("https://api-puzzles-pawns.onrender.com/PullEmail", {
-      userId: currentUserId
-    }).then(async (response) => {
       await Axios.post("https://api-puzzles-pawns.onrender.com/UpdateComment", {
         comment: editComment,
-        email: response.data[0].Email
+        userId: currentUserId
       }).then(async (response) => {
-        console.log(response)
+        setisOpen(false)
+        RenderComments()
       })
-    })
   };
   const handleSubmit = async () => {
     let userId = document.cookie

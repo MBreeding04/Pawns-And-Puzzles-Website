@@ -218,7 +218,7 @@ app.post("/UpdateComment", async (req, res) => {
     const comment = req.body.comment;
     const userId = req.body.userId
     db.query(
-        "UPDATE reviews SET Comment = ? WHERE userId = ?;",
+        "UPDATE reviews SET Comment = ? WHERE ChatID = ?;",
         [comment, userId],
         async (err, result) => {
             if (err) {
