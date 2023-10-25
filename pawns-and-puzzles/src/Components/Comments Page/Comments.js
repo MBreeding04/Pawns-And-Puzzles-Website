@@ -52,6 +52,7 @@ function App() {
   const [comment, setComment] = useState('');
   const [editComment, seteditComment] = useState('');
   const [isOpen, setisOpen] = useState(false);
+  const [currentUserId,setcurrentUserId] = useState(0)
   const RenderComments = async () => {
     await Axios.post("https://api-puzzles-pawns.onrender.com/Comment", {
     }).then(async (response) => {
@@ -80,16 +81,18 @@ function App() {
         onClick={() => handleDelete(ChatRef)}
       >
         Delete
-      </Button><Button
+      </Button>
+      <Button
         variant="outlined"
         color="secondary"
         onClick={() => {
           setisOpen(true)
           seteditComment(Comment)
+          setcurrentUserId(commentRef)
         }}
       >
-          Edit
-        </Button></Box>
+        Edit
+      </Button></Box>
       )
     }
     else if (finalUserId == commentRef) {
@@ -99,6 +102,7 @@ function App() {
         onClick={() => {
           setisOpen(true)
           seteditComment(Comment)
+          setcurrentUserId(commentRef)
         }}
       >
         Edit
@@ -115,9 +119,17 @@ function App() {
       RenderComments()
     })
   };
-  const handleEdit = () => {
+  const handleEdit = async () => {
 
-  }
+    await Axios.post("https://api-puzzles-pawns.onrender.com/PullEmail",{
+      userId: currentUserId
+    }).then(async (response) =>{
+      await Axios.post("https://api-puzzles-pawns.onrender.com/UpdateComment"),{
+        comment: editComment,
+        email: response.data[0].Email
+      }
+    })
+  };
   const handleSubmit = async () => {
     let userId = document.cookie
     let temp = userId.split('=')

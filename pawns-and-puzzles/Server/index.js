@@ -239,7 +239,6 @@ app.post("/DeleteComment", async (req, res) => {
 app.post("/UpdateComment", async (req, res) => {
     const comment = req.body.comment;
     const email = req.body.email
-    console.log('reviews ', reviews);
     db.query(
         "UPDATE reviews SET (Comment) = ? WHERE (Email) = ?;",
         [comment, email],
