@@ -238,10 +238,10 @@ app.post("/DeleteComment", async (req, res) => {
 })
 app.post("/UpdateComment", async (req, res) => {
     const comment = req.body.comment;
-    const email = req.body.email
+    const userId = req.body.userId
     db.query(
-        "UPDATE reviews SET Comment = ? WHERE Email = ?;",
-        [comment, email],
+        "UPDATE reviews SET Comment = ? WHERE userId = ?;",
+        [comment, userId],
         async (err, result) => {
             if (err) {
                 res.send({ err: err.message })
