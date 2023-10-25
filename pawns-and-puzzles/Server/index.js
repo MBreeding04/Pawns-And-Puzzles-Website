@@ -21,32 +21,47 @@ app.get("/", (_req, res) => {
 app.post("/SignIn", async (req, res) => {
     const Email = req.body.Email;
     const Password = req.body.Password;
-    try {
-        db.query(
-            "SELECT * FROM users WHERE Email = ? AND Password = ?;",
-            [Email, Password],
-            (err, result) => {
-                console.log(`error message: ${err}`)
-                console.log(`result:`)
-                console.log(JSON.stringify(result))
-                if (err) {
-                    res.send({ message: "None", err: err })
-                }
-                else {
-                    if (result.length > 0) {
-                        res.send(result)
-                    }
-                    else {
-                        res.send({ message: "None" })
-                    }
-                }
+    db.query(
+        "SELECT * FROM users WHERE Email = ? AND Password = ?;",
+        [Email, Password],
+        (err, result) => {
+            console.log(`error message: ${err}`)
+            console.log(`result:`)
+            console.log(JSON.stringify(result))
+            if (err) {
+                res.send({ message: "None", err: err })
             }
-        );
-    }
-    catch (error) {
-        res.send({ message: "API" })
-        console.log(`Your error: ${error.message}`)
-    }
+
+            else if (result.length > 0) {
+                res.send(result)
+            }
+            else {
+                res.send({ message: "None" })
+            }
+        }
+    );
+})
+app.post("/PullEmail", async (req, res) => {
+    const Id = req.body.userId
+    db.query(
+        "SELECT Email FROM users WHERE userId = ?;",
+        [Id],
+        (err, result) => {
+            console.log(`error message: ${err}`)
+            console.log(`result:`)
+            console.log(JSON.stringify(result))
+            if (err) {
+                res.send({ message: "None", err: err })
+            }
+
+            else if (result.length > 0) {
+                res.send(result)
+            }
+            else {
+                res.send({ message: "None" })
+            }
+        }
+    );
 })
 app.post("/ForgotPassword", async (req, res) => {
     const Email = req.body.Email;
