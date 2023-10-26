@@ -15,6 +15,7 @@ const db = mysql.createConnection({
     database: "sql9653263",
     port: '3306'
 })
+
 app.get("/", (_req, res) => {
     res.json({ message: "Connected" });
 });
