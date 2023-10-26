@@ -55,9 +55,6 @@ export default function Browse() {
                         </NavLink>
                     </Box>
                     <Divider variant='middle' orientation='horizontal' sx={{ width: '100%', bgcolor: '#0f4a3b', borderBottomWidth: '0.15em', }}></Divider>
-                    <Box sx={{display:'flex',flexDirection:'row', justifyContent:'center',alignItems:'center', m:'1em', borderRadius:4, width:'20%', border:'3px solid #0f4a3b', mr:'150px'}}>
-                        <ThemeProvider theme={MerriweatherFont}><Typography sx={{m:'1em', fontWeight: 'bold', color:'black'}}>Vendor Name</Typography></ThemeProvider>
-                    </Box>
                 </Box>
             </Box>
         </Box>
