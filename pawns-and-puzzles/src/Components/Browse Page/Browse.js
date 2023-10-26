@@ -79,7 +79,7 @@ export default function Browse() {
             <Box sx={{ display: 'flex', flexDirection: 'row', width: '100%', height: '100%' }}>
                 <Box sx={{ display: 'flex', flexDirection: 'column' }}>
                     <NavLink to={'/Home'} style={{ alignSelf: 'center' }}><img className='logo' src={logo} alt='Chess' /></NavLink>
-                    <Box sx={{ display: 'flex', flexDirection: 'column', bgcolor: '#b8b8b8', width: '200px', m: '1em', borderRadius: 3,boxShadow:'0px 3px 3px -2px rgba(0,0,0,0.2), 0px 3px 4px 0px rgba(0,0,0,0.14), 0px 1px 8px 0px rgba(0,0,0,0.12);' }}>
+                    <Box sx={{ display: 'flex', flexDirection: 'column', bgcolor: '#e9e9e9', width: '200px', m: '1em', borderRadius: 3,boxShadow:'0px 3px 3px -2px rgba(0,0,0,0.2), 0px 3px 4px 0px rgba(0,0,0,0.14), 0px 1px 8px 0px rgba(0,0,0,0.12);' }}>
                         <FormGroup>
                             <FormControlLabel sx={{alignItems:'center',mx:'0.5em'}}control={<Checkbox defaultChecked />} label="Board Game" />
                             <FormControlLabel sx={{alignItems:'center',mx:'0.5em'}}control={<Checkbox defaultChecked />} label="Lowest to Highest" />
@@ -142,7 +142,7 @@ export default function Browse() {
                     <Box sx={{ display: 'flex', flexDirection: 'row', flexWrap: 'wrap' }}>
                         {searchResult.map((result) => (
                             <Box sx={{
-                                bgcolor: '#dddedc',
+                                bgcolor: '#e9e9e9',
                                 borderRadius: 2, Width:'400px', display: 'flex', flexDirection: 'column', alignItems: 'center', mx: '1em',my:'1em', boxShadow:'0px 3px 3px -2px rgba(0,0,0,0.2), 0px 3px 4px 0px rgba(0,0,0,0.14), 0px 1px 8px 0px rgba(0,0,0,0.12);'
                             }}>
                                 <img className='products' src = {`${result.picture}`} alt='product'></img><ThemeProvider theme={MerriweatherFont}><Typography sx={{ fontSize: '2em' }}>{result.name}</Typography>
