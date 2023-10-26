@@ -216,6 +216,7 @@ app.post("/DeleteComment", async (req, res) => {
     );
 })
 app.post("/UpdateComment", async (req, res) => {
+    
     const comment = req.body.comment;
     const userId = req.body.userId
     db.query(
