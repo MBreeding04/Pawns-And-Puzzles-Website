@@ -75,7 +75,7 @@ export default function Browse() {
         SearchDatabase()
     },)
     return (
-        <Box sx={{ display: 'flex', bgcolor: '#fefff5', minHeight:'100%' }}>
+        <Box sx={{ display: 'flex', minHeight:'100%' }}>
             <Box sx={{ display: 'flex', flexDirection: 'row', width: '100%', height: '100%' }}>
                 <Box sx={{ display: 'flex', flexDirection: 'column' }}>
                     <NavLink to={'/Home'} style={{ alignSelf: 'center' }}><img className='logo' src={logo} alt='Chess' /></NavLink>

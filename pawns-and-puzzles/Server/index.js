@@ -15,6 +15,7 @@ const db = mysql.createConnection({
     database: "sql9653263",
     port: '3306'
 })
+
 app.get("/", (_req, res) => {
     res.json({ message: "Connected" });
 });
@@ -215,6 +216,7 @@ app.post("/DeleteComment", async (req, res) => {
     );
 })
 app.post("/UpdateComment", async (req, res) => {
+    
     const comment = req.body.comment;
     const userId = req.body.userId
     db.query(
