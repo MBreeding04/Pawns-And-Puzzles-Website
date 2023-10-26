@@ -235,6 +235,104 @@ app.post("/UpdateComment", async (req, res) => {
         }
     );
 })
+app.post("/GetGames", async (req, res) => {
+    const VendorID = req.body.VendorID
+    db.query(
+        "SELECT * FROM game WHERE VendorID = ?;",
+        [VendorID],
+        async (err, result) => {
+            if (err) {
+                res.send({ err: err.message })
+            }
+            else{
+                if (result.length > 0) {
+                    res.send(result)
+                }
+                else {
+                    res.send({ message: "None", error: 'No result matches your query' })
+                }
+            }
+        }
+    );
+})
+app.post("/AddGame", async (req, res) => {
+    const Gname = req.body.Gname;
+    const descp = req.body.descp;
+    const price = req.body.price
+    db.query(
+        "INSERT INTO games ( Gname, descp, price) VALUES(?,?,?)",
+        [Gname, descp, price ],
+        async (err, result) => {
+            if (err) {
+                res.send({ err: err.message })
+            }
+            if (result.length > 0) {
+                res.send(result)
+            }
+            else {
+                res.send({ message: "None", error: 'No comment' })
+            }
+        }
+    );
+})
+app.post("/GetVendor", async (req, res) => {
+    db.query(
+        "SELECT * FROM vendors;",
+        async (err, result) => {
+            if (err) {
+                res.send({ err: err.message })
+            }
+            else{
+                if (result.length > 0) {
+                    res.send(result)
+                }
+                else {
+                    res.send({ message: "None", error: 'No result matches your query' })
+                }
+            }
+        }
+    );
+})
+app.post("/UpdateGames", async (req, res) => {
+    
+    const GameID = req.body.GameId;
+    const Gname = req.body.Gname;
+    const descp = req.body.descp;
+    const price = req.body.price
+    db.query(
+        "UPDATE reviews SET Gname = ?, descp = ?, price = ?  WHERE GameID = ?;",
+        [Gname, descp, price, GameID],
+        async (err, result) => {
+            if (err) {
+                res.send({ err: err.message })
+            }
+            else if (result.length > 0) {
+                res.send(result)
+            }
+            else {
+                res.send({ message: "None", error: 'No comment' })
+            }
+        }
+    );
+})
+app.post("/DeleteGame", async (req, res) => {
+    const GameID = req.body.GameID;
+    db.query(
+        "DELETE FROM `game` WHERE GameID = ?",
+        [GameID],
+        async (err, result) => {
+            if (err) {
+                res.send({ err: err.message })
+            }
+            if (result.length > 0) {
+                res.send(result)
+            }
+            else {
+                res.send({ message: "None", error: 'No comment' })
+            }
+        }
+    );
+})
 app.listen('5000', () => {
     console.log("Connected to server")
 })
