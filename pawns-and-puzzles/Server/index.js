@@ -216,7 +216,6 @@ app.post("/DeleteComment", async (req, res) => {
     );
 })
 app.post("/UpdateComment", async (req, res) => {
-    
     const comment = req.body.comment;
     const userId = req.body.userId
     db.query(
@@ -258,10 +257,11 @@ app.post("/GetGames", async (req, res) => {
 app.post("/AddGame", async (req, res) => {
     const Gname = req.body.Gname;
     const descp = req.body.descp;
-    const price = req.body.price
+    const price = req.body.price;
+    const vendorId = req.body.vendorID;
     db.query(
-        "INSERT INTO games ( Gname, descp, price) VALUES(?,?,?)",
-        [Gname, descp, price ],
+        "INSERT INTO games ( Gname, descp, price, VendorID) VALUES(?,?,?,?)",
+        [Gname, descp, price, vendorId],
         async (err, result) => {
             if (err) {
                 res.send({ err: err.message })

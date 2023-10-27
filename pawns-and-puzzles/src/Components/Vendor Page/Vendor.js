@@ -1,213 +1,232 @@
-import { Typography, Box, Divider, Button } from '@mui/material';
+import { Typography, Box, Divider, Button, Modal, TextField } from '@mui/material';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import FormGroup from '@mui/material/FormGroup';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import Checkbox from '@mui/material/Checkbox';
 import Axios from "axios";
-import TextField from '@mui/material/TextField';
 import { useState, useEffect } from 'react';
 import logo from '../../Assets/Logo/Pawns&Puzzles.png'
-import Collapse from '@mui/material/Collapse';
-import Alert from '@mui/material/Alert';
-import React, { Component } from 'react';
-import '../Browse Page/Browse.css'
+import React from 'react';
+import '../Vendor Page/Vendor.css'
 import {
-    NavLink,
+  NavLink,
 } from "react-router-dom";
+import CloseIcon from '@mui/icons-material/Close';
+import IconButton from '@mui/material/IconButton';
+import Carousel from 'react-material-ui-carousel'
+import Collapse from '@mui/material/Collapse';
 const MerriweatherFont = createTheme({
-    typography: {
-        fontFamily: ['Merriweather', 'serif'].join(",")
-    },
+  typography: {
+    fontFamily: ['Merriweather', 'serif'].join(",")
+  },
 });
 const SpecialEliteFont = createTheme({
-    typography: {
-        fontFamily: ['Special Elite', 'cursive'].join(",")
-    },
+  typography: {
+    fontFamily: ['Special Elite', 'cursive'].join(",")
+  },
 });
 const customTheme = createTheme({
 
-    typography: {
-        fontFamily: 'Merriweather, serif',
+  typography: {
+    fontFamily: 'Merriweather, serif',
+  },
+  palette: {
+    primary: {
+      main: '#0f4a3b',
     },
-    palette: {
-        primary: {
-            main: '#0f4a3b',
-        },
-        text: {
-            primary: '#000',
-            secondary: '#fff',
-        },
-    }
+    text: {
+      primary: '#000',
+      secondary: '#fff',
+    },
+  }
 });
 
 
 
 export default function Browse() {
-    const [searchQuery, setSearchQuery] = useState('')
-    const [searchResult, setSearchResult] = useState([])
-    const [isAlert, setIsAlert] = useState(false)
-    const [alertMessage, setalertMessage] = useState('')
-    const SearchDatabase = async () => {
-        await Axios.post("https://api-puzzles-pawns.onrender.com/Games", {
-            Gname: searchQuery
-        }).then(async (response) => {
-            if (response.data.message === 'None') {
-                setIsAlert(true)
-                setalertMessage(response.data.error)
-            }
-            else {
-                setIsAlert(false)
-                let temp = []
-                for (let i = 0; i < (response.data.length); i++) {
-                    let tempName = (response.data[i].Gname);
-                    let tempDesc = (response.data[i].descp);
-                    let tempType = (response.data[i].Type);
-                    let tempPrice = (response.data[i].Price);
-                    let tempPic = (response.data[i].picture);
-                    temp.push({ name: tempName, desc: tempDesc, type: tempType, price: tempPrice, picture: tempPic});
-                }
-                setSearchResult(temp)
-                searchResult.map.size = searchResult.length
-                console.log('result in state: ', searchResult);
-            }
-        }).catch(() => {
-        }
-        );
-    }
-    useEffect(() => {
-        SearchDatabase()
-    },)
-    return (
-<<<<<<< HEAD
-        <Box sx={{ display: 'flex', bgcolor: '#fefff5', minHeight: '100%' }}>
-          <Box sx={{ display: 'flex', flexDirection: 'row', width: '100%', height: '100%' }}>
-            <Box sx={{ display: 'flex', flexDirection: 'column', width: '100%' }}>
-              <Box sx={{ display: 'flex', flexDirection: 'row', justifyContent: 'end', alignItems: 'end' }}>
-                <NavLink to={'/Home'} style={{ alignSelf: 'center' }}>
-                  <Button sx={{
-                    my: '2em', mx: '1em', width: '15em', backgroundColor: '#0f4a3b',
-                    ':hover': {
-                      bgcolor: '#09261f',
-                      color: 'white'
-                    }
-                  }} variant='contained'>Home</Button>
-                </NavLink>
-                <NavLink to={'/Browse'} style={{ alignSelf: 'center' }}>
-                  <Button sx={{
-                    my: '2em', mx: '1em', width: '15em', backgroundColor: '#0f4a3b',
-                    ':hover': {
-                      bgcolor: '#09261f',
-                      color: 'white'
-                    }
-                  }} variant='contained'>Browse Games</Button>
-                </NavLink>
-                <NavLink to={'/Comments'} style={{ alignSelf: 'center' }}>
-                  <Button sx={{
-                    my: '2em', mx: '1em', width: '15em', backgroundColor: '#0f4a3b',
-                    ':hover': {
-                      bgcolor: '#09261f',
-                      color: 'white'
-                    }
-                  }} variant='contained'>Community</Button>
-                </NavLink>
-              </Box>
-              <Divider variant='middle' orientation='horizontal' sx={{ width: '100%', bgcolor: '#0f4a3b', borderBottomWidth: '0.15em', }}></Divider>
-              <Box sx={{ display: 'flex', flexDirection: 'row', width: '100%', justifyContent: 'end' }}>
-                <ThemeProvider theme={customTheme}>
-                  <TextField sx={{ width: '30%', my: '1em', mx: '2em' }}
-                    InputLabelProps={{
-                      style: { color: '#0f4a3b' },
-                    }}
-                    margin="normal"
-                    name="Search"
-                    label="Search"
-                    id="Search"
-                    value={searchQuery}
-                    onChange={(e) => {
-                      setSearchQuery(e.target.value)
-                    }
-                    }
-                  />
-                </ThemeProvider>
-              </Box>
-              <Collapse in={isAlert}>
-                <Alert severity="error">{alertMessage}</Alert>
-              </Collapse>
-              <Box sx={{ display: 'flex', flexDirection: 'row', flexWrap: 'wrap' }}>
-                {searchResult.map((result) => (
-                  <Box sx={{
-                    bgcolor: '#e9e9e9',
-                    borderRadius: 2, Width: '400px', display: 'flex', flexDirection: 'column', alignItems: 'center', mx: '1em', my: '1em', boxShadow: '0px 3px 3px -2px rgba(0,0,0,0.2), 0px 3px 4px 0px rgba(0,0,0,0.14), 0px 1px 8px 0px rgba(0,0,0,0.12);'
-                  }}>
-                    <img className='products' src={result.picture} alt='product'></img>
-                    <ThemeProvider theme={MerriweatherFont}>
-                      <Typography sx={{ fontSize: '2em' }}>{result.name}</Typography>
-                      <Typography align='left' color={'#595959'} sx={{ fontSize: '1em', mt: '1em', maxWidth: '30em', mx: '1em' }}>{result.desc}</Typography>
-                      <Typography align='left' color={'#0f4a3b'} sx={{ fontSize: '1.5em', mt: '0.5em', fontWeight: 'bold' }}>{result.price}</Typography>
-                      <Button sx={{
-                        my: '2em', mx: '1em', width: '15em', backgroundColor: '#0f4a3b',
-                        ':hover': {
-                          bgcolor: '#09261f',
-                          color: 'white'
-                        }
-                      }} variant='contained'>Add to Cart</Button>
-                    </ThemeProvider>
-                  </Box>
-                ))}
-              </Box>
-=======
-        <Box sx={{ display: 'flex', minHeight: '100%' }}>
-            <Box sx={{ display: 'flex', flexDirection: 'row', width: '100%', height: '100%' }}>
-                <Box sx={{ display: 'flex', flexDirection: 'column' }}>
-                    <NavLink to={'/Home'} style={{ alignSelf: 'center' }}><img className='logo' src={logo} alt='Chess' /></NavLink>
-                    <Box sx={{ display: 'flex', flexDirection: 'column', bgcolor: 'grey', width: '200px' }}>
-                    </Box>
-                </Box>
-                <Box sx={{ display: 'flex', flexDirection: 'column', width: '100%' }}>
-                    <Box sx={{ display: 'flex', flexDirection: 'row', justifyContent: 'end', alignItems: 'end' }}>
-                        <NavLink to={'/Home'} style={{ alignSelf: 'center' }}>
-                            <Button sx={{
-                                my: '2em', mx: '1em', width: '15em', backgroundColor: '#0f4a3b',
-                                ':hover': {
-                                    bgcolor: '#09261f',
-                                    color: 'white'
-                                }
-                            }} variant='contained'>Home</Button>
-                        </NavLink>
-                        <NavLink to={'/Games'} style={{ alignSelf: 'center' }}>
-                            <Button sx={{
-                                my: '2em', mx: '1em', width: '15em', backgroundColor: '#0f4a3b',
-                                ':hover': {
-                                    bgcolor: '#09261f',
-                                    color: 'white'
-                                }
-                            }} variant='contained'>Browse Games</Button>
-                        </NavLink>
-                        <NavLink to={'/Comments'} style={{ alignSelf: 'center' }}>
-                            <Button sx={{
-                                my: '2em', mx: '1em', width: '15em', backgroundColor: '#0f4a3b',
-                                ':hover': {
-                                    bgcolor: '#09261f',
-                                    color: 'white'
-                                }
-                            }} variant='contained'>Community</Button>
-                        </NavLink>
-                    </Box>
-                    <Divider variant='middle' orientation='horizontal' sx={{ width: '100%', bgcolor: '#0f4a3b', borderBottomWidth: '0.15em', }}></Divider>
-                </Box>
->>>>>>> b7acc080d98ac0e72741bfd1946affa102b3f27f
-            </Box>
-      
-            <Box sx={{ display: 'flex', flexDirection: 'column', bgcolor: '#e9e9e9', width: '200px', m: '1em', borderRadius: 3, boxShadow: '0px 3px 3px -2px rgba(0,0,0,0.2), 0px 3px 4px 0px rgba(0,0,0,0.14), 0px 1px 8px 0px rgba(0,0,0,0.12);', height: '10vh', marginTop: '2in' }}>
-              <FormGroup>
-                <FormControlLabel sx={{ alignItems: 'center', mx: '0.5em' }} control={<Checkbox defaultChecked />} label="Board Game" />
-                <FormControlLabel sx={{ alignItems: 'center', mx: '0.5em' }} control={<Checkbox defaultChecked />} label="Lowest to Highest" />
-                <FormControlLabel sx={{ alignItems: 'center', mx: '0.5em' }} control={<Checkbox defaultChecked />} label="Highest to Lowest" />
-              </FormGroup>
-            </Box>
+  const [vendor, setvendor] = useState([]);
+  const [isOpen, setisOpen] = useState(false);
+  const [isUpdate, setisUpdate] = useState(false);
+  const [currentName, setcurrentName] = useState('');
+  const [currentVendorId, setcurrentVendorId] = useState();
+  const [currentDesc, setcurrentDesc] = useState('');
+  const [games, setgames] = useState([])
+
+
+  const renderAdminUI = (quantity, gameId) => {
+    let userId = document.cookie
+    let temp = userId.split('=')
+    var finalUserId = temp[2]
+    console.log(temp)
+    if(finalUserId == 1){
+      return(
+        <Box sx={{display:'flex', flexDirection:'column', justifyContent:'center', alignItems:'center'}}>
+          <Typography>Boxes Available: {quantity}</Typography>
+          <Typography>Admin Priveledges:</Typography>
+          <Box sx={{display:'flex', flexDirection:'row', justifyContent:'space-evenly'}}>
+            <Button variant='contained' sx={{m:1}} onClick={()=>{
+              setisUpdate(true)
+            }}>
+              Add Game
+            </Button>
+            <Button variant='contained' sx={{m:1}}onClick={()=>{
+              setisUpdate(true)
+            }}>
+              Update Game
+            </Button>
+            <Button variant='contained' sx={{m:1}}onClick={()=>{
+              setisUpdate(true)
+            }}>
+              Delete Game
+            </Button>
+            
           </Box>
+          <Modal sx={{display:'flex', width:'100%', height:'100%', justifyContent:'center', alignItems:'center'}} open={isUpdate} onClose={()=>{setisUpdate(false)}}>
+            <Box>
+              <Typography></Typography>
+              <TextField>
+
+              </TextField>
+            </Box>
+          </Modal>
         </Box>
       )
-      
+    }
+    else{
+      return(
+        null
+      )
+    }
+  }
+
+  const renderVendors = async () => {
+    await Axios.post("https://api-puzzles-pawns.onrender.com/GetVendor", {
+    }
+    ).then(async (response) => {
+      console.log(response.data)
+      let temp = []
+      for (let i = 0; i < response.data.length; i++) {
+        temp.push({ VendorId: response.data[i].VendorID, Vname: response.data[i].Vname, Vdesc: response.data[i].Vdesc, logo: response.data[i].logo, profit: response.data[i].TotalProfit })
+      }
+      setvendor(temp)
+      console.log('array', vendor)
+      vendor.map.size = vendor.length
+    })
+  }
+  const renderVendorGames = async (Id) => {
+    await Axios.post("https://api-puzzles-pawns.onrender.com/GetGames", {
+      VendorID: Id
+    }
+    ).then(async (response) => {
+      console.log('games', response.data)
+      let temp = []
+      for (let i = 0; i < response.data.length; i++) {
+        temp.push({ GameId: response.data[i].GameID, Gname: response.data[i].Gname, Quantity: response.data[i].Quantity, Type: response.data[i].Type, picture: response.data[i].picture })
+      }
+      setgames(temp)
+      console.log(games)
+      games.map.size = games.length
+    })
+  }
+  //this fires when vendorId is changed, instead of a traditional function call, something to do with updating of states
+  useEffect(() => {
+    renderVendorGames(currentVendorId)
+  }, [currentVendorId])
+  useEffect(() => {
+
+  }, [games])
+  useEffect(() => {
+    renderVendors()
+  }, [])
+  return (
+    <Box sx={{ display: 'flex', minHeight: '100%' }}>
+      <Box sx={{ display: 'flex', flexDirection: 'row', width: '100%', height: '100%' }}>
+        <Box sx={{ display: 'flex', flexDirection: 'column' }}>
+          <NavLink to={'/Home'} style={{ alignSelf: 'center' }}><img className='logo' src={logo} alt='Chess' /></NavLink>
+          <Box sx={{ display: 'flex', flexDirection: 'column', bgcolor: 'grey', width: '200px' }}>
+          </Box>
+        </Box>
+        <Box sx={{ display: 'flex', flexDirection: 'column', width: '100%' }}>
+          <Box sx={{ display: 'flex', flexDirection: 'row', justifyContent: 'end', alignItems: 'end' }}>
+            <NavLink to={'/Home'} style={{ alignSelf: 'center' }}>
+              <Button sx={{
+                my: '2em', mx: '1em', width: '15em', backgroundColor: '#0f4a3b',
+                ':hover': {
+                  bgcolor: '#09261f',
+                  color: 'white'
+                }
+              }} variant='contained'>Home</Button>
+            </NavLink>
+            <NavLink to={'/Games'} style={{ alignSelf: 'center' }}>
+              <Button sx={{
+                my: '2em', mx: '1em', width: '15em', backgroundColor: '#0f4a3b',
+                ':hover': {
+                  bgcolor: '#09261f',
+                  color: 'white'
+                }
+              }} variant='contained'>Browse Games</Button>
+            </NavLink>
+            <NavLink to={'/Comments'} style={{ alignSelf: 'center' }}>
+              <Button sx={{
+                my: '2em', mx: '1em', width: '15em', backgroundColor: '#0f4a3b',
+                ':hover': {
+                  bgcolor: '#09261f',
+                  color: 'white'
+                }
+              }} variant='contained'>Community</Button>
+            </NavLink>
+          </Box>
+          <Divider variant='middle' orientation='horizontal' sx={{ width: '100%', bgcolor: '#0f4a3b', borderBottomWidth: '0.15em', }}></Divider>
+          <Box sx={{ display: 'flex', width: '100%', flexWrap: 'wrap' }}>
+            {vendor.map((vendors) => (
+              <Box sx={{
+                display: 'flex', flexDirection: 'column', alignItems: 'center', maxWidth: '500px', bgcolor: '#e9e9e9',
+                borderRadius: 4, m: '1em', boxShadow: '0px 3px 3px -2px rgba(0,0,0,0.2), 0px 3px 4px 0px rgba(0,0,0,0.14), 0px 1px 8px 0px rgba(0,0,0,0.12);', justifyContent: 'center', alignItems: 'center'
+              }}>
+                <img style={{ margin: '1em' }} className='logos' src={vendors.logo}></img>
+                <ThemeProvider theme={MerriweatherFont}><Typography fontWeight={'bold'} color='#0f4a3b' sx={{ m: 1, fontSize: '2em' }}>{vendors.Vname}</Typography>
+                  <Typography fontWeight={'bold'} color='#0f4a3b' sx={{ m: 1, fontSize: '2.5em' }}>{vendors.profit}$</Typography></ThemeProvider>
+                <Button onClick={async () => {
+                  setcurrentName(vendors.Vname)
+                  setcurrentVendorId(vendors.VendorId)
+                  setcurrentDesc(vendors.Vdesc)
+                  setisOpen(true)
+                }} sx={{
+                  my: '2em', mx: '1em', width: '15em', backgroundColor: '#0f4a3b',
+                  ':hover': {
+                    bgcolor: '#09261f',
+                    color: 'white'
+                  }
+                }} variant='contained'>visit {vendors.Vname}</Button>
+              </Box>
+            ))}
+          </Box>
+          <Modal sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', }} open={isOpen} onClose={() => setisOpen(false)}>
+            <Box sx={{ display: 'flex', bgcolor: 'white', flexDirection: 'column', width: '50%', borderRadius: 3 }}>
+              <Box sx={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between' }}>
+                <ThemeProvider theme={customTheme}><Typography sx={{ m: '0.5em', fontSize: '2em' }} fontWeight={'bold'}>{currentName}</Typography></ThemeProvider>
+                <IconButton onClick={() => setisOpen(false)}><CloseIcon></CloseIcon></IconButton>
+              </Box>
+              <Divider></Divider>
+              <ThemeProvider theme={MerriweatherFont}>
+                <Typography align='center' sx={{ m: 1, fontSize: '1.25em' }}>{currentDesc}</Typography>
+                <Typography fontWeight={'bold'} color='#0f4a3b' align='center' sx={{ m: 1, fontSize: '3em' }}>Games</Typography>
+                <Carousel>
+                  {
+                    games.map((games) => (
+                      <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', flexDirection: 'column' }}>
+                        <ThemeProvider theme={MerriweatherFont}>
+                          <img alt='missing game asset' className='games' src={games.picture}></img>
+                          <Typography>{games.Gname}</Typography>              
+                          <Typography>Type: {games.Type}</Typography>
+                          {renderAdminUI(games.Quantity, games.GameId)}
+                        </ThemeProvider>
+                      </Box>
+                    ))
+                  }
+                </Carousel>
+              </ThemeProvider>
+            </Box>
+          </Modal>
+        </Box>
+      </Box>
+    </Box>
+  )
 }
-      

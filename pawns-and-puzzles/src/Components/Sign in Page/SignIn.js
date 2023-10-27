@@ -35,7 +35,6 @@ const customTheme = createTheme({
         },
     }
 });
-const defaultTheme = createTheme();
 
 
 
