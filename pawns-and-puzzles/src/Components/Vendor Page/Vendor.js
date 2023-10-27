@@ -1,4 +1,4 @@
-import { Typography, Box, Divider, Button, Modal, TextField } from '@mui/material';
+import { Typography, Box, Divider, Button, Modal, TextField, Alert } from '@mui/material';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import Axios from "axios";
 import { useState, useEffect } from 'react';
@@ -11,6 +11,7 @@ import {
 import CloseIcon from '@mui/icons-material/Close';
 import IconButton from '@mui/material/IconButton';
 import Carousel from 'react-material-ui-carousel'
+import Collapse from '@mui/material';
 const MerriweatherFont = createTheme({
   typography: {
     fontFamily: ['Merriweather', 'serif'].join(",")
@@ -44,8 +45,10 @@ export default function Browse() {
   const [isOpen, setisOpen] = useState(false);
   const [isUpdate, setisUpdate] = useState(false);
   const [isAdd, setisAdd] = useState(false);
+  const [isDelete, setisDelete] = useState(false);
   const [currentName, setcurrentName] = useState('');
   const [currentVendorId, setcurrentVendorId] = useState();
+  const [currentGamerId, setcurrentGamerId] = useState();
   const [currentDesc, setcurrentDesc] = useState('');
   const [newDesc, setnewDesc] = useState('');
   const [newprice, setnewprice] = useState('');
@@ -53,10 +56,24 @@ export default function Browse() {
   const [newType, setnewType] = useState('');
   const [games, setgames] = useState([])
 
+  const renderProfit = (profit) =>{
+    let userId = document.cookie
+    let temp = userId.split('=')
+    var finalUserId = temp[1]
+    if(finalUserId == 1){
+      return(
+        <Typography fontWeight={'bold'} color='#0f4a3b' sx={{ m: 1, fontSize: '2.5em' }}>{profit}$</Typography>
+      )
+    }
+    else{
+      return null
+    }
+  }
+
   const renderAdminUI = (quantity, gameId, currentDesc, currentName, currentPrice, currentType) => {
     let userId = document.cookie
     let temp = userId.split('=')
-    var finalUserId = temp[2]
+    var finalUserId = temp[1]
     if (finalUserId == 1) {
       return (
         <Box sx={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
@@ -70,6 +87,7 @@ export default function Browse() {
               setnewType('')
               setisAdd(true)
               setisUpdate(true)
+
             }}>
               Add Game
             </Button>
@@ -80,20 +98,38 @@ export default function Browse() {
               setnewType(currentType)
               setisAdd(false)
               setisUpdate(true)
+              setcurrentGamerId(gameId)
             }}>
               Update Game
             </Button>
             <Button variant='contained' sx={{ m: 1 }} onClick={() => {
-              setisUpdate(true)
+              setisDelete(true)
+              setcurrentGamerId(gameId)
             }}>
               Delete Game
             </Button>
 
           </Box>
+          <Modal sx={{ display: 'flex', width: '100%', height: '100%', justifyContent: 'center', alignItems: 'center' }}
+            open={isDelete} onClose={() => { setisDelete(false) }}>
+            <Box sx={{ display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
+              <Box sx={{ display: 'flex', flexDirection: 'row', justifyContent: 'flex-end', alignItems: 'center' }}>
+                <IconButton onClick={() => setisDelete(false)}><CloseIcon sx={{ color: 'white' }}></CloseIcon></IconButton>
+              </Box>
+              <Alert severity='error'>ARE YOU SURE YOU WANT TO DELETE?</Alert>
+              <Button color='error' variant='contained' sx={{ m: 1 }} onClick={async () => {
+                await Axios.post('https://api-puzzles-pawns.onrender.com/DeleteGame', {
+                  GameID: currentGamerId,
+                }).then(async (response) => {
+                  window.location.reload();
+                })
+              }}>yes i'm sure</Button>
+            </Box>
+          </Modal>
           <Modal sx={{ display: 'flex', width: '100%', height: '100%', justifyContent: 'center', alignItems: 'center' }} open={isUpdate} onClose={() => { setisUpdate(false) }}>
             <Box sx={{ display: 'flex', flexDirection: 'column', width: '40%', bgcolor: 'white', borderRadius: 4 }}>
               <Box sx={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between' }}>
-                <ThemeProvider theme={customTheme}><Typography sx={{ m: '0.5em' }} fontWeight={'bold'}>Edit your review</Typography></ThemeProvider>
+                <ThemeProvider theme={customTheme}><Typography sx={{ m: '0.5em' }} fontWeight={'bold'}>Add/Edit Game</Typography></ThemeProvider>
                 <IconButton onClick={() => setisUpdate(false)}><CloseIcon></CloseIcon></IconButton>
               </Box>
               <Divider></Divider>
@@ -139,7 +175,6 @@ export default function Browse() {
                   color="primary"
                   sx={{ m: 2 }}
                   onClick={async () => {
-                    console.log(isAdd)
                     if (isAdd == true) {
                       await Axios.post('https://api-puzzles-pawns.onrender.com/AddGame', {
                         Gname: newName,
@@ -148,7 +183,7 @@ export default function Browse() {
                         vendorID: currentVendorId,
                         Type: newType,
                       }).then(async (response) => {
-                        console.log(response)
+                        window.location.reload();
                       })
                     }
                     else {
@@ -156,15 +191,15 @@ export default function Browse() {
                         Gname: newName,
                         descp: newDesc,
                         price: newprice,
-                        GameId: gameId,
+                        GameId: currentGamerId,
                         Type: newType,
                       }).then(async (response) => {
-                        console.log(response)
+                        window.location.reload();
                       })
                     }
                   }}
                 >
-                  Submit Review
+                  Submit
                 </Button>
               </ThemeProvider>
             </Box>
@@ -183,13 +218,11 @@ export default function Browse() {
     await Axios.post("https://api-puzzles-pawns.onrender.com/GetVendor", {
     }
     ).then(async (response) => {
-      console.log(response.data)
       let temp = []
       for (let i = 0; i < response.data.length; i++) {
         temp.push({ VendorId: response.data[i].VendorID, Vname: response.data[i].Vname, Vdesc: response.data[i].Vdesc, logo: response.data[i].logo, profit: response.data[i].TotalProfit })
       }
       setvendor(temp)
-      console.log('array', vendor)
       vendor.map.size = vendor.length
     })
   }
@@ -198,13 +231,11 @@ export default function Browse() {
       VendorID: Id
     }
     ).then(async (response) => {
-      console.log('games', response.data)
       let temp = []
       for (let i = 0; i < response.data.length; i++) {
         temp.push({ GameId: response.data[i].GameID, Gname: response.data[i].Gname, Price: response.data[i].Price, descp: response.data[i].descp, Quantity: response.data[i].Quantity, Type: response.data[i].Type, picture: response.data[i].picture })
       }
       setgames(temp)
-      console.log('final array:', games)
       games.map.size = games.length
     })
   }
@@ -265,7 +296,7 @@ export default function Browse() {
               }}>
                 <img style={{ margin: '1em' }} className='logos' src={vendors.logo}></img>
                 <ThemeProvider theme={MerriweatherFont}><Typography fontWeight={'bold'} color='#0f4a3b' sx={{ m: 1, fontSize: '2em' }}>{vendors.Vname}</Typography>
-                  <Typography fontWeight={'bold'} color='#0f4a3b' sx={{ m: 1, fontSize: '2.5em' }}>{vendors.profit}$</Typography></ThemeProvider>
+                  {renderProfit(vendors.profit)}</ThemeProvider>
                 <Button onClick={async () => {
                   setcurrentName(vendors.Vname)
                   setcurrentVendorId(vendors.VendorId)

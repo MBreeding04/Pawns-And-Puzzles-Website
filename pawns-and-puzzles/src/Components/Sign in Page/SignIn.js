@@ -82,7 +82,7 @@ export default function SignInSide() {
             }
             else {
                 let temp = response.data[0].userId
-                document.cookie = `userID=${temp};`
+                document.cookie = `userID=${temp}`
                 Navigate('/Home');
             }
         }).catch(() => {

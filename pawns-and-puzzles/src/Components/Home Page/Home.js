@@ -11,6 +11,7 @@ import {
     NavLink,
 } from "react-router-dom";
 import { Typography } from '@mui/material';
+import { useEffect } from 'react';
 const MerriweatherFont = createTheme({
     typography: {
         fontFamily: ['Merriweather', 'serif'].join(",")
@@ -22,6 +23,9 @@ const SpecialEliteFont = createTheme({
     },
 });
 function Home() {
+    useEffect(()=>{
+        console.log(document.cookie)
+    },[])
     return (
         <div style={{ display: 'flex', flexDirection: 'column' }}>
             

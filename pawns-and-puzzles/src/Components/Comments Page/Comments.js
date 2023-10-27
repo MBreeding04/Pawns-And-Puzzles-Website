@@ -74,7 +74,7 @@ function App() {
   const renderDelete = (commentRef, ChatRef, Comment) => {
     let userId = document.cookie
     let temp = userId.split('=')
-    var finalUserId = temp[2]
+    var finalUserId = temp[1]
     console.log(finalUserId)
     if (finalUserId == 1) {
       return (<Box><Button
