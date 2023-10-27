@@ -302,7 +302,7 @@ app.post("/UpdateGames", async (req, res) => {
     const price = req.body.price;
     const Type = req.body.Type;
     db.query(
-        "UPDATE reviews SET Gname = ?, descp = ?, price = ?, Type = ?  WHERE GameID = ?;",
+        "UPDATE game SET Gname = ?, descp = ?, price = ?, Type = ?  WHERE GameID = ?;",
         [Gname, descp, price, Type, GameID],
         async (err, result) => {
             if (err) {

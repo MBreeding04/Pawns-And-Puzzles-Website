@@ -64,22 +64,22 @@ export default function Browse() {
           <Typography>Admin Priveledges:</Typography>
           <Box sx={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-evenly' }}>
             <Button variant='contained' sx={{ m: 1 }} onClick={() => {
-              setisUpdate(true)
               setnewDesc('')
               setnewName('')
               setnewprice('')
               setnewType('')
               setisAdd(true)
+              setisUpdate(true)
             }}>
               Add Game
             </Button>
             <Button variant='contained' sx={{ m: 1 }} onClick={() => {
-              setisUpdate(true)
               setnewDesc(currentDesc)
               setnewName(currentName)
               setnewprice(currentPrice)
               setnewType(currentType)
               setisAdd(false)
+              setisUpdate(true)
             }}>
               Update Game
             </Button>
@@ -152,7 +152,15 @@ export default function Browse() {
                       })
                     }
                     else {
-
+                      await Axios.post('https://api-puzzles-pawns.onrender.com/UpdateGames', {
+                        Gname: newName,
+                        descp: newDesc,
+                        price: newprice,
+                        GameId: gameId,
+                        Type: newType,
+                      }).then(async (response) => {
+                        console.log(response)
+                      })
                     }
                   }}
                 >
