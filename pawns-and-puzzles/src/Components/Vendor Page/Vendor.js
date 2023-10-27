@@ -142,10 +142,11 @@ export default function Browse() {
                     console.log(isAdd)
                     if (isAdd == true) {
                       await Axios.post('https://api-puzzles-pawns.onrender.com/AddGame', {
-                        Gname: currentName,
-                        descp: currentDesc,
-                        price: currentPrice,
+                        Gname: newName,
+                        descp: newDesc,
+                        price: newprice,
                         vendorID: currentVendorId,
+                        Type: newType,
                       }).then(async (response) => {
                         console.log(response)
                       })

@@ -299,10 +299,11 @@ app.post("/UpdateGames", async (req, res) => {
     const GameID = req.body.GameId;
     const Gname = req.body.Gname;
     const descp = req.body.descp;
-    const price = req.body.price
+    const price = req.body.price;
+    const Type = req.body.Type;
     db.query(
-        "UPDATE reviews SET Gname = ?, descp = ?, price = ?  WHERE GameID = ?;",
-        [Gname, descp, price, GameID],
+        "UPDATE reviews SET Gname = ?, descp = ?, price = ?, Type = ?  WHERE GameID = ?;",
+        [Gname, descp, price, Type, GameID],
         async (err, result) => {
             if (err) {
                 res.send({ err: err.message })
