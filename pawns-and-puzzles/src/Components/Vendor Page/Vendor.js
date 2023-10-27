@@ -11,7 +11,6 @@ import {
 import CloseIcon from '@mui/icons-material/Close';
 import IconButton from '@mui/material/IconButton';
 import Carousel from 'react-material-ui-carousel'
-import Collapse from '@mui/material/Collapse';
 const MerriweatherFont = createTheme({
   typography: {
     fontFamily: ['Merriweather', 'serif'].join(",")
@@ -44,53 +43,128 @@ export default function Browse() {
   const [vendor, setvendor] = useState([]);
   const [isOpen, setisOpen] = useState(false);
   const [isUpdate, setisUpdate] = useState(false);
+  const [isAdd, setisAdd] = useState(false);
   const [currentName, setcurrentName] = useState('');
   const [currentVendorId, setcurrentVendorId] = useState();
   const [currentDesc, setcurrentDesc] = useState('');
+  const [newDesc, setnewDesc] = useState('');
+  const [newprice, setnewprice] = useState('');
+  const [newName, setnewName] = useState('');
+  const [newType, setnewType] = useState('');
   const [games, setgames] = useState([])
 
-
-  const renderAdminUI = (quantity, gameId) => {
+  const renderAdminUI = (quantity, gameId, currentDesc, currentName, currentPrice, currentType) => {
     let userId = document.cookie
     let temp = userId.split('=')
     var finalUserId = temp[2]
-    console.log(temp)
-    if(finalUserId == 1){
-      return(
-        <Box sx={{display:'flex', flexDirection:'column', justifyContent:'center', alignItems:'center'}}>
+    if (finalUserId == 1) {
+      return (
+        <Box sx={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
           <Typography>Boxes Available: {quantity}</Typography>
           <Typography>Admin Priveledges:</Typography>
-          <Box sx={{display:'flex', flexDirection:'row', justifyContent:'space-evenly'}}>
-            <Button variant='contained' sx={{m:1}} onClick={()=>{
+          <Box sx={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-evenly' }}>
+            <Button variant='contained' sx={{ m: 1 }} onClick={() => {
               setisUpdate(true)
+              setnewDesc('')
+              setnewName('')
+              setnewprice('')
+              setnewType('')
+              setisAdd(true)
             }}>
               Add Game
             </Button>
-            <Button variant='contained' sx={{m:1}}onClick={()=>{
+            <Button variant='contained' sx={{ m: 1 }} onClick={() => {
               setisUpdate(true)
+              setnewDesc(currentDesc)
+              setnewName(currentName)
+              setnewprice(currentPrice)
+              setnewType(currentType)
+              setisAdd(false)
             }}>
               Update Game
             </Button>
-            <Button variant='contained' sx={{m:1}}onClick={()=>{
+            <Button variant='contained' sx={{ m: 1 }} onClick={() => {
               setisUpdate(true)
             }}>
               Delete Game
             </Button>
-            
+
           </Box>
-          <Modal sx={{display:'flex', width:'100%', height:'100%', justifyContent:'center', alignItems:'center'}} open={isUpdate} onClose={()=>{setisUpdate(false)}}>
-            <Box>
-              <Typography></Typography>
-              <TextField>
+          <Modal sx={{ display: 'flex', width: '100%', height: '100%', justifyContent: 'center', alignItems: 'center' }} open={isUpdate} onClose={() => { setisUpdate(false) }}>
+            <Box sx={{ display: 'flex', flexDirection: 'column', width: '40%', bgcolor: 'white', borderRadius: 4 }}>
+              <Box sx={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between' }}>
+                <ThemeProvider theme={customTheme}><Typography sx={{ m: '0.5em' }} fontWeight={'bold'}>Edit your review</Typography></ThemeProvider>
+                <IconButton onClick={() => setisUpdate(false)}><CloseIcon></CloseIcon></IconButton>
+              </Box>
+              <Divider></Divider>
+              <Typography sx={{ mx: '0.5em', my: '0.5em' }} >Name</Typography>
+              <TextField sx={{ mx: '1em' }} value={newName}
+                onChange={(e) => setnewName(e.target.value)}
+                InputLabelProps={{
+                  shrink: true,
+                }}>
 
               </TextField>
+              <Typography sx={{ mx: '0.5em', my: '0.5em' }}>description</Typography>
+              <TextField sx={{ mx: '1em' }}
+                required
+                multiline
+                rows={4}
+                value={newDesc}
+                onChange={(e) => setnewDesc(e.target.value)}
+                InputLabelProps={{
+                  shrink: true,
+                }}
+              />
+              <Typography sx={{ mx: '0.5em', my: '0.5em' }}>Price</Typography>
+              <TextField sx={{ mx: '1em', mb: '0.5em' }} value={newprice}
+                onChange={(e) => setnewprice(e.target.value)}
+                InputLabelProps={{
+                  shrink: true,
+                }}>
+
+              </TextField>
+              <Typography sx={{ mx: '0.5em', my: '0.5em' }}>Type</Typography>
+              <TextField sx={{ mx: '1em', mb: '0.5em' }} value={newType}
+                onChange={(e) => setnewType(e.target.value)}
+                InputLabelProps={{
+                  shrink: true,
+                }}>
+
+              </TextField>
+              <ThemeProvider theme={customTheme}>
+                <Button
+                  type="submit"
+                  variant="contained"
+                  color="primary"
+                  sx={{ m: 2 }}
+                  onClick={async () => {
+                    console.log(isAdd)
+                    if (isAdd == true) {
+                      await Axios.post('https://api-puzzles-pawns.onrender.com/AddGame', {
+                        Gname: currentName,
+                        descp: currentDesc,
+                        price: currentPrice,
+                        vendorID: currentVendorId,
+                      }).then(async (response) => {
+                        console.log(response)
+                      })
+                    }
+                    else {
+
+                    }
+                  }}
+                >
+                  Submit Review
+                </Button>
+              </ThemeProvider>
             </Box>
           </Modal>
         </Box>
       )
     }
-    else{
-      return(
+    else {
+      return (
         null
       )
     }
@@ -118,10 +192,10 @@ export default function Browse() {
       console.log('games', response.data)
       let temp = []
       for (let i = 0; i < response.data.length; i++) {
-        temp.push({ GameId: response.data[i].GameID, Gname: response.data[i].Gname, Quantity: response.data[i].Quantity, Type: response.data[i].Type, picture: response.data[i].picture })
+        temp.push({ GameId: response.data[i].GameID, Gname: response.data[i].Gname, Price: response.data[i].Price, descp: response.data[i].descp, Quantity: response.data[i].Quantity, Type: response.data[i].Type, picture: response.data[i].picture })
       }
       setgames(temp)
-      console.log(games)
+      console.log('final array:', games)
       games.map.size = games.length
     })
   }
@@ -211,12 +285,13 @@ export default function Browse() {
                 <Carousel>
                   {
                     games.map((games) => (
+
                       <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', flexDirection: 'column' }}>
                         <ThemeProvider theme={MerriweatherFont}>
                           <img alt='missing game asset' className='games' src={games.picture}></img>
-                          <Typography>{games.Gname}</Typography>              
+                          <Typography>{games.Gname}</Typography>
                           <Typography>Type: {games.Type}</Typography>
-                          {renderAdminUI(games.Quantity, games.GameId)}
+                          {renderAdminUI(games.Quantity, games.GameId, games.descp, games.Gname, games.Price, games.Type)}
                         </ThemeProvider>
                       </Box>
                     ))

@@ -260,7 +260,7 @@ app.post("/AddGame", async (req, res) => {
     const price = req.body.price;
     const vendorId = req.body.vendorID;
     db.query(
-        "INSERT INTO games ( Gname, descp, price, VendorID) VALUES(?,?,?,?)",
+        "INSERT INTO game ( Gname, descp, price, VendorID) VALUES(?,?,?,?)",
         [Gname, descp, price, vendorId],
         async (err, result) => {
             if (err) {
