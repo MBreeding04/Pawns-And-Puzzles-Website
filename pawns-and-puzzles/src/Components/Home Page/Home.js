@@ -27,7 +27,7 @@ function Home() {
         console.log(document.cookie)
     },[])
     return (
-        <div style={{ display: 'flex', flexDirection: 'column' }}>
+        <Box sx={{ display: 'flex', flexDirection: 'column' }}>
             
             <div className='chessPieces'>
                 <Fade ><ThemeProvider theme={MerriweatherFont}><Typography sx={{ fontSize: '6em', color: '#0f4a3b', fontWeight: 'bold', letterSpacing: '0.2em'}}>Pawns & Puzzles</Typography> </ThemeProvider>
@@ -115,7 +115,7 @@ function Home() {
                 </Zoom>
                 <Slide direction='down' duration={1200}><Fade><img className='leftGirl' src={lowerThird4} alt='talking girl'></img></Fade></Slide>
             </Box>
-        </div>
+        </Box>
     );
 }
 export default Home;

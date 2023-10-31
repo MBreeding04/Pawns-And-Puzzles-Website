@@ -9,7 +9,7 @@ import { useState, useEffect } from 'react';
 import logo from '../../Assets/Logo/Pawns&Puzzles.png'
 import Collapse from '@mui/material/Collapse';
 import Alert from '@mui/material/Alert';
-import React, { Component } from 'react';
+import React from 'react';
 import '../Browse Page/Browse.css'
 import {
     NavLink,
@@ -17,11 +17,6 @@ import {
 const MerriweatherFont = createTheme({
     typography: {
         fontFamily: ['Merriweather', 'serif'].join(",")
-    },
-});
-const SpecialEliteFont = createTheme({
-    typography: {
-        fontFamily: ['Special Elite', 'cursive'].join(",")
     },
 });
 const customTheme = createTheme({
@@ -51,6 +46,7 @@ export default function Browse() {
             if (response.data.message === 'None') {
                 setIsAlert(true)
                 setalertMessage(response.data.error)
+                setSearchResult([])
             }
             else {
                 setIsAlert(false)
@@ -65,7 +61,6 @@ export default function Browse() {
                 }
                 setSearchResult(temp)
                 searchResult.map.size = searchResult.length
-                console.log('result in state: ', searchResult);
             }
         }).catch(() => {
         }
@@ -128,6 +123,7 @@ export default function Browse() {
                                 name="Search"
                                 label="Search"
                                 id="Search"
+                                helperText="Search results will include titles of all games that contain your entry."
                                 value={searchQuery}
                                 onChange={(e) => {
                                     setSearchQuery(e.target.value)
@@ -147,7 +143,7 @@ export default function Browse() {
                             }}>
                                 <img className='products' src = {`${result.picture}`} alt='product'></img><ThemeProvider theme={MerriweatherFont}><Typography sx={{ fontSize: '2em' }}>{result.name}</Typography>
                                     <Typography align='left' color={'#595959'} sx={{ fontSize: '1em',mt:'1em', maxWidth:'30em',mx:'1em' }}>{result.desc}</Typography>
-                                    <Typography align='left' color={'#0f4a3b'} sx={{ fontSize: '1.5em',mt:'0.5em',fontWeight:'bold'}}>{result.price}</Typography>
+                                    <Typography align='left' color={'#0f4a3b'} sx={{ fontSize: '1.5em',mt:'0.5em',fontWeight:'bold'}}>${result.price}</Typography>
                                     <Button sx={{
                                 my: '2em', mx: '1em', width: '15em', backgroundColor: '#0f4a3b',
                                 ':hover': {

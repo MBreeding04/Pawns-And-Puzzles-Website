@@ -11,15 +11,9 @@ import {
 import CloseIcon from '@mui/icons-material/Close';
 import IconButton from '@mui/material/IconButton';
 import Carousel from 'react-material-ui-carousel'
-import Collapse from '@mui/material';
 const MerriweatherFont = createTheme({
   typography: {
     fontFamily: ['Merriweather', 'serif'].join(",")
-  },
-});
-const SpecialEliteFont = createTheme({
-  typography: {
-    fontFamily: ['Special Elite', 'cursive'].join(",")
   },
 });
 const customTheme = createTheme({
@@ -60,9 +54,10 @@ export default function Browse() {
     let userId = document.cookie
     let temp = userId.split('=')
     var finalUserId = temp[1]
+    //this is an error in the developer console, the syntax wants to be strict but there is no need to be strict here
     if(finalUserId == 1){
       return(
-        <Typography fontWeight={'bold'} color='#0f4a3b' sx={{ m: 1, fontSize: '2.5em' }}>{profit}$</Typography>
+        <Typography fontWeight={'bold'} color='#0f4a3b' sx={{ m: 1, fontSize: '2.5em' }}>${profit}</Typography>
       )
     }
     else{
@@ -74,6 +69,7 @@ export default function Browse() {
     let userId = document.cookie
     let temp = userId.split('=')
     var finalUserId = temp[1]
+    //this is an error in the developer console, the syntax wants to be strict but there is no need to be strict here
     if (finalUserId == 1) {
       return (
         <Box sx={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
@@ -175,6 +171,7 @@ export default function Browse() {
                   color="primary"
                   sx={{ m: 2 }}
                   onClick={async () => {
+                    //this is an error in the developer console, the syntax wants to be strict but there is no need to be strict here
                     if (isAdd == true) {
                       await Axios.post('https://api-puzzles-pawns.onrender.com/AddGame', {
                         Gname: newName,
@@ -240,12 +237,14 @@ export default function Browse() {
     })
   }
   //this fires when vendorId is changed, instead of a traditional function call, something to do with updating of states
+  //this produces an error within the developer console, It is not an error as renderVendorGames is a function therefore it does not need to be a dependency.
   useEffect(() => {
     renderVendorGames(currentVendorId)
-  }, [currentVendorId])
+  }, [currentVendorId,])
   useEffect(() => {
 
   }, [games])
+  //this produces an error within the developer console, It is not an error as renderVendors is a function therefore it does not need to be a dependency.
   useEffect(() => {
     renderVendors()
   }, [])
@@ -291,10 +290,10 @@ export default function Browse() {
           <Box sx={{ display: 'flex', width: '100%', flexWrap: 'wrap' }}>
             {vendor.map((vendors) => (
               <Box sx={{
-                display: 'flex', flexDirection: 'column', alignItems: 'center', maxWidth: '500px', bgcolor: '#e9e9e9',
+                display: 'flex', flexDirection: 'column', maxWidth: '500px', bgcolor: '#e9e9e9',
                 borderRadius: 4, m: '1em', boxShadow: '0px 3px 3px -2px rgba(0,0,0,0.2), 0px 3px 4px 0px rgba(0,0,0,0.14), 0px 1px 8px 0px rgba(0,0,0,0.12);', justifyContent: 'center', alignItems: 'center'
               }}>
-                <img style={{ margin: '1em' }} className='logos' src={vendors.logo}></img>
+                <img style={{ margin: '1em' }} className='logos' src={vendors.logo} alt='Vendor Brand'></img>
                 <ThemeProvider theme={MerriweatherFont}><Typography fontWeight={'bold'} color='#0f4a3b' sx={{ m: 1, fontSize: '2em' }}>{vendors.Vname}</Typography>
                   {renderProfit(vendors.profit)}</ThemeProvider>
                 <Button onClick={async () => {

@@ -59,15 +59,12 @@ function App() {
   const RenderComments = async () => {
     await Axios.post("https://api-puzzles-pawns.onrender.com/Comment", {
     }).then(async (response) => {
-      console.log('repsonse', response.data)
       let newReviews = []
       for (let i = 0; i < response.data.length; i++) {
         newReviews.push({ ReviewId: response.data[i].ChatID, CommentBody: response.data[i].Comment, UserId: response.data[i].userID, Commenter: response.data[i].Email })
-        console.log('pulled review', newReviews)
       }
       setReviews(newReviews)
       reviews.map.size = reviews.length
-      console.log('final', reviews)
     })
   };
 
@@ -75,7 +72,6 @@ function App() {
     let userId = document.cookie
     let temp = userId.split('=')
     var finalUserId = temp[1]
-    console.log(finalUserId)
     if (finalUserId == 1) {
       return (<Box><Button
         variant="outlined"
@@ -145,7 +141,6 @@ function App() {
         commentEntry: comment,
         userId: finalUserId
       }).then(async (response) => {
-        console.log(response)
       })
       RenderComments()
     }
