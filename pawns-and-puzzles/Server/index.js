@@ -389,6 +389,54 @@ app.post("/DeleteGame", async (req, res) => {
         res.send({ message: "None", error: { error } })
     }
 })
+app.post("/AscGames", async (req, res) => {
+    try {
+        
+        db.query(
+            "SELECT * FROM game ORDER BY Price ASC ;",
+            async (err, result) => {
+                if (err) {
+                    res.send({ err: err.message })
+                }
+                else {
+                    if (result.length > 0) {
+                        res.send(result)
+                    }
+                    else {
+                        res.send({ message: "None", error: 'No result matches your query' })
+                    }
+                }
+            }
+        );
+    }
+    catch (error) {
+        res.send({ message: "None", error: { error } })
+    }
+})
+app.post("/DESCGames", async (req, res) => {
+    try {
+        
+        db.query(
+            "SELECT * FROM game ORDER BY Price DESC ;",
+            async (err, result) => {
+                if (err) {
+                    res.send({ err: err.message })
+                }
+                else {
+                    if (result.length > 0) {
+                        res.send(result)
+                    }
+                    else {
+                        res.send({ message: "None", error: 'No result matches your query' })
+                    }
+                }
+            }
+        );
+    }
+    catch (error) {
+        res.send({ message: "None", error: { error } })
+    }
+})
 app.listen('5000', () => {
     console.log("Connected to server")
 })
