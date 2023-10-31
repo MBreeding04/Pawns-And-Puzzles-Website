@@ -317,8 +317,8 @@ app.post("/AddGame", async (req, res) => {
 })
 app.post("/GetVendor", async (req, res) => {
     try {
-        const Vname = req.body.Vname
-        Vname = '%'+Vname+'%'
+        const Vname = req.body.Vname;
+        Vname = '%' + Vname + '%'
         console.log('Vname ',Vname)
         db.query(
             "SELECT * FROM vendors WHERE Vname LIKE ? ;",
