@@ -23,7 +23,6 @@ var isGoing = true
 
 
 app.get("/", async (_req, res) => {
-    res.json({ message: "Connected" });
     while(isGoing == true){
         db.query(
             "SELECT 1",
@@ -31,13 +30,13 @@ app.get("/", async (_req, res) => {
                 console.log(`error message: ${err}`)
                 console.log(`result: ${result}`)
                 if (err) {
-                    res.send({ message: "None", err: err })
+                    res.json({ message: "None", err: err })
                 }
                 else if (result.length > 0) {
-                    res.send(result)
+                    res.json(result)
                 }
                 else {
-                    res.send({ message: "None" })
+                    res.json({ message: "None" })
                 }
             }
         );
