@@ -24,8 +24,7 @@ const heartbeat = async () => {
     while (isGoing) {
         try {
             db.query(
-                "SELECT * FROM users WHERE Email = ? AND Password = ?;",
-                [Email, Password],
+                "SELECT 1",
                 (err, result) => {
                     if (err) {
                         console.log(err)
@@ -43,7 +42,7 @@ const heartbeat = async () => {
             );
         }
         catch (error) {
-            res.send({ message: "None", error: { error } })
+            console.log(error)
         }
     }
 }
