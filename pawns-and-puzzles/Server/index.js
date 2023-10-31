@@ -321,7 +321,7 @@ app.post("/GetVendor", async (req, res) => {
         Vname = '%' + Vname + '%'
         console.log('Vname ',Vname)
         db.query(
-            "SELECT * FROM vendors WHERE Vname LIKE `?` ;",
+            "SELECT * FROM vendors WHERE Vname LIKE ? ;",
             [Vname],
             async (err, result) => {
                 if (err) {
