@@ -21,6 +21,10 @@ const delay = (delayInms) => {
 
 var isGoing = true
 
+
+app.get("/", (_req, res) => {
+    res.json({ message: "Connected" });
+});
 app.post("/SignIn", async (req, res) => {
     try {
         const Email = req.body.Email;
@@ -442,25 +446,8 @@ app.post("/DESCGames", async (req, res) => {
         res.send({ message: "None", error: { error } })
     }
 })
-app.listen('5000', async () => {
-    while(isGoing == true){
-        db.query(
-            "SELECT 1",
-            (err, result) => {
-                
-                if (err) {
-                    console.log(`error message: ${err}`)
-                }
-                else if (result.length > 0) {
-                    console.log(`result: ${result}`)
-                }
-                else {
-                    console.log(`result: ${result}`)
-                }
-            }
-        );
-        await delay(180000)
-    }
+app.listen('5000', () => {
+    console.log("Connected to server")
 })
 
 
