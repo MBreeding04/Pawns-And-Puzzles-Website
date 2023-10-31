@@ -29,7 +29,7 @@ app.get("/", async (_req, res) => {
             "SELECT 1",
             (err, result) => {
                 console.log(`error message: ${err}`)
-                console.log(`result:`)
+                console.log(`result: ${result}`)
                 if (err) {
                     res.send({ message: "None", err: err })
                 }
