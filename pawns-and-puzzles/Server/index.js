@@ -18,35 +18,6 @@ const db = mysql.createConnection({
 const delay = (delayInms) => {
     return new Promise(resolve => setTimeout(resolve, delayInms));
 }
-
-var isGoing = true
-const heartbeat = async () => {
-    while (isGoing) {
-        try {
-            db.query(
-                "SELECT 1",
-                (err, result) => {
-                    if (err) {
-                        console.log(err)
-                    }
-
-                    else if (result.length > 0) {
-                        console.log(`result:`)
-                        console.log(JSON.stringify(result))
-                    }
-                    else {
-                        console.log(`result:`)
-                        console.log(JSON.stringify(result))
-                    }
-                }
-            );
-        }
-        catch (error) {
-            console.log(error)
-        }
-    }
-}
-heartbeat()
 app.get("/", (_req, res) => {
     res.json({ message: "Connected" });
 });
