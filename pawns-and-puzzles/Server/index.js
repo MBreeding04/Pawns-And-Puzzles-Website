@@ -104,7 +104,6 @@ app.post("/ResetPassword", async (req, res) => {
 app.post("/Games", async (req, res) => {
     try {
         var Gname = req.body.Gname;
-        console.log('Gname ', Gname);
         Gname = '%' + Gname + '%'
         console.log('Gname pt2 ', Gname)
         db.query(
@@ -318,8 +317,11 @@ app.post("/AddGame", async (req, res) => {
 })
 app.post("/GetVendor", async (req, res) => {
     try {
+        const Vname = req.body.Vname
+        Vname = '%'+Vname+'%'
         db.query(
-            "SELECT * FROM vendors;",
+            "SELECT * FROM vendors WHERE Vname LIKE ?;",
+            [Vname],
             async (err, result) => {
                 if (err) {
                     res.send({ err: err.message })

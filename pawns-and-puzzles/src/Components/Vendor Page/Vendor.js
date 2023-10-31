@@ -1,4 +1,4 @@
-import { Typography, Box, Divider, Button, Modal, TextField, Alert } from '@mui/material';
+import { Typography, Box, Divider, Button, Modal, TextField, Alert, Collapse } from '@mui/material';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import Axios from "axios";
 import { useState, useEffect } from 'react';
@@ -49,18 +49,22 @@ export default function Browse() {
   const [newName, setnewName] = useState('');
   const [newType, setnewType] = useState('');
   const [games, setgames] = useState([])
+  const [searchQuery, setSearchQuery] = useState('')
+  const [isAlert, setIsAlert] = useState(false)
+  const [alertMessage, setalertMessage] = useState('')
 
-  const renderProfit = (profit) =>{
+
+  const renderProfit = (profit) => {
     let userId = document.cookie
     let temp = userId.split('=')
     var finalUserId = temp[1]
     //this is an error in the developer console, the syntax wants to be strict but there is no need to be strict here
-    if(finalUserId == 1){
-      return(
+    if (finalUserId == 1) {
+      return (
         <Typography fontWeight={'bold'} color='#0f4a3b' sx={{ m: 1, fontSize: '2.5em' }}>${profit}</Typography>
       )
     }
-    else{
+    else {
       return null
     }
   }
@@ -213,8 +217,10 @@ export default function Browse() {
 
   const renderVendors = async () => {
     await Axios.post("https://api-puzzles-pawns.onrender.com/GetVendor", {
+      Vname: searchQuery
     }
     ).then(async (response) => {
+      console.log(response)
       let temp = []
       for (let i = 0; i < response.data.length; i++) {
         temp.push({ VendorId: response.data[i].VendorID, Vname: response.data[i].Vname, Vdesc: response.data[i].Vdesc, logo: response.data[i].logo, profit: response.data[i].TotalProfit })
@@ -245,9 +251,14 @@ export default function Browse() {
 
   }, [games])
   //this produces an error within the developer console, It is not an error as renderVendors is a function therefore it does not need to be a dependency.
+  //these useEffects are called on first render and when searchquery is changed
   useEffect(() => {
     renderVendors()
   }, [])
+  useEffect(() => {
+    renderVendors()
+  }, [searchQuery])
+  //renders UI elements
   return (
     <Box sx={{ display: 'flex', minHeight: '100%' }}>
       <Box sx={{ display: 'flex', flexDirection: 'row', width: '100%', height: '100%' }}>
@@ -287,6 +298,29 @@ export default function Browse() {
             </NavLink>
           </Box>
           <Divider variant='middle' orientation='horizontal' sx={{ width: '100%', bgcolor: '#0f4a3b', borderBottomWidth: '0.15em', }}></Divider>
+          <Box sx={{ display: 'flex', flexDirection: 'row', width: '100%', justifyContent: 'end' }}>
+            <ThemeProvider theme={customTheme}>
+              <TextField sx={{ width: '30%', my: '1em', mx: '2em' }}
+                InputLabelProps={{
+                  style: { color: '#0f4a3b' },
+                }}
+                margin="normal"
+                name="Search"
+                label="Search"
+                id="Search"
+                //helperText="Search results will include titles of all games that contain your entry."
+                value={searchQuery}
+                onChange={(e) => {
+                  setSearchQuery(e.target.value)
+                  console.log(searchQuery)
+                }
+                }
+              />
+            </ThemeProvider>
+          </Box>
+          <Collapse in={isAlert}>
+            <Alert severity="error">{alertMessage}</Alert>
+          </Collapse>
           <Box sx={{ display: 'flex', width: '100%', flexWrap: 'wrap' }}>
             {vendor.map((vendors) => (
               <Box sx={{
