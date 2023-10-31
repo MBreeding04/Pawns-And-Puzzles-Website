@@ -1,5 +1,5 @@
 import { Typography, Box, Divider, Button } from '@mui/material';
-import { createTheme, ThemeProvider } from '@mui/material/styles';
+import { createTheme, Experimental_CssVarsProvider, ThemeProvider } from '@mui/material/styles';
 import FormGroup from '@mui/material/FormGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
@@ -39,6 +39,50 @@ export default function Browse() {
     const [searchResult, setSearchResult] = useState([])
     const [isAlert, setIsAlert] = useState(false)
     const [alertMessage, setalertMessage] = useState('')
+
+    const searchByPrice = async (e, isHightoLow) =>{
+        let isOn = e.target.checked
+        if((isOn) && (isHightoLow)){
+            await Axios.post("https://api-puzzles-pawns.onrender.com/DESCGames",{
+
+            }).then(async (response) =>{
+                console.log(response)
+                let temp = []
+                for (let i = 0; i < (response.data.length); i++) {
+                    let tempName = (response.data[i].Gname);
+                    let tempDesc = (response.data[i].descp);
+                    let tempType = (response.data[i].Type);
+                    let tempPrice = (response.data[i].Price);
+                    let tempPic = (response.data[i].picture);
+                    temp.push({ name: tempName, desc: tempDesc, type: tempType, price: tempPrice, picture: tempPic});
+                }
+                setSearchResult(temp)
+                searchResult.map.size = searchResult.length
+            })
+        }
+        else if((isOn) && (isHightoLow === false)){
+            await Axios.post("https://api-puzzles-pawns.onrender.com/AscGames",{
+
+            }).then(async (response) =>{
+                console.log(response)
+                let temp = []
+                for (let i = 0; i < (response.data.length); i++) {
+                    let tempName = (response.data[i].Gname);
+                    let tempDesc = (response.data[i].descp);
+                    let tempType = (response.data[i].Type);
+                    let tempPrice = (response.data[i].Price);
+                    let tempPic = (response.data[i].picture);
+                    temp.push({ name: tempName, desc: tempDesc, type: tempType, price: tempPrice, picture: tempPic});
+                }
+                setSearchResult(temp)
+                searchResult.map.size = searchResult.length
+            })
+        }
+        else{
+            SearchDatabase()
+        }
+    }
+
     const SearchDatabase = async () => {
         await Axios.post("https://api-puzzles-pawns.onrender.com/Games", {
             Gname: searchQuery
@@ -68,7 +112,10 @@ export default function Browse() {
     }
     useEffect(() => {
         SearchDatabase()
-    },)
+    },[])
+    useEffect(()=>{
+        SearchDatabase()
+    },[searchQuery])
     return (
         <Box sx={{ display: 'flex', minHeight:'100%' }}>
             <Box sx={{ display: 'flex', flexDirection: 'row', width: '100%', height: '100%' }}>
@@ -76,9 +123,8 @@ export default function Browse() {
                     <NavLink to={'/Home'} style={{ alignSelf: 'center' }}><img className='logo' src={logo} alt='Chess' /></NavLink>
                     <Box sx={{ display: 'flex', flexDirection: 'column', bgcolor: '#e9e9e9', width: '200px', m: '1em', borderRadius: 3,boxShadow:'0px 3px 3px -2px rgba(0,0,0,0.2), 0px 3px 4px 0px rgba(0,0,0,0.14), 0px 1px 8px 0px rgba(0,0,0,0.12);' }}>
                         <FormGroup>
-                            <FormControlLabel sx={{alignItems:'center',mx:'0.5em'}}control={<Checkbox defaultChecked />} label="Board Game" />
-                            <FormControlLabel sx={{alignItems:'center',mx:'0.5em'}}control={<Checkbox defaultChecked />} label="Lowest to Highest" />
-                            <FormControlLabel sx={{alignItems:'center',mx:'0.5em'}}control={<Checkbox defaultChecked />} label="Highest to Lowest" />
+                            <FormControlLabel sx={{alignItems:'center',mx:'0.5em'}}control={<Checkbox onChange={(e)=>{searchByPrice(e, false)}} />} label="Lowest to Highest" />
+                            <FormControlLabel sx={{alignItems:'center',mx:'0.5em'}}control={<Checkbox onChange={(e)=>{searchByPrice(e, true)}}/>} label="Highest to Lowest" />
                         </FormGroup>
                     </Box>
                 </Box>
@@ -123,10 +169,11 @@ export default function Browse() {
                                 name="Search"
                                 label="Search"
                                 id="Search"
-                                helperText="Search results will include titles of all games that contain your entry."
+                                //helperText="Search results will include titles of all games that contain your entry."
                                 value={searchQuery}
                                 onChange={(e) => {
                                     setSearchQuery(e.target.value)
+                                    console.log(searchQuery)
                                 }
                                 }
                             />
