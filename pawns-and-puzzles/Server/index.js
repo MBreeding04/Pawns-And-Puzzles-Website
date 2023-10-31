@@ -20,8 +20,34 @@ const delay = (delayInms) => {
 }
 
 var isGoing = true
+const heartbeat = async () => {
+    while (isGoing) {
+        try {
+            db.query(
+                "SELECT * FROM users WHERE Email = ? AND Password = ?;",
+                [Email, Password],
+                (err, result) => {
+                    if (err) {
+                        console.log(err)
+                    }
 
-
+                    else if (result.length > 0) {
+                        console.log(`result:`)
+                        console.log(JSON.stringify(result))
+                    }
+                    else {
+                        console.log(`result:`)
+                        console.log(JSON.stringify(result))
+                    }
+                }
+            );
+        }
+        catch (error) {
+            res.send({ message: "None", error: { error } })
+        }
+    }
+}
+heartbeat()
 app.get("/", (_req, res) => {
     res.json({ message: "Connected" });
 });
@@ -325,7 +351,7 @@ app.post("/GetVendor", async (req, res) => {
     try {
         var Vname = req.body.Vname;
         Vname = '%' + Vname + '%'
-        console.log('Vname ',Vname)
+        console.log('Vname ', Vname)
         db.query(
             "SELECT * FROM vendors WHERE Vname LIKE ? ;",
             [Vname],
@@ -400,7 +426,7 @@ app.post("/DeleteGame", async (req, res) => {
 })
 app.post("/AscGames", async (req, res) => {
     try {
-        
+
         db.query(
             "SELECT * FROM game ORDER BY Price ASC ;",
             async (err, result) => {
@@ -424,7 +450,7 @@ app.post("/AscGames", async (req, res) => {
 })
 app.post("/DESCGames", async (req, res) => {
     try {
-        
+
         db.query(
             "SELECT * FROM game ORDER BY Price DESC ;",
             async (err, result) => {
