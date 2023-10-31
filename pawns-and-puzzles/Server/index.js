@@ -15,9 +15,34 @@ const db = mysql.createConnection({
     database: "sql9653263",
     port: '3306'
 })
+const delay = (delayInms) => {
+    return new Promise(resolve => setTimeout(resolve, delayInms));
+}
 
-app.get("/", (_req, res) => {
+var isGoing = true
+
+
+app.get("/", async (_req, res) => {
     res.json({ message: "Connected" });
+    while(isGoing == true){
+        db.query(
+            "SELECT 1",
+            (err, result) => {
+                console.log(`error message: ${err}`)
+                console.log(`result:`)
+                if (err) {
+                    res.send({ message: "None", err: err })
+                }
+                else if (result.length > 0) {
+                    res.send(result)
+                }
+                else {
+                    res.send({ message: "None" })
+                }
+            }
+        );
+        await delay(300000)
+    }
 });
 app.post("/SignIn", async (req, res) => {
     try {
