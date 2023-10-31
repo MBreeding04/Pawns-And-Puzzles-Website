@@ -27,16 +27,15 @@ app.get("/", async (_req, res) => {
         db.query(
             "SELECT 1",
             (err, result) => {
-                console.log(`error message: ${err}`)
-                console.log(`result: ${result}`)
+                
                 if (err) {
-                    res.json({ message: "None", err: err })
+                    console.log(`error message: ${err}`)
                 }
                 else if (result.length > 0) {
-                    res.json(result)
+                    console.log(`result: ${result}`)
                 }
                 else {
-                    res.json({ message: "None" })
+                    console.log(`result: ${result}`)
                 }
             }
         );
