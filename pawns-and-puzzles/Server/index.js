@@ -7,6 +7,11 @@ app.use(cors())
 
 
 app.use(express.json());
+console.log('Host',process.env.REACT_APP_HOST)
+console.log('Host',process.env.REACT_APP_USER)
+console.log('Host',process.env.REACT_APP_PASSWORD)
+console.log('Host',process.env.REACT_APP_DATABASE)
+console.log('Host',process.env.REACT_APP_PORT)
 
 const db = mysql.createConnection({
     host: process.env.REACT_APP_HOST,
