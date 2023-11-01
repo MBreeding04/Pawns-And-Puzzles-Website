@@ -221,12 +221,20 @@ export default function Browse() {
     }
     ).then(async (response) => {
       console.log(response)
-      let temp = []
-      for (let i = 0; i < response.data.length; i++) {
-        temp.push({ VendorId: response.data[i].VendorID, Vname: response.data[i].Vname, Vdesc: response.data[i].Vdesc, logo: response.data[i].logo, profit: response.data[i].TotalProfit })
+      if (response.data.message == 'None') {
+        setIsAlert(true)
+        setalertMessage('no results match your query')
+        setvendor([])
       }
-      setvendor(temp)
-      vendor.map.size = vendor.length
+      else {
+        setIsAlert(false)
+        let temp = []
+        for (let i = 0; i < response.data.length; i++) {
+          temp.push({ VendorId: response.data[i].VendorID, Vname: response.data[i].Vname, Vdesc: response.data[i].Vdesc, logo: response.data[i].logo, profit: response.data[i].TotalProfit })
+        }
+        setvendor(temp)
+        vendor.map.size = vendor.length
+      }
     })
   }
   const renderVendorGames = async (Id) => {

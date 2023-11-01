@@ -9,15 +9,12 @@ app.use(cors())
 app.use(express.json());
 
 const db = mysql.createConnection({
-    host: "sql9.freemysqlhosting.net",
-    user: "sql9653263",
-    password: "nsbriSDRqP", //make these enviormental variables so they are secret and cant be accessed
-    database: "sql9653263",
-    port: '3306'
+    host: process.env.REACT_APP_HOST,
+    user: process.env.REACT_APP_USER,
+    password: process.env.REACT_APP_PASSWORD,
+    database: process.env.REACT_APP_DATABASE,
+    port: process.env.REACT_APP_PORT
 })
-const delay = (delayInms) => {
-    return new Promise(resolve => setTimeout(resolve, delayInms));
-}
 app.get("/", (_req, res) => {
     res.json({ message: "Connected" });
 });
@@ -35,7 +32,6 @@ app.post("/SignIn", async (req, res) => {
                 if (err) {
                     res.send({ message: "None", err: err })
                 }
-
                 else if (result.length > 0) {
                     res.send(result)
                 }
