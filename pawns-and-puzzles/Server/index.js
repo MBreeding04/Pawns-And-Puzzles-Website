@@ -7,7 +7,6 @@ app.use(cors())
 
 
 app.use(express.json());
-console.log(process.env)
 
 const db = mysql.createConnection({
     host: process.env.REACT_APP_HOST,
@@ -19,6 +18,7 @@ const db = mysql.createConnection({
 app.get("/", (_req, res) => {
     res.json({ message: "Connected" });
 });
+//Api control that gets user data
 app.post("/SignIn", async (req, res) => {
     try {
         const Email = req.body.Email;
@@ -46,6 +46,7 @@ app.post("/SignIn", async (req, res) => {
         res.send({ message: "None", error: { error } })
     }
 })
+//Api control that checks to see if email is valid to reset password
 app.post("/ForgotPassword", async (req, res) => {
     try {
         const Email = req.body.Email;
@@ -75,6 +76,7 @@ app.post("/ForgotPassword", async (req, res) => {
         console.log(`Your error: ${error.message}`)
     }
 })
+//Api control that updates the User password in the database based off of email 
 app.post("/ResetPassword", async (req, res) => {
     try {
         const Email = req.body.Email;
@@ -100,6 +102,7 @@ app.post("/ResetPassword", async (req, res) => {
         console.log(`Your error: ${error.message}`)
     }
 })
+//Api control that pulls all games from the game table and searches by wildcard keyword
 app.post("/Games", async (req, res) => {
     try {
         var Gname = req.body.Gname;
@@ -127,6 +130,7 @@ app.post("/Games", async (req, res) => {
         res.send({ message: "None", error: { error } })
     }
 })
+//Api control that inserts new user entries into the user table
 app.post("/Register", async (req, res) => {
     try {
         const EmailReg = req.body.EmailReg;
@@ -169,6 +173,7 @@ app.post("/Register", async (req, res) => {
         console.log(`Your error: ${error.message}`)
     }
 })
+//Api control that joins the user table and the comment table so we may render all reviews 
 app.post("/Comment", async (req, res) => {
     try {
         db.query(
@@ -177,8 +182,7 @@ app.post("/Comment", async (req, res) => {
                 if (err) {
                     res.send({ err: err.message })
                 }
-
-                if (result.length > 0) {
+                else if (result.length > 0) {
                     res.send(result)
                 }
                 else {
@@ -191,6 +195,7 @@ app.post("/Comment", async (req, res) => {
         res.send({ message: "None", error: { error } })
     }
 })
+//Api control that allows inserting of a new comment into the comment table 
 app.post("/AddComment", async (req, res) => {
     try {
         const comment = req.body.commentEntry;
@@ -202,7 +207,7 @@ app.post("/AddComment", async (req, res) => {
                 if (err) {
                     res.send({ err: err.message })
                 }
-                if (result.length > 0) {
+                else if (result.length > 0) {
                     res.send(result)
                 }
                 else {
@@ -215,6 +220,7 @@ app.post("/AddComment", async (req, res) => {
         res.send({ message: "None", error: { error } })
     }
 })
+//Api control that deletes comments from the comment table
 app.post("/DeleteComment", async (req, res) => {
     try {
         const ChatID = req.body.reviewID
@@ -225,7 +231,7 @@ app.post("/DeleteComment", async (req, res) => {
                 if (err) {
                     res.send({ err: err.message })
                 }
-                if (result.length > 0) {
+                else if (result.length > 0) {
                     res.send(result)
                 }
                 else {
@@ -238,6 +244,7 @@ app.post("/DeleteComment", async (req, res) => {
         res.send({ message: "None", error: { error } })
     }
 })
+//Api control that updates the comment based off of chatID
 app.post("/UpdateComment", async (req, res) => {
     try {
         const comment = req.body.comment;
@@ -262,6 +269,7 @@ app.post("/UpdateComment", async (req, res) => {
         res.send({ message: "None", error: { error } })
     }
 })
+//Api control pulls all games for each vendor, or based off of vendorID
 app.post("/GetGames", async (req, res) => {
     try {
         const VendorID = req.body.VendorID
@@ -287,6 +295,7 @@ app.post("/GetGames", async (req, res) => {
         res.send({ message: "None", error: { error } })
     }
 })
+//Api control that Adds a game to the game table
 app.post("/AddGame", async (req, res) => {
     try {
         const Gname = req.body.Gname;
@@ -301,7 +310,7 @@ app.post("/AddGame", async (req, res) => {
                 if (err) {
                     res.send({ err: err.message })
                 }
-                if (result.length > 0) {
+                else if (result.length > 0) {
                     res.send(result)
                 }
                 else {
@@ -314,6 +323,7 @@ app.post("/AddGame", async (req, res) => {
         res.send({ message: "None", error: { error } })
     }
 })
+//Api control the gets all vendors based off of wildcard search query
 app.post("/GetVendor", async (req, res) => {
     try {
         var Vname = req.body.Vname;
@@ -341,6 +351,7 @@ app.post("/GetVendor", async (req, res) => {
         res.send({ message: "None", error: { error } })
     }
 })
+//Api control that updates the game table based off gameID
 app.post("/UpdateGames", async (req, res) => {
     try {
         const GameID = req.body.GameId;
@@ -368,6 +379,7 @@ app.post("/UpdateGames", async (req, res) => {
         res.send({ message: "None", error: { error } })
     }
 })
+//Api control that deletes a game based off GameID
 app.post("/DeleteGame", async (req, res) => {
     try {
         const GameID = req.body.GameID;
@@ -378,7 +390,7 @@ app.post("/DeleteGame", async (req, res) => {
                 if (err) {
                     res.send({ err: err.message })
                 }
-                if (result.length > 0) {
+                else if (result.length > 0) {
                     res.send(result)
                 }
                 else {
@@ -391,6 +403,7 @@ app.post("/DeleteGame", async (req, res) => {
         res.send({ message: "None", error: { error } })
     }
 })
+//Api control that orders games by Low to High
 app.post("/AscGames", async (req, res) => {
     try {
 
@@ -415,6 +428,7 @@ app.post("/AscGames", async (req, res) => {
         res.send({ message: "None", error: { error } })
     }
 })
+//Api control that orders games by High to Low
 app.post("/DESCGames", async (req, res) => {
     try {
 

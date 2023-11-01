@@ -14,7 +14,7 @@ import {
 } from "react-router-dom";
 
 
-
+//main app contains routes to all pages
 function App(){
       return (
         <Box sx={{ display: 'block', bgcolor: 'white', width: '100vw', height: '100vh', overflowX: 'hidden' }}>

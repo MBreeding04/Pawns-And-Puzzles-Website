@@ -20,8 +20,8 @@ import IconButton from '@mui/material/IconButton';
 import PasswordStrengthBar from 'react-password-strength-bar';
 
 
+//import themes for styling and fonts
 const customTheme = createTheme({
-
     typography: {
         fontFamily: 'Merriweather, serif',
     },
@@ -39,6 +39,7 @@ const customTheme = createTheme({
 
 
 export default function SignInSide() {
+    //variables for functionailty of website
     const [EmailEntry, setEmail] = useState("");
     const [PasswordEntry, setPassword] = useState("");
     const [passwordScore, setPasswordScore] = useState(0);
@@ -60,10 +61,12 @@ export default function SignInSide() {
     const [severity2, setseverity2] = useState('error');
     const Navigate = useNavigate();
 
+    //causes a delay when called upon
     const delay = (delayInms) => {
         return new Promise(resolve => setTimeout(resolve, delayInms));
     }
 
+    //funcion to verify is user is real, called upon initial sign in
     const VerifyLogin = async () => {
         setisLoading(true)
         await Axios.post("https://api-puzzles-pawns.onrender.com/SignIn", {
@@ -92,6 +95,8 @@ export default function SignInSide() {
         }
         );
     }
+    //function pertaining to forgotpassword call, lets the user insert a new password into the table based off email, would like to include email veriication and 2 factor authentication
+    //so users cant just pick a random email and change the password.
     const ForgotPassword = async () => {
         await Axios.post("https://api-puzzles-pawns.onrender.com/ForgotPassword", {
             Email: ResetPasswordEmail,
@@ -114,6 +119,7 @@ export default function SignInSide() {
             }
         })
     }
+    //verifies if the email is new so the user can register a new account, called upon register user
     const VerifyRegister = async () => {
         setisRegisterLoading(true)
         setisRegisterError(false)
@@ -144,6 +150,7 @@ export default function SignInSide() {
         }
         setisRegisterLoading(false)
     }
+    //Main UI elements, main page
     return (
         <ThemeProvider theme={customTheme}>
             <Grid container component="main" sx={{ height: '100vh' }}>

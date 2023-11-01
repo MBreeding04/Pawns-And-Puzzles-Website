@@ -23,6 +23,7 @@ import CloseIcon from '@mui/icons-material/Close';
 import IconButton from '@mui/material/IconButton';
 import Collapse from '@mui/material/Collapse';
 import Alert from '@mui/material/Alert';
+//themes for styling and fonts
 const MerriweatherFont = createTheme({
   typography: {
     fontFamily: ['Merriweather', 'serif'].join(",")
@@ -50,12 +51,14 @@ const customTheme = createTheme({
 });
 
 function App() {
+  //variables to handle functionailty like comments, alerts, browsability etc.
   const [reviews, setReviews] = useState([]);
   const [comment, setComment] = useState('');
   const [editComment, seteditComment] = useState('');
   const [isOpen, setisOpen] = useState(false);
   const [isAlert, setisAlert] = useState(false);
   const [currentUserId, setcurrentUserId] = useState(0)
+  //function on call renders all comments based on API call
   const RenderComments = async () => {
     await Axios.post("https://api-puzzles-pawns.onrender.com/Comment", {
     }).then(async (response) => {
@@ -67,7 +70,7 @@ function App() {
       reviews.map.size = reviews.length
     })
   };
-
+  //function that when called renders the delete button and edit button based off if your admin, if you made the comment it also renders the edit button for that comment
   const renderDelete = (commentRef, ChatRef, Comment) => {
     let userId = document.cookie
     let temp = userId.split('=')
@@ -111,6 +114,7 @@ function App() {
       return (null)
     }
   }
+  //actual API call that deletes the cooresponding comment
   const handleDelete = async (ChatID) => {
     await Axios.post("https://api-puzzles-pawns.onrender.com/DeleteComment", {
       reviewID: ChatID
@@ -118,6 +122,7 @@ function App() {
       RenderComments()
     })
   };
+  //actual API call that edits a comment
   const handleEdit = async () => {
     await Axios.post("https://api-puzzles-pawns.onrender.com/UpdateComment", {
       comment: editComment,
@@ -127,6 +132,7 @@ function App() {
       RenderComments()
     })
   };
+  //function that adds a comment to the database 
   const handleSubmit = async () => {
     if (comment === '') {
       setisAlert(true)
@@ -144,11 +150,12 @@ function App() {
       })
       RenderComments()
     }
-
   }
+  //fires when webpage is initially loaded, renders the comments on first load
   useEffect(() => {
     RenderComments()
   }, [])
+  //Renders ALL main UI elements
   return (
     <ThemeProvider theme={customTheme}>
       <div
@@ -202,17 +209,19 @@ function App() {
         <Container maxWidth="md">
           <Grid container spacing={2}>
             <Grid item xs={12}>
+              <ThemeProvider theme={MerriweatherFont}>
               <Typography variant="h4" align="center" gutterBottom>
                 Board Game Reviews
               </Typography>
+              </ThemeProvider>
             </Grid>
           </Grid>
           <Grid container spacing={2}>
             {reviews.map((review) => (
               <Grid item xs={12} key={review.ReviewId}>
                 <Paper elevation={3} sx={{ p: 2 }}>
-                  <Typography fontWeight={'bold'}>{review.CommentBody}</Typography>
-                  <Typography color={'grey'} variant="h6">- {review.Commenter}</Typography>
+                  <ThemeProvider theme={MerriweatherFont}><Typography fontWeight={'bold'}>{review.CommentBody}</Typography></ThemeProvider>
+                  <ThemeProvider theme={SpecialEliteFont}><Typography color={'grey'} variant="h6">- {review.Commenter}</Typography></ThemeProvider>
                   {renderDelete(review.UserId, review.ReviewId, review.CommentBody)}
                 </Paper>
               </Grid>
@@ -221,7 +230,7 @@ function App() {
           <Grid container spacing={2}>
             <Grid item xs={12}>
               <Paper elevation={3} sx={{ p: 2, mt: 2 }}>
-                <Typography sx={{ mb: 2 }} variant="h6">Leave Your Review</Typography>
+                <ThemeProvider theme={MerriweatherFont}><Typography sx={{ mb: 2 }} variant="h6">Leave Your Review</Typography></ThemeProvider>
                 <Box sx={{ mb: 2 }}> {/* Add margin-bottom */}
                   <Collapse in={isAlert}>
                     <Alert severity='error'>Please input text in the body paragraph</Alert>
@@ -254,10 +263,11 @@ function App() {
             </Grid>
           </Grid>
         </Container>
+        {/*pop up window for edit box*/}
         <Modal sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }} open={isOpen} onClose={() => setisOpen(false)}>
           <Box sx={{ display: 'flex', bgcolor: 'white', flexDirection: 'column', width: '50%' }}>
             <Box sx={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between' }}>
-              <ThemeProvider theme={customTheme}><Typography sx={{ m: '0.5em' }} fontWeight={'bold'}>Edit your review</Typography></ThemeProvider>
+              <ThemeProvider theme={MerriweatherFont}><Typography sx={{ m: '0.5em' }} fontWeight={'bold'}>Edit your review</Typography></ThemeProvider>
               <IconButton onClick={() => setisOpen(false)}><CloseIcon></CloseIcon></IconButton>
             </Box>
             <Divider></Divider>

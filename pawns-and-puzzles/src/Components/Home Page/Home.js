@@ -12,6 +12,7 @@ import {
 } from "react-router-dom";
 import { Typography } from '@mui/material';
 import { useEffect } from 'react';
+//themes for styling and fonts
 const MerriweatherFont = createTheme({
     typography: {
         fontFamily: ['Merriweather', 'serif'].join(",")
@@ -23,9 +24,7 @@ const SpecialEliteFont = createTheme({
     },
 });
 function Home() {
-    useEffect(()=>{
-        console.log(document.cookie)
-    },[])
+    //Renders Main page/ Main UI elements
     return (
         <Box sx={{ display: 'flex', flexDirection: 'column' }}>
             

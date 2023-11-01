@@ -11,6 +11,7 @@ import {
 import CloseIcon from '@mui/icons-material/Close';
 import IconButton from '@mui/material/IconButton';
 import Carousel from 'react-material-ui-carousel'
+//import themes for fonts and styling
 const MerriweatherFont = createTheme({
   typography: {
     fontFamily: ['Merriweather', 'serif'].join(",")
@@ -35,6 +36,7 @@ const customTheme = createTheme({
 
 
 export default function Browse() {
+  //variables for functionality of the website
   const [vendor, setvendor] = useState([]);
   const [isOpen, setisOpen] = useState(false);
   const [isUpdate, setisUpdate] = useState(false);
@@ -53,7 +55,7 @@ export default function Browse() {
   const [isAlert, setIsAlert] = useState(false)
   const [alertMessage, setalertMessage] = useState('')
 
-
+  //renders profit for each vendor if admin is present
   const renderProfit = (profit) => {
     let userId = document.cookie
     let temp = userId.split('=')
@@ -68,7 +70,7 @@ export default function Browse() {
       return null
     }
   }
-
+  //renders admin UI based on the condition the admin is signed in, also contains functionality
   const renderAdminUI = (quantity, gameId, currentDesc, currentName, currentPrice, currentType) => {
     let userId = document.cookie
     let temp = userId.split('=')
@@ -214,7 +216,7 @@ export default function Browse() {
       )
     }
   }
-
+  //renders all of the Vendors, contacts the API and pulls data from the database
   const renderVendors = async () => {
     await Axios.post("https://api-puzzles-pawns.onrender.com/GetVendor", {
       Vname: searchQuery
@@ -237,6 +239,7 @@ export default function Browse() {
       }
     })
   }
+  //renders all of the games associated with each vender
   const renderVendorGames = async (Id) => {
     await Axios.post("https://api-puzzles-pawns.onrender.com/GetGames", {
       VendorID: Id

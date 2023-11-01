@@ -1,5 +1,5 @@
 import { Typography, Box, Divider, Button } from '@mui/material';
-import { createTheme, Experimental_CssVarsProvider, ThemeProvider } from '@mui/material/styles';
+import { createTheme, ThemeProvider } from '@mui/material/styles';
 import FormGroup from '@mui/material/FormGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
@@ -14,6 +14,7 @@ import '../Browse Page/Browse.css'
 import {
     NavLink,
 } from "react-router-dom";
+//themes for fonts and styling
 const MerriweatherFont = createTheme({
     typography: {
         fontFamily: ['Merriweather', 'serif'].join(",")
@@ -35,16 +36,16 @@ const customTheme = createTheme({
     }
 });
 export default function Browse() {
+    //variables to allow for functionality
     const [searchQuery, setSearchQuery] = useState('')
     const [searchResult, setSearchResult] = useState([])
     const [isAlert, setIsAlert] = useState(false)
     const [alertMessage, setalertMessage] = useState('')
-
+    //is fired when checkbox filter has been checked, contacts API and pulls games from High to Low, and Low To High based of parameters
     const searchByPrice = async (e, isHightoLow) =>{
         let isOn = e.target.checked
         if((isOn) && (isHightoLow)){
             await Axios.post("https://api-puzzles-pawns.onrender.com/DESCGames",{
-
             }).then(async (response) =>{
                 console.log(response)
                 let temp = []
@@ -62,7 +63,6 @@ export default function Browse() {
         }
         else if((isOn) && (isHightoLow === false)){
             await Axios.post("https://api-puzzles-pawns.onrender.com/AscGames",{
-
             }).then(async (response) =>{
                 console.log(response)
                 let temp = []
@@ -82,7 +82,7 @@ export default function Browse() {
             SearchDatabase()
         }
     }
-
+    //searches the database for all games, is fired on initial render, and when search query is changed
     const SearchDatabase = async () => {
         await Axios.post("https://api-puzzles-pawns.onrender.com/Games", {
             Gname: searchQuery
@@ -110,12 +110,15 @@ export default function Browse() {
         }
         );
     }
+    //fires on initial render, renders all the games
     useEffect(() => {
         SearchDatabase()
     },[])
+    //fires when search query is changed, renders all the games
     useEffect(()=>{
         SearchDatabase()
     },[searchQuery])
+    //Main page or Main UI components
     return (
         <Box sx={{ display: 'flex', minHeight:'100%' }}>
             <Box sx={{ display: 'flex', flexDirection: 'row', width: '100%', height: '100%' }}>
