@@ -342,6 +342,13 @@ export default function Browse() {
               <Box sx={{
                 display: 'flex', flexDirection: 'column', maxWidth: '500px', bgcolor: '#e9e9e9',
                 borderRadius: 4, m: '1em', boxShadow: '0px 3px 3px -2px rgba(0,0,0,0.2), 0px 3px 4px 0px rgba(0,0,0,0.14), 0px 1px 8px 0px rgba(0,0,0,0.12);', justifyContent: 'center', alignItems: 'center'
+                , "&:hover": {
+                  transition: 'all 0.2s ease out',
+                  boxShadow: '0px 4px 8px rgba(38, 38, 38, 0.2);',
+                  top: '-4px',
+                  border: '1px solid #cccccc',
+                  backgroundColor: '#cccaca'
+                }
               }}>
                 <img style={{ margin: '1em' }} className='logos' src={vendors.logo} alt='Vendor Brand'></img>
                 <ThemeProvider theme={MerriweatherFont}><Typography fontWeight={'bold'} color='#0f4a3b' sx={{ m: 1, fontSize: '2em' }}>{vendors.Vname}</Typography>

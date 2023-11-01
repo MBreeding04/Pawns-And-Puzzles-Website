@@ -190,6 +190,13 @@ export default function Browse() {
                             <Box sx={{
                                 bgcolor: '#e9e9e9',
                                 borderRadius: 2, Width:'400px', display: 'flex', flexDirection: 'column', alignItems: 'center', mx: '1em',my:'1em', boxShadow:'0px 3px 3px -2px rgba(0,0,0,0.2), 0px 3px 4px 0px rgba(0,0,0,0.14), 0px 1px 8px 0px rgba(0,0,0,0.12);'
+                                , "&:hover": {
+                                    transition: 'all 0.2s ease out',
+                                    boxShadow: '0px 4px 8px rgba(38, 38, 38, 0.2);',
+                                    top: '-4px',
+                                    border: '1px solid #cccccc',
+                                    backgroundColor: '#cccaca'
+                                }
                             }}>
                                 <img className='products' src = {`${result.picture}`} alt='product'></img><ThemeProvider theme={MerriweatherFont}><Typography sx={{ fontSize: '2em' }}>{result.name}</Typography>
                                     <Typography align='left' color={'#595959'} sx={{ fontSize: '1em',mt:'1em', maxWidth:'30em',mx:'1em' }}>{result.desc}</Typography>

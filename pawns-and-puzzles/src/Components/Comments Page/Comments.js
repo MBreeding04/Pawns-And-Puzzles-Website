@@ -219,7 +219,13 @@ function App() {
           <Grid container spacing={2}>
             {reviews.map((review) => (
               <Grid item xs={12} key={review.ReviewId}>
-                <Paper elevation={3} sx={{ p: 2 }}>
+                <Paper elevation={3} sx={{ p: 2, "&:hover": {
+                  transition: 'all 0.2s ease out',
+                  boxShadow: '0px 4px 8px rgba(38, 38, 38, 0.2);',
+                  top: '-4px',
+                  border: '1px solid #cccccc',
+                  backgroundColor: '#f0f0f0'
+                } }}>
                   <ThemeProvider theme={MerriweatherFont}><Typography fontWeight={'bold'}>{review.CommentBody}</Typography></ThemeProvider>
                   <ThemeProvider theme={SpecialEliteFont}><Typography color={'grey'} variant="h6">- {review.Commenter}</Typography></ThemeProvider>
                   {renderDelete(review.UserId, review.ReviewId, review.CommentBody)}
