@@ -17,6 +17,11 @@ const MerriweatherFont = createTheme({
     fontFamily: ['Merriweather', 'serif'].join(",")
   },
 });
+const SpecialEliteFont = createTheme({
+  typography: {
+      fontFamily: ['Special Elite', 'cursive'].join(",")
+  },
+});
 const customTheme = createTheme({
 
   typography: {
@@ -364,12 +369,11 @@ export default function Browse() {
               </Box>
               <Divider></Divider>
               <ThemeProvider theme={MerriweatherFont}>
-                <Typography align='center' sx={{ m: 1, fontSize: '1.25em' }}>{currentDesc}</Typography>
+                <ThemeProvider theme={SpecialEliteFont}><Typography align='center' sx={{ m: 1, fontSize: '1.25em' }}>{currentDesc}</Typography></ThemeProvider>
                 <Typography fontWeight={'bold'} color='#0f4a3b' align='center' sx={{ m: 1, fontSize: '3em' }}>Games</Typography>
                 <Carousel>
                   {
                     games.map((games) => (
-
                       <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', flexDirection: 'column' }}>
                         <ThemeProvider theme={MerriweatherFont}>
                           <img alt='missing game asset' className='games' src={games.picture}></img>
